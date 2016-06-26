@@ -1,5 +1,5 @@
 # El Sultan
-set :ip, "45.56.74.195"
+set :ip, "45.33.7.177"
 
 server "#{ip}", :web, :app, :db, primary: true
 set :rails_env, 'production'
