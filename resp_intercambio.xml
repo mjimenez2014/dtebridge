@@ -1,60 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<RespuestaDTE xmlns="http://www.sii.cl/SiiDte" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.sii.cl/SiiDte RespuestaEnvioDTE_v10.xsd">
-	<Resultado ID="RecepcionEnvio">
-		<Caratula version="1.0">
-			<RutResponde>77888630-8</RutResponde>
-			<RutRecibe>88888888-8</RutRecibe>
-			<IdRespuesta>1</IdRespuesta>
-			<NroDetalles>2</NroDetalles>
-			<TmstFirmaResp>2014-11-28T10:45:00</TmstFirmaResp>
-		</Caratula>
-		<RecepcionEnvio>
-			<NmbEnvio>ENVIO_DTE_339734.xml</NmbEnvio>
-			<FchRecep>2014-11-26T10:30:00</FchRecep>
-			<CodEnvio>1</CodEnvio>
-			<EnvioDTEID>SetDoc</EnvioDTEID>
-			<EstadoRecepEnv>0</EstadoRecepEnv>
-			<RecepEnvGlosa>Envio REcibido Conforme</RecepEnvGlosa>
-			<NroDTE>2</NroDTE>
-			<RecepcionDTE>
-				<TipoDTE>33</TipoDTE>
-				<Folio>52687</Folio>
-				<FchEmis>2014-11-26</FchEmis>
-				<RUTEmisor>88888888-8</RUTEmisor>
-				<RUTRecep>77888630-8</RUTRecep>
-				<MntTotal>22682</MntTotal>
-				<EstadoRecepDTE>0</EstadoRecepDTE>
-				<RecepDTEGlosa>DTE Aceptado OK</RecepDTEGlosa>	
-			</RecepcionDTE>
-                        <RecepcionDTE>
-                                <TipoDTE>33</TipoDTE>  
-                                <Folio>52688</Folio>
-                                <FchEmis>2013-06-21</FchEmis>
-                                <RUTEmisor>88888888-8</RUTEmisor>
-                                <RUTRecep>69507000-4</RUTRecep>
-                                <MntTotal>31012</MntTotal>
-                                <EstadoRecepDTE>3</EstadoRecepDTE>
-                                <RecepDTEGlosa>DTE No Recibido - Error RUT Receptor</RecepDTEGlosa>
-                        </RecepcionDTE>
-		</RecepcionEnvio>
-	</Resultado>
-<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
-<SignedInfo>
-<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
-<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
-<Reference URI="">
-<Transforms>
-<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-</Transforms>
-<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-<DigestValue>RlSGfW7gGLtDwQF6SnI12IHJMwU=</DigestValue>
-</Reference>
-</SignedInfo>
-<SignatureValue>eQ6pmx39rom9lTb8sHLHViCuvefUZ28KuFzgvwRBWCvAbe6r7zG3mNoP5l7JDjLs
-QrgeuM4P5JSTZSri2Rc3TutA+CEkM7DU6vYd1SynfB2H2IqXcwTC5THUr0Gr3hIq
-xIGjCpSp0GaSUEBFmPvvqlNrt9REZHU5GF7154RKiS8=</SignatureValue>
-<KeyInfo>
-<KeyValue>
+<?xml version="1.0"?>
+<gettoken><item><Semilla>001761234626</Semilla></item><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>S0mDha9c57vneoaGsb8iW9QMYFs=</DigestValue></Reference></SignedInfo><SignatureValue>MRU1MjQd6eVfN/e+6kUAlzDxFVc3JYkGkGB/wn9H/Wk9XgzJw4G6F9UT4+c1Rsfa
+QK235wqOLckxRhUxnQKkpe45coXNZlLJonuvAK7SseM7SEQyz3FYSrfrRXdX1Mr/
+I8TmwnSFdCC00qzwzYGs0vNeoDdTXBZen/70xo6lJ7Y=</SignatureValue><KeyInfo><KeyValue>
 <RSAKeyValue>
 <Modulus>
 o9cYdRTMB/zpZJCop13dtvR+DYkMQLQ56rr2kFpPvjmDKSXZMLr4QCew9u8uwkkW
@@ -65,9 +12,7 @@ amTxAhcr45Ezse1t3bPq+xOy1JRdAKRRsQSn+9C8Bwk=
 AQAB
 </Exponent>
 </RSAKeyValue>
-</KeyValue>
-<X509Data>
-
+</KeyValue><X509Data>
 <X509Certificate>MIIGdDCCBVygAwIBAgIKNeG73AAAAAGnEjANBgkqhkiG9w0BAQUFADCB0jELMAkG
 A1UEBhMCQ0wxHTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQH
 EwhTYW50aWFnbzEUMBIGA1UEChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9y
@@ -103,7 +48,9 @@ QKDuQoxHkw/0sDZqrvlUfg7tf61fY9N1f+mC2HLg5pVeuA2Ro4qhnCmxqeq9SjTS
 j/v0wzDin0rfWNCYl18siI00HcaHms2dLDnSSBegc770DXtXZdpyxhf1y8xeWpGU
 ZFzOWYFvaffnrEnY2y9pLMQ9/lggxoiOEGdDSeHwzVqy5YF0WIdH+WT5r1403lZ/
 ZjNsUbDFvO0IGu+UFHWFggXHuxXL2oyc</X509Certificate>
-</X509Data>
-</KeyInfo>
-</Signature>
-</RespuestaDTE>
+<X509SubjectName>emailAddress=LUIS.BARAHONA@LUBBA.CL,CN=LUIS BARAHONA MENDOZA,OU=DISTRIBUIDORA DE CONFITES\,ABARROTES\,CIGARRILLOS\,LICORES Y OTROS,O=COMERCIAL LUBBA LTDA.,L=Santiago,ST=METROPOLITANA DE SANTIAGO\ ,C=CL</X509SubjectName>
+<X509IssuerSerial>
+<X509IssuerName>emailAddress=sclientes@e-certchile.cl,CN=E-CERTCHILE CA FIRMA ELECTRONICA SIMPLE,OU=Autoridad Certificadora,O=E-CERTCHILE,L=Santiago,ST=Region Metropolitana,C=CL</X509IssuerName>
+<X509SerialNumber>254449477703255814416146</X509SerialNumber>
+</X509IssuerSerial>
+</X509Data></KeyInfo></Signature></gettoken>

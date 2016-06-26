@@ -32,7 +32,7 @@ set :use_sudo, false
 
 # Repository info
 set :scm, "git"
-set :git_user, 'osvaldomiranda'
+set :git_user, 'mjimenez2014'
 set :repository, "git@github.com:#{git_user}/#{application}.git"
 
 

@@ -2,7 +2,7 @@
 class Api::V1::ReadMailController < Api::V1::ApiController
   def readmail
     Mail.defaults do
-      retriever_method :pop3, :address    => "mail.invoicedigital.cl",
+      retriever_method :pop3, :address => "mail.invoicedigital.cl",
       :port       => 110,
       :user_name  => 'test@invoicedigital.cl',
       :password   => 'paso2011',
@@ -22,7 +22,7 @@ class Api::V1::ReadMailController < Api::V1::ApiController
             if extencion == ".xml"
               d = Docsemail.new
               d.xmlrecibido = attachment.body.decoded
-              d.emailid = mail.message_id
+              d.mailid = mail.message_id
               d.estado = "RECIBIDO"
               d.save
             end

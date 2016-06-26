@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RespuestaDTE xmlns="http://www.sii.cl/SiiDte" xmlns:ds="http://www.w3.org/2000/09/xmldsig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://www.sii.cl/SiiDte RespuestaEnvioDTE_v10.xsd">
+  <Resultado ID="ResultadoDTE">
+    <Caratula version="1.0">
+      <RutResponde>78979690-4</RutResponde>
+     <RutRecibe>83614800-2</RutRecibe>
+      <IdRespuesta>1</IdRespuesta>
+      <TmstFirmaResp>2014-11-27T00:00:00</TmstFirmaResp>
+    </Caratula>
+    <ResultadoDTE>
+      <TipoDTE>61</TipoDTE>
+      <Folio>420438</Folio>
+      <FchEmis>2016-05-11 </FchEmis>
+      <RUTEmisor>83614800-2</RUTEmisor>
+      <RUTRecep>78979690-4</RUTRecep>
+      <MntTotal>343275</MntTotal>
+      <CodEnvio>339734</CodEnvio>
+      <EstadoDTE>0</EstadoDTE>
+      <RecepDTEGlosa>DTE Aceptado OK</RecepDTEGlosa>
+   </ResultadoDTE>
+  </Resultado>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>9HmJkVMltME7bUbi2s8iiFJPH5U=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>ucnn4fZGHU2T+CY2DlqLuz5RqhowCPBaRp9eBdc2k4hQJjKHu25eGMi7QWxgswgX
+iH+aNIH1FATX9i4Pd8oDEf1hQDbcQqTmRKXEI0bWuPRpsHX1xNv02OrPhKmJH0/q
+8syLqfoEf+jJi/dp3EOANxyYDVRM6JxBU5oMkom31Ps=</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>
+0JrhGlkliI9XXTpl30FyEv06Y9/6+48qOdddJwv+cAOIdR5vLdSVz6llfUaHU/tF
+2wDKE025SBIarBk+eSzw1RbydkQ5qT1HsGMz+eTjBayHh5LW3iS2poPChcTtwSDs
+3jxns0bhAVChcTaC9mGLQxpoUbNfJaZyNuhqyk7/83M=
+</Modulus>
+<Exponent>
+AQAB
+</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+
+
+
+<X509Certificate>MIIGUTCCBTmgAwIBAgIKU2LnHAAAAAMdPzANBgkqhkiG9w0BAQUFADCB0jELMAkG
+A1UEBhMCQ0wxHTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQH
+EwhTYW50aWFnbzEUMBIGA1UEChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9y
+aWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQDEydFLUNFUlRDSElMRSBDQSBGSVJN
+QSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEWGHNjbGllbnRlc0Bl
+LWNlcnRjaGlsZS5jbDAeFw0xNTEyMDkxNjA5MjlaFw0xODEyMDgxNjA5MjlaMIHU
+MQswCQYDVQQGEwJDTDEVMBMGA1UECAwMVkFMUEFSQcONU08gMSAwHgYDVQQHExdT
+YW4gRmVsaXBlIGRlIEFjb25jYWd1YTErMCkGA1UEChMic29jaWVkYWQgY29tZXJj
+aWFsIGNvcGlhcG8gbGltaXRhZDETMBEGA1UECxMKY2FybmljZXJpYTEhMB8GA1UE
+AxMYR0FCUklFTCBBQ0VWRURPIFpBTUJSQU5PMScwJQYJKoZIhvcNAQkBFhhnYWJy
+aWVsLmFjZXZlZG9AbWF5b3IuY2wwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGB
+ANCa4RpZJYiPV106Zd9BchL9OmPf+vuPKjnXXScL/nADiHUeby3Ulc+pZX1Gh1P7
+RdsAyhNNuUgSGqwZPnks8NUW8nZEOak9R7BjM/nk4wWsh4eS1t4ktqaDwoXE7cEg
+7N48Z7NG4QFQoXE2gvZhi0MaaFGzXyWmcjboaspO//NzAgMBAAGjggKnMIICozA9
+BgkrBgEEAYI3FQcEMDAuBiYrBgEEAYI3FQiC3IMvhZOMZoXVnReC4twnge/sPGGB
+y54UhqiCWAIBZAIBBDAdBgNVHQ4EFgQUTkFEGZDwvgOf3soYnBeExZi8z1owCwYD
+VR0PBAQDAgTwMB8GA1UdIwQYMBaAFHjhPp/SErN6PI3NMA5Ts0MpB7NVMD4GA1Ud
+HwQ3MDUwM6AxoC+GLWh0dHA6Ly9jcmwuZS1jZXJ0Y2hpbGUuY2wvZWNlcnRjaGls
+ZWNhRkVTLmNybDA6BggrBgEFBQcBAQQuMCwwKgYIKwYBBQUHMAGGHmh0dHA6Ly9v
+Y3NwLmVjZXJ0Y2hpbGUuY2wvb2NzcDAjBgNVHREEHDAaoBgGCCsGAQQBwQEBoAwW
+CjA5ODA0Njc1LTUwIwYDVR0SBBwwGqAYBggrBgEEAcEBAqAMFgo5NjkyODE4MC01
+MIIBTQYDVR0gBIIBRDCCAUAwggE8BggrBgEEAcNSBTCCAS4wLQYIKwYBBQUHAgEW
+IWh0dHA6Ly93d3cuZS1jZXJ0Y2hpbGUuY2wvQ1BTLmh0bTCB/AYIKwYBBQUHAgIw
+ge8egewAQwBlAHIAdABpAGYAaQBjAGEAZABvACAARgBpAHIAbQBhACAAUwBpAG0A
+cABsAGUALgAgAEgAYQAgAHMAaQBkAG8AIAB2AGEAbABpAGQAYQBkAG8AIABlAG4A
+IABmAG8AcgBtAGEAIABwAHIAZQBzAGUAbgBjAGkAYQBsACwAIABxAHUAZQBkAGEA
+bgBkAG8AIABoAGEAYgBpAGwAaQB0AGEAZABvACAAZQBsACAAQwBlAHIAdABpAGYA
+aQBjAGEAZABvACAAcABhAHIAYQAgAHUAcwBvACAAdAByAGkAYgB1AHQAYQByAGkA
+bzANBgkqhkiG9w0BAQUFAAOCAQEAWwg05OJw8skCz04oGZMzH+aUhnVq78fD3wIC
+iMg1m3vjCYMA2XNtvsGAXk3vOCtl8YqN/67Lt0buJCmKtld7oiCg2Y6vtAXjxeAt
+tZrrjTfogY6ZHNYTrAuuF2R8wLwlV6tXkJQ5t+/gVMmUeLZB91jv0hWvjBiGf/KB
+VE1UffEd3deVCQEK+zSZoI1L9c2kiRZ0CIIMUF01Vw6ImYAiXxfeBueiXyRS3o66
+/5zV0UlUvNRGm4Af3W1nCXlIX88wSXTMATT1YiFIyxO2qQOdfSzSw2ytS0eHER5b
+LXrB+0v47C3ILD27jGBP0WGMUGaL3Z0eEQiXys5tgPUXVehUMw==</X509Certificate>
+<X509SubjectName>emailAddress=gabriel.acevedo@mayor.cl,CN=GABRIEL ACEVEDO ZAMBRANO,OU=carniceria,O=sociedad comercial copiapo limitad,L=San Felipe de Aconcagua,ST=VALPARA\C3\8DSO\ ,C=CL</X509SubjectName>
+<X509IssuerSerial>
+<X509IssuerName>emailAddress=sclientes@e-certchile.cl,CN=E-CERTCHILE CA FIRMA ELECTRONICA SIMPLE,OU=Autoridad Certificadora,O=E-CERTCHILE,L=Santiago,ST=Region Metropolitana,C=CL</X509IssuerName>
+<X509SerialNumber>393780852182926198250815</X509SerialNumber>
+</X509IssuerSerial>
+</X509Data>
+</KeyInfo>
+</Signature>
+</RespuestaDTE>

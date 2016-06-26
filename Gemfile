@@ -76,6 +76,8 @@ gem 'groupdate'
 # for mail incoming
 gem 'mailman', require: false
 
+#mail
+gem 'mail'
 # for excel import
 gem 'roo'
 

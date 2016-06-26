@@ -320,6 +320,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   jquery-turbolinks
+  mail
   mailman
   net-ssh (~> 2.7.0)
   pg
@@ -344,4 +345,4 @@ DEPENDENCIES
   will_paginate (~> 3.0)
 
 BUNDLED WITH
-   1.10.6
+   1.11.2

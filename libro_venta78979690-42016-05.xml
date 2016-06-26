@@ -1,7 +1,27 @@
-<?xml version="1.0"?>
-<gettoken><item><Semilla>001761234626</Semilla></item><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>S0mDha9c57vneoaGsb8iW9QMYFs=</DigestValue></Reference></SignedInfo><SignatureValue>MRU1MjQd6eVfN/e+6kUAlzDxFVc3JYkGkGB/wn9H/Wk9XgzJw4G6F9UT4+c1Rsfa
-QK235wqOLckxRhUxnQKkpe45coXNZlLJonuvAK7SseM7SEQyz3FYSrfrRXdX1Mr/
-I8TmwnSFdCC00qzwzYGs0vNeoDdTXBZen/70xo6lJ7Y=</SignatureValue><KeyInfo><KeyValue>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<LibroCompraVenta xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sii.cl/SiiDte" xsi:schemaLocation="http://www.sii.cl/SiiDte LibroCV_v10.xsd" version="1.0"><EnvioLibro ID="IDV2016-05"><Caratula><RutEmisorLibro>78979690-4</RutEmisorLibro><RutEnvia>9804675-5</RutEnvia><PeriodoTributario>2016-05</PeriodoTributario><FchResol>2014-08-22</FchResol><NroResol>80</NroResol><TipoOperacion>VENTA</TipoOperacion><TipoLibro>MENSUAL</TipoLibro><TipoEnvio>TOTAL</TipoEnvio></Caratula><ResumenPeriodo>
+<TotalesPeriodo>
+<TpoDoc>33</TpoDoc>
+<TotDoc>6100</TotDoc><TotMntExe>0</TotMntExe>
+<TotMntNeto>1092223799</TotMntNeto>
+<TotMntIVA>207522507</TotMntIVA><TotMntTotal>1299746306</TotMntTotal>
+</TotalesPeriodo>
+<TotalesPeriodo>
+<TpoDoc>61</TpoDoc>
+<TotDoc>55</TotDoc><TotMntExe>0</TotMntExe>
+<TotMntNeto>20690290</TotMntNeto>
+<TotMntIVA>3931153</TotMntIVA><TotMntTotal>24621443</TotMntTotal>
+</TotalesPeriodo>
+<TotalesPeriodo>
+<TpoDoc>35</TpoDoc>
+<TotDoc>247381</TotDoc><TotMntExe>0</TotMntExe>
+<TotMntNeto>1505127633</TotMntNeto>
+<TotMntIVA>285974250</TotMntIVA><TotMntTotal>1791101883</TotMntTotal>
+</TotalesPeriodo>
+</ResumenPeriodo>
+<TmstFirma>2016-06-22T15:26:15</TmstFirma></EnvioLibro><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>dnbrvfmmfynqlLiWkjV3FG32PkA=</DigestValue></Reference></SignedInfo><SignatureValue>EdKzKuxNbnEhVqfFnXEoNP8l/ccb6+vpzrT8qPAbejjYg5TqBn1FKkhEsY8QAbRG
+3sFR9CYunzDXxDY2IljXSr6CHpS1OUb1+8CLhRaias48msAzVYBQdI8Bj5cpy3D8
+YqbSnIYM42ww7WLlgb1KAs65e+ME5u67tHE2DV09j04=</SignatureValue><KeyInfo><KeyValue>
 <RSAKeyValue>
 <Modulus>
 o9cYdRTMB/zpZJCop13dtvR+DYkMQLQ56rr2kFpPvjmDKSXZMLr4QCew9u8uwkkW
@@ -48,9 +68,4 @@ QKDuQoxHkw/0sDZqrvlUfg7tf61fY9N1f+mC2HLg5pVeuA2Ro4qhnCmxqeq9SjTS
 j/v0wzDin0rfWNCYl18siI00HcaHms2dLDnSSBegc770DXtXZdpyxhf1y8xeWpGU
 ZFzOWYFvaffnrEnY2y9pLMQ9/lggxoiOEGdDSeHwzVqy5YF0WIdH+WT5r1403lZ/
 ZjNsUbDFvO0IGu+UFHWFggXHuxXL2oyc</X509Certificate>
-<X509SubjectName>emailAddress=LUIS.BARAHONA@LUBBA.CL,CN=LUIS BARAHONA MENDOZA,OU=DISTRIBUIDORA DE CONFITES\,ABARROTES\,CIGARRILLOS\,LICORES Y OTROS,O=COMERCIAL LUBBA LTDA.,L=Santiago,ST=METROPOLITANA DE SANTIAGO\ ,C=CL</X509SubjectName>
-<X509IssuerSerial>
-<X509IssuerName>emailAddress=sclientes@e-certchile.cl,CN=E-CERTCHILE CA FIRMA ELECTRONICA SIMPLE,OU=Autoridad Certificadora,O=E-CERTCHILE,L=Santiago,ST=Region Metropolitana,C=CL</X509IssuerName>
-<X509SerialNumber>254449477703255814416146</X509SerialNumber>
-</X509IssuerSerial>
-</X509Data></KeyInfo></Signature></gettoken>
+</X509Data></KeyInfo></Signature></LibroCompraVenta>
