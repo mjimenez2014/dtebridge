@@ -146,7 +146,118 @@ class Compmanual < ActiveRecord::Base
     end
     return msg
   end  
+  def self.import2(file)
+    fileOk = false
+    msg=" "
+    begin
+      CSV.foreach(file.path, col_sep: ';', headers: true, encoding: "ISO-8859-1" ) do |row|
+        rowHash = row.to_hash
+       
+        if rowHash["fchemis"][0..3].index("-") != nil || rowHash["fchemis"].index("/") != nil
+          msg = msg + "Documento folio " + rowHash["folio"] +", formato fecha incorrecto, debe ser : aaaa-mm-dd \r\n"
+        end  
 
+        if rowHash["ivanorec"] == 0 
+          montotot = rowHash["mntneto"].to_f + rowHash["mntexe"].to_f + rowHash["mntiva"].to_f + rowHash["otrosimpto"].to_f + rowHash["codimp"] + rowHash["tasaimmp"].to_f + rowHash["mntimp"]
+          if montotot != rowHash["mnttotal"].to_f 
+            msg =  msg + "Documento folio " + rowHash["folio"] + " montos no cuadran.  \r\n" 
+          end
+
+          if (rowHash["mntneto"].to_f*0.19).round(0) != rowHash["mntiva"].to_f.round(0)
+            msg =  msg + "Documento folio " + rowHash["folio"] + ", monto Iva no cuadra.  \r\n"
+          end
+        end
+
+        if msg != " "
+          return msg
+        else
+          fileOk = true
+        end    
+      end
+    rescue
+      msg = msg + "Formato de archivo incorrecto, revise si contiene algún caracter especial."
+      puts "****************"
+      puts msg
+      puts puts "Error #{$!}"
+      puts "****************"  
+      return msg    
+    end  
+
+
+    if fileOk
+      CSV.foreach(file.path, col_sep: ';', headers: true, encoding: "ISO-8859-1" ) do |row|
+
+        rowHash = row.to_hash    
+
+        rowHash["rznsocemisor"] = rowHash["rznsocemisor"][0..49].gsub('&','')
+        rowHash["rutemisor"] = rowHash["rutemisor"].gsub('.','')
+        rowHash["rutemisor"] = rowHash["rutemisor"].gsub('k','K')
+        rowHash["rutrecep"] = rowHash["rutrecep"].gsub('.','')
+        rowHash["rutrecep"] = rowHash["rutrecep"].gsub('k','K')
+
+
+
+        if rowHash["codimp"]==nil
+          rowHash["codimp"]="0"
+        end  
+
+        if rowHash["tasaimp"]==nil
+          rowHash["tasaimp"]="0"
+        end  
+
+        if rowHash["mntimp"]==nil
+          rowHash["mntimp"]="0"
+        end  
+
+        if rowHash["mntneto"]==nil
+          rowHash["mntneto"]="0"
+        end 
+
+        if rowHash["mntexe"]==nil
+          rowHash["mntexe"]="0"
+        end 
+
+        if rowHash["mntiva"]==nil
+          rowHash["mntiva"]="0"
+        end 
+
+        if rowHash["otrosimpto"]==nil
+          rowHash["otrosimpto"]="0"
+        end 
+
+
+        doc = Compmanual.new(rowHash)
+
+        if doc.rutrecep.index('-').nil?  
+          doc.rutrecep = doc.rutrecep.insert(8, '-') 
+        end  
+        if doc.tipodoc == 1
+          doc.tipodoc = 30
+        end
+        if doc.tipodoc == 7
+          doc.tipodoc = 35
+        end  
+        doc.save
+
+        impto18 = rowHash["codimp"].to_f
+        impto25 = rowHash["tasaimp"].to_f
+        impto30 = rowHash["mntimp"].to_f
+
+        if impto10>0
+          imptoH = Hash.new 
+          imptoH["TipoImp"] = impto18   
+          imptoH["TasaImp"] = impto25 
+          imptoH["MontoImp"] = impto30 
+          imptoH["compmanual_id"] = doc.id
+          Otrosimpcompmanual.create! imptoH
+        end  
+ 
+        doc.otrosimpto = impto30
+        doc.save
+      end  
+    end
+    return msg
+  end 
 
   def self.open_spreadsheet(file)
 

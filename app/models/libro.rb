@@ -257,10 +257,10 @@ class Libro < ActiveRecord::Base
       tosign_xml+="<TipoLibro>MENSUAL</TipoLibro>\r\n"
       tosign_xml+="<TipoEnvio>TOTAL</TipoEnvio>\r\n"
     else 
-      tosign_xml+="<RutEnvia>5682509-6</RutEnvia>\r\n"
+      tosign_xml+="<RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
       tosign_xml+="<PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
-      tosign_xml+="<FchResol>2014-09-10</FchResol>"
-      tosign_xml+="<NroResol>0</NroResol>"
+      tosign_xml+="<FchResol>2014-09-10</FchResol>\r\n"
+      tosign_xml+="<NroResol>0</NroResol>\r\n"
       tosign_xml+="<TipoOperacion>COMPRA</TipoOperacion>\r\n"
       tosign_xml+="<TipoLibro>ESPECIAL</TipoLibro>\r\n"
       tosign_xml+="<TipoEnvio>TOTAL</TipoEnvio>\r\n"

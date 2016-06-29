@@ -1,15 +1,16 @@
 # encoding: ISO-8859-1
 class Api::V1::DoccompraController < Api::V1::ApiController
   def procesarecibo
-    demails = Docsemail.where(estado: "RECIBIDO")
+    demails = Docsemail.where(estado: "RECIBIDO").all
 
     demails.each do |demail| 
       begin
         @doc_xml = 'PROCESADO' 
         unless demail.nil?
           json= Hash.from_xml(demail.xmlrecibido)
+          
           if json['EnvioDTE']['SetDTE']['DTE'].kind_of?(Array)
-            json['EnvioDTE']['SetDTE']['DTE'].each do  |dte|  
+             json['EnvioDTE']['SetDTE']['DTE'].each do  |dte| 
               procesadoc(dte,demail)
             end
           else
@@ -19,7 +20,9 @@ class Api::V1::DoccompraController < Api::V1::ApiController
 
         end
       rescue
-        puts "======ERROR======"
+        puts "======ERROR EN PROCESAR RECIBO ======"
+        demail = 'ACUSEPROVEEDOR'
+
       end  
     end  
     render 'api/v1/doccompra/procesarecibo'

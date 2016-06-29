@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160621234215) do
+ActiveRecord::Schema.define(version: 20160628194745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,9 @@ ActiveRecord::Schema.define(version: 20160621234215) do
     t.datetime "updated_at"
     t.integer  "ivanorec"
     t.integer  "codivanorec"
+    t.integer  "codimp"
+    t.float    "tasaimp"
+    t.integer  "mntimp"
   end
 
   create_table "contribuyentes", force: true do |t|
