@@ -1,4 +1,4 @@
-# encoding: ISO-8859-1
+    # encoding: ISO-8859-1
 class DoccomprasController < ApplicationController
   before_action :set_doccompra, only: [:show, :edit, :update, :destroy]
 
@@ -22,7 +22,13 @@ class DoccomprasController < ApplicationController
       @doccompras = Doccompra.where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).where(estado: nil).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
     end
   end
-
+  def print
+    @doccompra = Doccompra.find(params[:id])
+    #       respond_to do |format|
+    #     format.html 
+    # end
+    render pdf: "terms", formats: :html, encoding: "UTF-8"   # Excluding ".pdf" extension.
+  end
 
   def rechazar
     d = Doccompra.find(params[:id])
@@ -161,32 +167,26 @@ class DoccomprasController < ApplicationController
     tosign_xml+="</RespuestaDTE>\r\n"
 
 
-    rut = d.RUTRecep
-
-    puts "============================================================="
-    puts rut
-    puts "============================================================="
-    File.open("tosign_xml#{t}.xml", 'w') { |file| file.puts tosign_xml}
+    File.open("inter_tosign_xml#{t}.xml", 'w') { |file| file.puts tosign_xml}
     sleep 1
      
-    system("./comando#{rut} tosign_xml#{t}.xml doc-signed#{t}.xml")
-
-
-    doc = File.read "doc-signed#{t}.xml"    
+    system("./comando#{d.RUTRecep} inter_tosign_xml#{t}.xml inter_doc-signed#{t}.xml")
 
     #enviar doc por mail
-
-    system("rm tosign_xml#{t}.xml") 
+    contrib = Contribuyente.find_by_rut(d.RUTEmisor)
+   #   NotificationMailer.send_intercambio("osvaldo.omiranda@gmail.com", d.id, d.RUTRecep, "inter_doc-signed#{t}.xml" ).deliver
+    NotificationMailer.send_intercambio(contrib.email, d.id, d.RUTRecep, "inter_doc-signed#{t}.xml" ).deliver
+    system("rm inter_tosign_xml#{t}.xml") 
     #system("rm doc-signed#{t}.xml")
-    system("mv doc-signed#{t}.xml public/uploads/documento/fileIntercambio/")
+    system("mv inter_doc-signed#{t}.xml public/uploads/documento/fileIntercambio/")
     d.estado = "APROBADO"
     d.save
 
-    @doccompras = Doccompra.where(estado: nil).where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa})
+    @doccompras = Doccompra.where(estado: nil).where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).paginate(:page => params[:page], :per_page => 15 )
     respond_to do |format|
-        format.html { redirect_to :back}
+        format.html { render action: 'index'}
     end  
-  end  
+end
 
   def sendxml
     doccompra = Doccompra.find(params[:id])
@@ -201,4 +201,5 @@ class DoccomprasController < ApplicationController
     def doccompra_params
       params.require(:doccompra).permit(:TipoDTE, :Folio, :FchEmis, :IndNoRebaja, :TipoDespacho, :IndTraslado, :TpoImpresion, :IndServicio, :MntBruto, :FmaPago, :FchVenc, :RUTEmisor, :RznSoc, :GiroEmis, :Telefono, :CorreoEmisor, :Acteco, :CdgTraslado, :FolioAut, :FchAut, :Sucursal, :CdgSIISucur, :CodAdicSucur, :DirOrigen, :CmnaOrigen, :CiudadOrigen, :CdgVendedor, :IdAdicEmisor, :RUTMandante, :RUTRecep, :CdgIntRecep, :RznSocRecep, :NumId, :Nacionalidad, :IdAdicRecep, :GiroRecep, :Contacto, :CorreoRecep, :DirRecep, :CmnaRecep, :CiudadRecep, :DirPostal, :CmnaPostal, :CiudadPostal, :RUTSolicita, :Patente, :RUTTrans, :RUTChofer, :NombreChofer, :DirDest, :CmnaDest, :CiudadDest, :CodModVenta, :CodClauVenta, :TotClauVenta, :CodViaTransp, :NombreTransp, :RUTCiaTransp, :NomCiaTransp, :IdAdicTransp, :Booking, :Operador, :CodPtoEmbarque, :IdAdicPtoEmb, :CodPtoDesemb, :IdAdicPtoDesemb, :Tara, :CodUnidMedTara, :PesoBruto, :CodUnidPesoBruto, :PesoNeto, :CodUnidPesoNeto, :TotItems, :TotBultos, :TpoMoneda, :MntNeto, :MntExe, :MntBase, :MntMargenCom, :TasaIVA, :IVA, :IVAProp, :IVATerc, :IVANoRet, :CredEC, :GrntDep, :ValComNeto, :ValComExe, :ValComIVA, :MntTotal, :MontoNF, :xmlrecibido, :estado)
     end
+
 end

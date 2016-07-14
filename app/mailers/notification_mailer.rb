@@ -41,16 +41,17 @@ class NotificationMailer < ActionMailer::Base
     mail(to: email, subject: "IAT offline en sucursal : #{sucursal}, #{empresa}" )
   end
 
-  def send_intercambio(email, id, empresa)
+  def send_intercambio(email, id, empresa, docxml)
     doc = Doccompra.find(id)
     @user = doc.RznSocRecep
-    @destinatario = doc.RznSocRecep
+    @destinatario = doc.RznSoc
     @rut = doc.RUTEmisor
     @empresa = doc.RznSoc
     @documento = Tipodte.find_by_tipo(doc.TipoDTE).nombre
     @folio = doc.Folio 
     @user = "Precioso"
     @url  = 'http://www.invoicedigital.cl'
+    attachments["inter_#{doc.Folio}_cliente.xml"] =  File.read("#{Rails.root}/#{docxml}").force_encoding('iso-8859-1').encode('utf-8')
     mail(to: email, subject: "Intercambio DTE, #{empresa}" )
   end
 

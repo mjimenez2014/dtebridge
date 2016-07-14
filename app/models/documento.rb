@@ -6,6 +6,7 @@ class Documento < ActiveRecord::Base
   has_many :ref_detalles, dependent: :destroy
   has_many :comisions, dependent: :destroy
   has_many :detalles, dependent: :destroy
+  has_many :sucursals
 
   accepts_nested_attributes_for :detalles
   accepts_nested_attributes_for :impuesto_retens
@@ -29,7 +30,7 @@ class Documento < ActiveRecord::Base
   attr_reader :sucursal
   attr_reader :nombre_doc
 
-  scope :sucursal, lambda {|sucursal| where('"Sucursal" = ?', sucursal) if sucursal.present? }
+  scope :sucursal, lambda {|sucursal| where('"CdgSIISucur" = ?', sucursal) if sucursal.present? }
   scope :tipodte, lambda {|tipodte| where('"TipoDTE" = ?',tipodte) if tipodte.present? }
   scope :folio, lambda {|folio| where('"Folio" = ?', folio) if  folio.present? }
   scope :fecha, lambda {|fecha| where(fecha: fecha) if fecha.present? }

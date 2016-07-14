@@ -1,11 +1,11 @@
 %h1 Listing tipodtes
 
-%table
+%table.table.table-striped
   %thead
     %tr
       %th Tipo
       %th Nombre
-      %th
+      %th Nombre en Pdf
       %th
       %th
       
@@ -14,6 +14,7 @@
       %tr
         %td= tipodte.tipo
         %td= tipodte.nombre
+        %td= tipodte.nomdtepdf
         %td= link_to 'Show', tipodte
         %td= link_to 'Edit', edit_tipodte_path(tipodte)
         %td= link_to 'Destroy', tipodte, :method => :delete, :data => { :confirm => 'Are you sure?' }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628194745) do
+ActiveRecord::Schema.define(version: 20160714040735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(version: 20160628194745) do
     t.float    "PrcBruItem"
     t.float    "DescuentoBruMonto"
     t.float    "MontoBruItem"
+    t.string   "CodCatalog"
   end
 
   add_index "detalles", ["documento_id"], name: "index_detalles_on_documento_id", using: :btree
@@ -431,6 +432,8 @@ ActiveRecord::Schema.define(version: 20160628194745) do
     t.string   "TelRecep"
     t.string   "DirMatriz"
     t.string   "NroOrdenCompra"
+    t.string   "CondVenta"
+    t.string   "MedioPago"
   end
 
   create_table "dsc_rcg_globals", force: true do |t|
@@ -680,6 +683,7 @@ ActiveRecord::Schema.define(version: 20160628194745) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "manual"
+    t.string   "nomdtepdf"
   end
 
   create_table "users", force: true do |t|

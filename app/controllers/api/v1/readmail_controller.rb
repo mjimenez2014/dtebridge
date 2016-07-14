@@ -14,7 +14,6 @@ class Api::V1::ReadMailController < Api::V1::ApiController
     mails.each do |mail|
       doceamil = Docsemail.where(mailid: mail.message_id).first
       if !doceamil.present?
-
         if mail.multipart?  
           mail.attachments.each do | attachment |
             filename = attachment.filename
@@ -29,6 +28,7 @@ class Api::V1::ReadMailController < Api::V1::ApiController
           end
         end     
       end
-    end   
+    end  
+    render json: "Ok"  
   end
 end

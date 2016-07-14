@@ -42,6 +42,6 @@ class TipodtesController < ApplicationController
     end
 
     def tipodte_params
-      params.require(:tipodte).permit(:tipo, :nombre)
+      params.require(:tipodte).permit(:tipo, :nombre, :nomdtepdf)
     end
 end

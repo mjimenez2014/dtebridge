@@ -92,6 +92,8 @@ Dtebridge::Application.routes.draw do
   get "doccompras_rech/aprobar/:id", to: "doccompras_rech#aprobar"
   get "doccompras_aprob", to: "doccompras_aprob#index"
   get "doccompras_rech", to: "doccompras_rech#index"
+  get "doccompras/print/:id", to: "doccompras#print"
+
 
   post "buscarDoc", to: "documentos#find"
 

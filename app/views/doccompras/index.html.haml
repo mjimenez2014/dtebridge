@@ -35,7 +35,8 @@
         %td= doccompra.RUTRecep
         %td= doccompra.RznSocRecep.force_encoding('utf-8')
         %td= number_to_currency( doccompra.MntTotal, precision: 0, delimiter: "." )
-        %td= link_to "Detalle", "/detcompras/#{doccompra.id}", class: "btn btn-primary btn-xs"
+        %td= link_to "Ver", "/doccompras/print/#{doccompra.id}", class: "btn btn-primary btn-xs"
+        / %td= link_to "Detalle", "/detcompras/#{doccompra.id}", class: "btn btn-primary btn-xs"
         %td= link_to 'XML', "/doccompras/sendxml/#{doccompra.id}", class: "btn btn-primary btn-xs"
         %td= link_to "Aprobar", "/doccompras/aprobar/#{doccompra.id}", class: "btn btn-success btn-xs" 
         %td= link_to "Rechazar", "/doccompras/rechazar/#{doccompra.id}", class: "btn btn-danger btn-xs"      

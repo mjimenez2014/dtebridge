@@ -80,7 +80,9 @@ gem 'mailman', require: false
 gem 'mail'
 # for excel import
 gem 'roo'
-
+# create PDF
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 group :development do
   # Use sqlite3 as the database for development
