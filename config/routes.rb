@@ -93,6 +93,8 @@ Dtebridge::Application.routes.draw do
   get "doccompras_aprob", to: "doccompras_aprob#index"
   get "doccompras_rech", to: "doccompras_rech#index"
   get "doccompras/print/:id", to: "doccompras#print"
+  get "doccompras/ver/:id", to: "doccompras#ver"
+
 
 
   post "buscarDoc", to: "documentos#find"
@@ -131,7 +133,7 @@ Dtebridge::Application.routes.draw do
       get "/resend", to: "documento#resend"
       get "/sendclient", to: "documento#sendclient"
       get "/separchivo", to: "separchivo#separchivo"
-      get "/readmail", to: "readmail#readmail"
+      get "/readmail", to: "readmail#read_mail"
      end
   end
 

@@ -254,17 +254,23 @@ class Libro < ActiveRecord::Base
       tosign_xml+="<FchResol>#{fchResolucion}</FchResol>\r\n"
       tosign_xml+="<NroResol>#{numResolucion}</NroResol>\r\n"
       tosign_xml+="<TipoOperacion>COMPRA</TipoOperacion>\r\n"
-      tosign_xml+="<TipoLibro>MENSUAL</TipoLibro>\r\n"
+      tosign_xml+="<TipoLibro>#{libro.tipolibro}</TipoLibro>\r\n"
       tosign_xml+="<TipoEnvio>TOTAL</TipoEnvio>\r\n"
+      if(libro.codautrec != "0")
+      tosign_xml+="<CodAutRec>#{libro.codautrec}</CodAutRec>\r\n"
+      end  
     else 
       tosign_xml+="<RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
       tosign_xml+="<PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
-      tosign_xml+="<FchResol>#{fchResolucion}</FchResol>\r\n"
+      tosign_xml+="<FchResol>2014-05-12</FchResol>\r\n"
       tosign_xml+="<NroResol>0</NroResol>\r\n"
       tosign_xml+="<TipoOperacion>COMPRA</TipoOperacion>\r\n"
       tosign_xml+="<TipoLibro>ESPECIAL</TipoLibro>\r\n"
       tosign_xml+="<TipoEnvio>TOTAL</TipoEnvio>\r\n"
       tosign_xml+="<FolioNotificacion>2</FolioNotificacion>\r\n"
+      if(libro.codautrec != "0")
+      tosign_xml+="<CodAutRec>#{libro.codautrec}</CodAutRec>\r\n"
+      end  
     end
 
     tosign_xml+="</Caratula>"
@@ -283,6 +289,13 @@ class Libro < ActiveRecord::Base
       impto10 = libro.detlibro.where(tipodte: t.tipo).sum(:impto10).to_i
       impto25 = libro.detlibro.where(tipodte: t.tipo).sum(:impto25).to_i
       impto30 = libro.detlibro.where(tipodte: t.tipo).sum(:impto30).to_i
+      impto5 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 18).sum(:mntimp).to_i
+      impto15 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 23).sum(:mntimp).to_i
+      impto10 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 27).sum(:mntimp).to_i            
+      impto12 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 14).sum(:mntimp).to_i
+      impto20_5 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 25).sum(:mntimp).to_i      
+      
+
 
       ivanorec = libro.detlibro.where(tipodte:t.tipo).sum(:ivanorec).to_i
       countivanorec = libro.detlibro.where(tipodte:t.tipo).where("codivanorec > ?", 0).count
@@ -312,17 +325,41 @@ class Libro < ActiveRecord::Base
    #     tosign_xml+="<TotIVAUsoComun>1</TotIVAUsoComun>\r\n"
    #     tosign_xml+="<FctProp>0.999</FctProp>\r\n"
    #     tosign_xml+="<TotCredIVAUsoComun>1</TotCredIVAUsoComun>\r\n"
-
-        if impto18 > 0
+        
+        if impto5 > 0
           tosign_xml+="<TotOtrosImp>\r\n"
-          tosign_xml+="<CodImp>271</CodImp>\r\n"
-          tosign_xml+="<TotMntImp>#{impto18}</TotMntImp>\r\n"
+          tosign_xml+="<CodImp>18</CodImp>\r\n"
+          tosign_xml+="<TotMntImp>#{impto5}</TotMntImp>\r\n"
+          tosign_xml+="</TotOtrosImp>\r\n"
+        end
+        if impto15 > 0
+          tosign_xml+="<TotOtrosImp>\r\n"
+          tosign_xml+="<CodImp>23</CodImp>\r\n"
+          tosign_xml+="<TotMntImp>#{impto15}</TotMntImp>\r\n"
           tosign_xml+="</TotOtrosImp>\r\n"
         end
         if impto10 > 0
           tosign_xml+="<TotOtrosImp>\r\n"
           tosign_xml+="<CodImp>27</CodImp>\r\n"
           tosign_xml+="<TotMntImp>#{impto10}</TotMntImp>\r\n"
+          tosign_xml+="</TotOtrosImp>\r\n"
+        end
+        if impto12 > 0
+          tosign_xml+="<TotOtrosImp>\r\n"
+          tosign_xml+="<CodImp>14</CodImp>\r\n"
+          tosign_xml+="<TotMntImp>#{impto12}</TotMntImp>\r\n"
+          tosign_xml+="</TotOtrosImp>\r\n"
+        end
+          if impto20_5 > 0
+          tosign_xml+="<TotOtrosImp>\r\n"
+          tosign_xml+="<CodImp>25</CodImp>\r\n"
+          tosign_xml+="<TotMntImp>#{impto20_5}</TotMntImp>\r\n"
+          tosign_xml+="</TotOtrosImp>\r\n"
+        end
+        if impto18 > 0
+          tosign_xml+="<TotOtrosImp>\r\n"
+          tosign_xml+="<CodImp>271</CodImp>\r\n"
+          tosign_xml+="<TotMntImp>#{impto18}</TotMntImp>\r\n"
           tosign_xml+="</TotOtrosImp>\r\n"
         end
         if impto25 > 0
@@ -405,8 +442,13 @@ class Libro < ActiveRecord::Base
         tosign_xml+="<MntExe>#{det.mntexe}</MntExe>\r\n"
         tosign_xml+="<MntNeto>#{det.mntneto}</MntNeto>\r\n"
         tosign_xml+="<MntIVA>#{det.mntiva.to_i}</MntIVA>"
-
-
+        if doc.codimp > 0  
+        tosign_xml+="<OtrosImp>\r\n"
+        tosign_xml+="<CodImp>#{doc.codimp}</CodImp>\r\n"
+        tosign_xml+="<TasaImp>#{doc.tasaimp}</TasaImp>\r\n"
+        tosign_xml+="<MntImp>#{doc.mntimp.to_i}</MntImp>\r\n"
+        tosign_xml+="</OtrosImp>\r\n"
+        end 
         if doc.impto18 > 0
           tosign_xml+="<OtrosImp>\r\n"
           tosign_xml+="<CodImp>271</CodImp>\r\n"

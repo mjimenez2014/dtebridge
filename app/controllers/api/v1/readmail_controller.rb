@@ -1,6 +1,8 @@
 # encoding: ISO-8859-1
-class Api::V1::ReadMailController < Api::V1::ApiController
-  def readmail
+class Api::V1::ReadmailController < Api::V1::ApiController
+  def read_mail
+    require 'mail'
+    
     Mail.defaults do
       retriever_method :pop3, :address => "mail.invoicedigital.cl",
       :port       => 110,
@@ -10,6 +12,7 @@ class Api::V1::ReadMailController < Api::V1::ApiController
     end
 
     mails = Mail.all
+    #mails = Mail.find(:what => :last, :count => 5, :order => :desc)
 
     mails.each do |mail|
       doceamil = Docsemail.where(mailid: mail.message_id).first

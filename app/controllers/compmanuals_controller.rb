@@ -19,7 +19,7 @@ class CompmanualsController < ApplicationController
     respond_to do |format|
       format.html {
         if @msg == " "
-          render action: 'index', notice: "Documentos Ok"
+          render action: 'index'#, notice: "Documentos Ok"
         else
           render '/compmanuals/error'
         end  

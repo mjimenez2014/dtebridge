@@ -80,7 +80,9 @@ class LibroCompraController < ApplicationController
     if (rut.nil? || mes.nil?)
         return false
     end    
-
+     
+    tipolibro = Compmanual.where('"rutrecep"=? and "estado" = ?',  rut, "PREVIO" ).last
+     
     # registrar libro con sus datos
     libro = Libro.new
     libro.rut = rut
@@ -89,6 +91,8 @@ class LibroCompraController < ApplicationController
     libro.estado = "XML NO Generado"
     libro.idenvio = mes.gsub('/','-')
     libro.enviado = "NO"
+    libro.tipolibro = tipolibro.tipolibro
+    libro.codautrec = tipolibro.codautrec
     libro.save
 
     desde = Date.strptime("#{mes}/01", "%Y/%m/%d")
@@ -144,6 +148,9 @@ class LibroCompraController < ApplicationController
       detlibro.impto10 = e.impto10
       detlibro.impto25 = e.impto25
       detlibro.impto30 = e.impto30
+      detlibro.codimp = e.codimp
+      detlibro.tasaimp = e.tasaimp
+      detlibro.mntimp = e.mntimp
       
       if e.ivanorec.present?
         detlibro.ivanorec = e.ivanorec

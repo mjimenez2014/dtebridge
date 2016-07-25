@@ -30,6 +30,13 @@ class DoccomprasController < ApplicationController
     render pdf: "terms", formats: :html, encoding: "UTF-8"   # Excluding ".pdf" extension.
   end
 
+    def ver
+    @doccompra = Doccompra.find(params[:id])
+       respond_to do |format|
+         format.html 
+    end
+  end
+
   def rechazar
     d = Doccompra.find(params[:id])
 

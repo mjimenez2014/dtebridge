@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714040735) do
+ActiveRecord::Schema.define(version: 20160725165256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,8 @@ ActiveRecord::Schema.define(version: 20160714040735) do
     t.integer  "codimp"
     t.float    "tasaimp"
     t.integer  "mntimp"
+    t.string   "tipolibro"
+    t.string   "codautrec"
   end
 
   create_table "contribuyentes", force: true do |t|
@@ -182,6 +184,9 @@ ActiveRecord::Schema.define(version: 20160714040735) do
     t.integer  "cantidad"
     t.integer  "ivanorec"
     t.integer  "codivanorec"
+    t.integer  "codimp"
+    t.float    "tasaimp"
+    t.integer  "mntimp"
   end
 
   add_index "detlibros", ["libro_id"], name: "index_detlibros_on_libro_id", using: :btree
@@ -560,6 +565,8 @@ ActiveRecord::Schema.define(version: 20160714040735) do
     t.string   "fchenvio"
     t.string   "estado"
     t.text     "estadoxml"
+    t.string   "tipolibro"
+    t.string   "codautrec"
   end
 
   create_table "log_iats", force: true do |t|
