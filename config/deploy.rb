@@ -22,7 +22,7 @@ load "config/recipes/imagemagick"
 load "config/recipes/image_compression"
 
 set :stages, %w( staging production elsultan )
-set :default_stage, "staging"
+set :default_stage, "production"
 
 # Application info
 set :user, "deployer"
