@@ -16,7 +16,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
   <meta charset="utf-8">
 </head>
-<body background="/assets/slider.jpg">
+<body>
  <div class="container" id="fondo-menu">
    <div class="row">
     <nav class="navbar navbar-default" role="navigation">
@@ -102,12 +102,14 @@
     </ul>
   </div>
 </nav>
+  <h4 style="color:blue">Empresa: <%= Empresa.where(rut: Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).last.rznsocial%></h4>
 </div>	
 <!-- Contenido -->
 <%= yield %>
 <!-- footer-->
 <div class="row">
-  <div class="col-md-12 text-center">copyright Adm Software</div>
+<!--   <div class="col-md-12 text-center">copyright Invoice Digital SPA</div> -->
+    <div class="col-md-12 text-center">copyright Adm Software</div>
 </div>
 </div>
 </body>
