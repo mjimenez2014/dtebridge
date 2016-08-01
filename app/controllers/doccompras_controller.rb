@@ -8,13 +8,13 @@ class DoccomprasController < ApplicationController
     searchparams = params["/doccompras"]
     if searchparams.present?
       if searchparams[:search] != ""
-        @search = Doccompra.search do
+          search = Doccompra.where(RUTEmisor: searchparams[:rutemis]).where(estado: nil).all do
           fulltext searchparams[:search]
           order_by(:created_at, :desc)
           paginate :page => 1, :per_page => 500
         end
-       # @doccompras = @search.results
-        @doccompras = Doccompra.where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).where(id: @search.results.map(&:id)).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
+        @doccompras = search
+        @doccompras = Doccompra.where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).where(id: search.map(&:id)).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
       else
         @doccompras = Doccompra.where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).where(estado: nil).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
       end  
@@ -24,10 +24,17 @@ class DoccomprasController < ApplicationController
   end
   def print
     @doccompra = Doccompra.find(params[:id])
-    #       respond_to do |format|
-    #     format.html 
-    # end
-    render pdf: "terms", formats: :html, encoding: "UTF-8"   # Excluding ".pdf" extension.
+     respond_to do |format|
+         format.html 
+         format.pdf do  
+            render pdf: "terms", 
+            formats: :html, 
+            encoding: "UTF-8",
+            template: "doccompras/print.html.erb",
+            layout: "pdf.html.erb"
+         end
+     end
+  # Excluding ".pdf" extension.
   end
 
     def ver

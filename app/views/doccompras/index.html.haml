@@ -1,9 +1,23 @@
 %h3 Documentos Recibidos Proveedor
 
-/ = simple_form_for(doccompras_path,:method => :get ) do |f|
-/   = f.input :search, label: false, placeholder: "Folio, RutEmisor, Rznsoc, tipoDte, FchEmis" , :input_html => {:style=> 'width: 400px'}   
-/   %p
-/   = f.button :submit, "Buscar",  class: "btn btn-primary btn-xs"
+.container-fluid
+  .row
+    .col-md-12
+      = simple_form_for(doccompras_path,:method => :get ) do |f|
+        .form-group  
+          /.col-sm-2
+          /  = f.input :sucursal, label: false,  collection: Documento.sucursal_options_for_select(current_user.email), :input_html => {:style=> 'width: 180px'}
+          /.col-sm-2   
+          /  = f.input :tipodte, label: false, collection:  Documento.tipodte_option_for_select,:input_html => {:style=> 'width: 150px'} 
+          .col-sm-2  
+            = f.input :rutemis, label: false, placeholder: "Rut Emisor", :input_html => {:style=> 'width: 150px'}
+          / .col-sm-2 
+          /   = f.input :fecha, label: false, placeholder: "Fchemis(yyyy-mm)", :input_html => {:style=> 'width: 150px'} 
+          .col-sm-2  
+            = f.button :submit, "Buscar",  class: "btn btn-primary btn-xs"
+
+      = link_to "Limpiar Busqueda","/doccompras",  class: 'btn btn-info btn-xs'
+%br
 
 %br
 
@@ -20,6 +34,7 @@
       %th Rutrecep
       %th Rznsocrecep
       %th Mnttotal
+      %th -
       %th
       %th
       %th
@@ -35,7 +50,8 @@
         %td= doccompra.RUTRecep
         %td= doccompra.RznSocRecep.force_encoding('utf-8')
         %td= number_to_currency( doccompra.MntTotal, precision: 0, delimiter: "." )
-        %td= link_to "Ver", "/doccompras/print/#{doccompra.id}", class: "btn btn-primary btn-xs"
+        %td= check_box :remember_me, :class => "checkbox"
+        %td= link_to "Pdf", "/doccompras/print/#{doccompra.id}.pdf", class: "btn btn-primary btn-xs"
         / %td= link_to "Detalle", "/detcompras/#{doccompra.id}", class: "btn btn-primary btn-xs"
         %td= link_to 'XML', "/doccompras/sendxml/#{doccompra.id}", class: "btn btn-primary btn-xs"
         %td= link_to "Aprobar", "/doccompras/aprobar/#{doccompra.id}", class: "btn btn-success btn-xs" 
