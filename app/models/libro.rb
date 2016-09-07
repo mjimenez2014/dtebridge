@@ -43,9 +43,11 @@ class Libro < ActiveRecord::Base
     # Para certificacion
      # tosign_xml+="<TipoLibro>ESPECIAL</TipoLibro>"
 
-    tosign_xml+="<TipoLibro>MENSUAL</TipoLibro>"
+    tosign_xml+="<TipoLibro>#{libro.tipolibro}</TipoLibro>"
     tosign_xml+="<TipoEnvio>TOTAL</TipoEnvio>"
-
+    if(libro.tipolibro == "RECTIFICA")
+      tosign_xml+="<CodAutRec>#{libro.codautrec}</CodAutRec>\r\n"
+    end  
     # Solo para certificación 
      # tosign_xml+="<FolioNotificacion>1</FolioNotificacion>" 
     tosign_xml+="</Caratula>"
@@ -285,16 +287,15 @@ class Libro < ActiveRecord::Base
       iva = libro.detlibro.where(tipodte: t.tipo).sum(:mntiva).to_i 
       mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal) 
 
-      impto18 = libro.detlibro.where(tipodte: t.tipo).sum(:impto18).to_i
+      impto18 = libro.detlibro.where(tipodte: t.tipo).where(:codimp =>271).sum(:mntimp).to_i
       impto10 = libro.detlibro.where(tipodte: t.tipo).sum(:impto10).to_i
       impto25 = libro.detlibro.where(tipodte: t.tipo).sum(:impto25).to_i
       impto30 = libro.detlibro.where(tipodte: t.tipo).sum(:impto30).to_i
       impto5 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 18).sum(:mntimp).to_i
       impto15 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 23).sum(:mntimp).to_i
       impto10 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 27).sum(:mntimp).to_i            
-      impto12 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 14).sum(:mntimp).to_i
-      impto20_5 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 25).sum(:mntimp).to_i      
-      
+      impto12 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 19).sum(:mntimp).to_i
+      impto20_5 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 25).sum(:mntimp).to_i           
 
 
       ivanorec = libro.detlibro.where(tipodte:t.tipo).sum(:ivanorec).to_i
@@ -346,7 +347,7 @@ class Libro < ActiveRecord::Base
         end
         if impto12 > 0
           tosign_xml+="<TotOtrosImp>\r\n"
-          tosign_xml+="<CodImp>14</CodImp>\r\n"
+          tosign_xml+="<CodImp>19</CodImp>\r\n"
           tosign_xml+="<TotMntImp>#{impto12}</TotMntImp>\r\n"
           tosign_xml+="</TotOtrosImp>\r\n"
         end

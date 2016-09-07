@@ -18,8 +18,8 @@ class ListalibroController < ApplicationController
 
   def genxml
     lib = Libro.find(params[:id])
+    puts lib.id
     lib.xml
-
     lib.estado = "XML Generado"
     lib.enviado = "NO"
     lib.save

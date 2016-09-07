@@ -9,6 +9,8 @@ class DocumentosController < ApplicationController
 
     if searchparams.present?
       @search = Documento.sucursal(searchparams["sucursal"]).tipodte(searchparams["tipodte"]).folio(searchparams["folio"])
+      puts "----------------------------------------------"
+      puts @search
       @documentos = Documento.where(id: @search.map(&:id)).where(:RUTEmisor => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
     else
       @documentos = Documento.where(:RUTEmisor => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )

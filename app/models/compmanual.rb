@@ -146,6 +146,7 @@ class Compmanual < ActiveRecord::Base
     end
     return msg
   end  
+  
   def self.import2(file)
     fileOk = false
     msg=" "

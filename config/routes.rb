@@ -14,6 +14,10 @@ Dtebridge::Application.routes.draw do
     collection { post :import }
   end
 
+  resources :doccompras do
+    collection { post :import }
+  end
+
   resources :log_iats
   resources :otrosimpmanuals
   resources :otrosimpcompmanuals

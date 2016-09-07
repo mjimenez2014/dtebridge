@@ -13,6 +13,8 @@ class LibroVentaController < ApplicationController
         mes = "0001/01"
         @fecha = ""
     end
+    @tipolibro = params[:tipolibro]
+    @codautrec = params[:codautrec]
 
     emp = Empresa.where(rut: @rut).first
     @empresa = emp.rznsocial
@@ -54,19 +56,22 @@ class LibroVentaController < ApplicationController
     @msg = "Se ha generado Libro"
     @rut = params[:rut]
     @mes = params[:mes]
+    @tipolibro = params[:tipolibro]
+    @codautrec = params[:codautrec]
+
     libro = Libro.where(rut: @rut).where(fecha: @mes).where(tipo: "VENTA").first
 
     unless libro.nil?
       if libro.enviado == "NO"
         libro.destroy
-        unless create(@rut, @mes)
+        unless create(@rut, @mes, @tipolibro, @codautrec)
             @msg = "Libro NO generado" 
         end    
       else
         @msg = "Libro ya se ha generado y enviado a SII, no se puede volver a generar" 
       end
     else
-        if !create(@rut, @mes)
+        if !create(@rut, @mes, @tipolibro, @codautrec)
             @msg = "Libro NO generado" 
         end    
     end
@@ -76,7 +81,7 @@ class LibroVentaController < ApplicationController
   end
 
 
-  def create (rut, mes)
+  def create (rut, mes, tipolibro, codautrec)
 
     if (rut.nil? || mes.nil?)
         return false
@@ -90,6 +95,9 @@ class LibroVentaController < ApplicationController
     libro.estado = "XML NO Generado"
     libro.idenvio = mes.gsub('/','-')
     libro.enviado = "NO"
+    libro.tipolibro = tipolibro
+    libro.codautrec = codautrec
+
     libro.save
 
     desde = Date.strptime("#{mes}/01", "%Y/%m/%d")

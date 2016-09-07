@@ -83,6 +83,8 @@ gem 'roo'
 # create PDF
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+# administrar tablas
+#gem 'activeadmin', github: 'activeadmin'
 
 group :development do
   # Use sqlite3 as the database for development

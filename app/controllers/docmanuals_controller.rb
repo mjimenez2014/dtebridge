@@ -21,7 +21,7 @@ class DocmanualsController < ApplicationController
     totFmanual = Docmanual.select('sum("mntneto") as mntneto,sum("mntexe") as mntexe, sum("mntiva") as iva, sum("mnttotal") as mnttotal,sum(impto10+impto18+impto25+impto30) as otrosimp, count(*) as count').where('"tipodoc" <> 52 and "tipodoc"<>60').where(:rutemisor => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa})
     totFmanual.map { |e| @totFmanual = e }
    
-    @msg = Docmanual.import2(params[:file])
+    @msg = Docmanual.import(params[:file])
     respond_to do |format|
       format.html {
         if @msg == " "

@@ -1,28 +1,19 @@
 %h3 Documentos Recibidos Proveedor
-
 .container-fluid
   .row
-    .col-md-12
+    .col-xs-6
       = simple_form_for(doccompras_path,:method => :get ) do |f|
         .form-group  
-          /.col-sm-2
-          /  = f.input :sucursal, label: false,  collection: Documento.sucursal_options_for_select(current_user.email), :input_html => {:style=> 'width: 180px'}
-          /.col-sm-2   
-          /  = f.input :tipodte, label: false, collection:  Documento.tipodte_option_for_select,:input_html => {:style=> 'width: 150px'} 
-          .col-sm-2  
-            = f.input :rutemis, label: false, placeholder: "Rut Emisor", :input_html => {:style=> 'width: 150px'}
-          / .col-sm-2 
-          /   = f.input :fecha, label: false, placeholder: "Fchemis(yyyy-mm)", :input_html => {:style=> 'width: 150px'} 
-          .col-sm-2  
-            = f.button :submit, "Buscar",  class: "btn btn-primary btn-xs"
-
-      = link_to "Limpiar Busqueda","/doccompras",  class: 'btn btn-info btn-xs'
-%br
-
-%br
-
+          = f.input :rutemis, label: false, placeholder: "Rut Emisor", :input_html => {:style=> 'width: 150px'}
+          %br
+          = f.button :submit, "Buscar Proveedor",  class: "btn btn-primary btn-xs"
+          /= link_to "Limpiar Busqueda","/doccompras",  class: 'btn btn-info btn-xs'
+    .col-xs-6
+      = form_tag import_doccompras_path, multipart: true do 
+        = file_field_tag :file 
+        %br
+        = submit_tag "Importar XML" 
 = will_paginate @doccompras
-
 %table.table.table-striped
   %thead
     %tr

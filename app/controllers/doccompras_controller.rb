@@ -22,6 +22,7 @@ class DoccomprasController < ApplicationController
       @doccompras = Doccompra.where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).where(estado: nil).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
     end
   end
+
   def print
     @doccompra = Doccompra.find(params[:id])
      respond_to do |format|
@@ -36,8 +37,26 @@ class DoccomprasController < ApplicationController
      end
   # Excluding ".pdf" extension.
   end
+ 
+  def import
+    #recupero el archivo del formulario
+    file_data = params[:file]
+    file_content = file_data.read
+    puts "-----    XML    ------------"
+    puts file_content
+    d = Docsemail.new
+    d.xmlrecibido = file_content
+    d.mailid = "Carga Manual"
+    d.estado = "RECIBIDO"
+    d.save
+    respond_to do |format|
+        format.html { redirect_to :back}
+    end   
+      
+  end
 
-    def ver
+  
+  def ver
     @doccompra = Doccompra.find(params[:id])
        respond_to do |format|
          format.html 
