@@ -5,7 +5,7 @@
   </head>
   <body>
 
-<h3>Sres: <%= @destinatario %>:</h3>
+<h3>Sres: <%= @destinatario.force_encoding('utf-8') %>:</h3>
 
 <p> En el presente correo se les adjunta el siguiente documento tributario electrónico: </p>
 
