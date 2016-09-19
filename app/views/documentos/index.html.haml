@@ -38,8 +38,8 @@
       %td= documento.Folio
       %td= documento.FchEmis
       %td= documento.sucursal
-      %td= documento.MntNeto
-      %td= documento.MntTotal
+      %td= number_to_currency(documento.MntNeto, precision: 0, delimiter: "." )
+      %td= number_to_currency(documento.MntTotal, precision: 0, delimiter: "." )
       %td= documento.estado
       -if(documento.pdfs?)
         %td= link_to 'PDF', documento.pdfs_url

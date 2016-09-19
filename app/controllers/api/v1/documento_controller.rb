@@ -38,6 +38,8 @@ class Api::V1::DocumentoController < Api::V1::ApiController
     if @invoice.save
       if !params[:conEnvio].present? || params[:conEnvio] == "S"
         @invoice.estadoxml = postsii(@invoice.id)
+        trackid = @invoice.estadoxml.to_s[estadoxml.to_s.index('TRACKID')+8..estadoxml.to_s.index('/TRACKID')-2]
+        @invoice.trackidSII = trackid
         @invoice.save       
         estadoStr(@invoice)
       end

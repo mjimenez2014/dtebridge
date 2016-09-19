@@ -295,7 +295,9 @@ class Libro < ActiveRecord::Base
       impto15 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 23).sum(:mntimp).to_i
       impto10 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 27).sum(:mntimp).to_i            
       impto12 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 19).sum(:mntimp).to_i
-      impto20_5 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 25).sum(:mntimp).to_i           
+      impto20_5 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 25).sum(:mntimp).to_i
+      impto20_5_2 = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 26).sum(:mntimp).to_i
+      diesel = libro.detlibro.where(tipodte: t.tipo).where(:codimp => 28).sum(:mntimp).to_i
 
 
       ivanorec = libro.detlibro.where(tipodte:t.tipo).sum(:ivanorec).to_i
@@ -319,13 +321,6 @@ class Libro < ActiveRecord::Base
           tosign_xml+=" <TotMntIVANoRec>#{ivanorec}</TotMntIVANoRec>\r\n"
           tosign_xml+=" </TotIVANoRec>\r\n"
         end
-
-
-
-   #     tosign_xml+="<TotOpIVAUsoComun>1</TotOpIVAUsoComun>\r\n"
-   #     tosign_xml+="<TotIVAUsoComun>1</TotIVAUsoComun>\r\n"
-   #     tosign_xml+="<FctProp>0.999</FctProp>\r\n"
-   #     tosign_xml+="<TotCredIVAUsoComun>1</TotCredIVAUsoComun>\r\n"
         
         if impto5 > 0
           tosign_xml+="<TotOtrosImp>\r\n"
@@ -375,49 +370,22 @@ class Libro < ActiveRecord::Base
           tosign_xml+="<TotMntImp>#{impto30}</TotMntImp>\r\n"
           tosign_xml+="</TotOtrosImp>\r\n"
         end
-
+        if impto20_5_2 > 0
+          tosign_xml+="<TotOtrosImp>\r\n"
+          tosign_xml+="<CodImp>26</CodImp>\r\n"
+          tosign_xml+="<TotMntImp>#{impto20_5_2}</TotMntImp>\r\n"
+          tosign_xml+="</TotOtrosImp>\r\n"
+        end
+        if diesel > 0
+          tosign_xml+="<TotOtrosImp>\r\n"
+          tosign_xml+="<CodImp>28</CodImp>\r\n"
+          tosign_xml+="<TotMntImp>#{diesel}</TotMntImp>\r\n"
+          tosign_xml+="</TotOtrosImp>\r\n"
+        end
         tosign_xml+="<TotMntTotal>#{mnttotal}</TotMntTotal>\r\n"
         tosign_xml+="</TotalesPeriodo>\r\n"
       end
     end
-
-    # <TotalesPeriodo>
-    # <TpoDoc>33</TpoDoc>
-    # <TotDoc>2</TotDoc>
-    # <TotMntExe>10616</TotMntExe>
-    # <TotMntNeto>23544</TotMntNeto>
-    # <TotMntIVA>2171</TotMntIVA>
-    # <TotIVANoRec>
-    # <CodIVANoRec>4</CodIVANoRec>
-    # <TotOpIVANoRec>1</TotOpIVANoRec>
-    # <TotMntIVANoRec>2302</TotMntIVANoRec>
-    # </TotIVANoRec>
-    # <TotMntTotal>38633</TotMntTotal>
-    # </TotalesPeriodo>
-
-    # <TotalesPeriodo>
-    # <TpoDoc>60</TpoDoc>
-    # <TotDoc>2</TotDoc>
-    # <TotMntExe>0</TotMntExe>
-    # <TotMntNeto>11937</TotMntNeto>
-    # <TotMntIVA>2268</TotMntIVA>
-    # <TotMntTotal>14205</TotMntTotal>
-    # </TotalesPeriodo>
-
-    # <TotalesPeriodo>
-    # <TpoDoc>46</TpoDoc>
-    # <TotDoc>1</TotDoc>
-    # <TotMntExe>0</TotMntExe>
-    # <TotMntNeto>10622</TotMntNeto>
-    # <TotMntIVA>2018</TotMntIVA>
-
-    # <TotOtrosImp>
-    # <CodImp>15</CodImp>
-    # <TotMntImp>2018</TotMntImp>
-    # </TotOtrosImp>
-    
-    # <TotMntTotal>10622</TotMntTotal>
-    # </TotalesPeriodo>
 
     tosign_xml+="</ResumenPeriodo>"
 
@@ -489,98 +457,6 @@ class Libro < ActiveRecord::Base
         tosign_xml+="<MntTotal>#{det.mnttotal}</MntTotal>\r\n"
         tosign_xml+="</Detalle>\r\n"
       end  
-
-    # <Detalle>
-    # <TpoDoc>33</TpoDoc>
-    # <NroDoc>32</NroDoc>
-    # <TpoImp>1</TpoImp>
-    # <TasaImp>19</TasaImp>
-    # <FchDoc>2014-06-05</FchDoc>
-    # <RUTDoc>07139792-0</RUTDoc>
-    # <RznSoc>PEDRO LEON CALDERON</RznSoc>
-    # <MntExe>10616</MntExe>
-    # <MntNeto>11428</MntNeto>
-    # <MntIVA>2171</MntIVA>
-    # <MntTotal>24215</MntTotal>
-    # </Detalle>
-
-    # <Detalle>
-    # <TpoDoc>30</TpoDoc>
-    # <NroDoc>781</NroDoc>
-    # <TpoImp>1</TpoImp>
-    # <TasaImp>19</TasaImp>
-    # <FchDoc>2014-06-05</FchDoc>
-    # <RUTDoc>07139792-0</RUTDoc>
-    # <RznSoc>PEDRO LEON CALDERON</RznSoc>
-    # <MntExe>0</MntExe>
-    # <MntNeto>30167</MntNeto>
-    # <IVAUsoComun>5732</IVAUsoComun>
-    # <MntTotal>35899</MntTotal>
-    # </Detalle>
-
-    # <Detalle>
-    # <TpoDoc>60</TpoDoc>
-    # <NroDoc>451</NroDoc>
-    # <TpoImp>1</TpoImp>
-    # <TasaImp>19</TasaImp>
-    # <FchDoc>2014-06-05</FchDoc>
-    # <RUTDoc>07139792-0</RUTDoc>
-    # <RznSoc>PEDRO LEON CALDERON</RznSoc>
-    # <MntExe>0</MntExe>
-    # <MntNeto>2926</MntNeto>
-    # <MntIVA>556</MntIVA>
-    # <MntTotal>3482</MntTotal>
-    # </Detalle>
-
-    # <Detalle>
-    # <TpoDoc>33</TpoDoc>
-    # <NroDoc>67</NroDoc>
-    # <TpoImp>1</TpoImp>
-    # <TasaImp>19</TasaImp>
-    # <FchDoc>2014-06-05</FchDoc>
-    # <RUTDoc>07139792-0</RUTDoc>
-    # <RznSoc>PEDRO LEON CALDERON</RznSoc>
-    # <MntExe>0</MntExe>
-    # <MntNeto>12116</MntNeto>
-    # <IVANoRec>
-    # <CodIVANoRec>4</CodIVANoRec>
-    # <MntIVANoRec>2302</MntIVANoRec>
-    # </IVANoRec>
-    # <MntTotal>14418</MntTotal>
-    # </Detalle>
-
-    # <Detalle>
-    # <TpoDoc>46</TpoDoc>
-    # <NroDoc>9</NroDoc>
-    # <TpoImp>1</TpoImp>
-    # <TasaImp>19</TasaImp>
-    # <FchDoc>2014-06-05</FchDoc>
-    # <RUTDoc>07139792-0</RUTDoc>
-    # <RznSoc>PEDRO LEON CALDERON</RznSoc>
-    # <MntExe>0</MntExe>
-    # <MntNeto>10622</MntNeto>
-    # <MntIVA>2018</MntIVA>
-    # <OtrosImp>
-    # <CodImp>15</CodImp>
-    # <TasaImp>19</TasaImp>
-    # <MntImp>2018</MntImp>
-    # </OtrosImp>
-    # <MntTotal>10622</MntTotal>
-    # </Detalle>
-
-    # <Detalle>
-    # <TpoDoc>60</TpoDoc>
-    # <NroDoc>211</NroDoc>
-    # <TpoImp>1</TpoImp>
-    # <TasaImp>19</TasaImp>
-    # <FchDoc>2014-06-05</FchDoc>
-    # <RUTDoc>07139792-0</RUTDoc>
-    # <RznSoc>PEDRO LEON CALDERON</RznSoc>
-    # <MntExe>0</MntExe>
-    # <MntNeto>9011</MntNeto>
-    # <MntIVA>1712</MntIVA>
-    # <MntTotal>10723</MntTotal>
-    # </Detalle>
     end
 
     fchfirma = Date.strptime("#{Date.today.year}/#{Date.today.month}/#{Date.today.day}", "%Y/%m/%d")

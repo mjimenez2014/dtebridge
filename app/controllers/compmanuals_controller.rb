@@ -14,12 +14,12 @@ class CompmanualsController < ApplicationController
   end
 
   def import
-    @compmanuals = Compmanual.all
+    @compmanuals = Compmanual.where(estado: "PREVIO")
     @msg = Compmanual.import(params[:file]).force_encoding('utf-8')
     respond_to do |format|
       format.html {
         if @msg == " "
-          render action: 'index'#, notice: "Documentos Ok"
+          render action: 'index', notice: "Documentos Ok"
         else
           render '/compmanuals/error'
         end  
