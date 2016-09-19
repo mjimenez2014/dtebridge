@@ -2,7 +2,8 @@ namespace :redis do
   set_default(:redis_port, 6379)
   desc "Install redis"
   task :install do
-    run "cd /tmp && wget http://redis.googlecode.com/files/redis-2.6.14.tar.gz"
+    run "cd /tmp && wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/redis/redis-2.6.14.tar.gz"
+    
     run "cd /tmp && tar xzf redis-2.6.14.tar.gz"
     run "cd /tmp/redis-2.6.14 && make" 
   end
