@@ -1,4 +1,4 @@
-set :ip, "192.168.1.87"
+set :ip, "45.56.66.85"
 server "#{ip}", :web, :app, :db, primary: true
 set :rails_env, 'production'
 set :branch, "master"
