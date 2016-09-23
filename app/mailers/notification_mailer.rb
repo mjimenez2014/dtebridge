@@ -52,7 +52,7 @@ class NotificationMailer < ActionMailer::Base
     @user = "Precioso"
     @url  = 'http://www.invoicedigital.cl'
     attachments["inter_#{doc.Folio}_cliente.xml"] =  File.read("#{Rails.root}/#{docxml}").force_encoding('iso-8859-1').encode('utf-8')
-    mail(to: email, subject: "Intercambio DTE, #{empresa}" )
+    mail(to: email, subject: "Intercambio DTE, #{empresa}")
   end
 
 end

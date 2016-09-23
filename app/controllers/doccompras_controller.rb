@@ -207,8 +207,14 @@ class DoccomprasController < ApplicationController
 
     #enviar doc por mail
     contrib = Contribuyente.find_by_rut(d.RUTEmisor)
+    if Rails.env.production?
+        email = contrib.email
+    else
+        email = "jimenezmaury@gmail.com"
+    end
+
    #   NotificationMailer.send_intercambio("osvaldo.omiranda@gmail.com", d.id, d.RUTRecep, "inter_doc-signed#{t}.xml" ).deliver
-    NotificationMailer.send_intercambio(contrib.email, d.id, d.RUTRecep, "inter_doc-signed#{t}.xml" ).deliver
+    NotificationMailer.send_intercambio(email, d.id, d.RUTRecep, "inter_doc-signed#{t}.xml" ).deliver
     system("rm inter_tosign_xml#{t}.xml") 
     #system("rm doc-signed#{t}.xml")
     system("mv inter_doc-signed#{t}.xml public/uploads/documento/fileIntercambio/")

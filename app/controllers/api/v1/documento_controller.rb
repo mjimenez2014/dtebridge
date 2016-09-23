@@ -374,7 +374,12 @@ class Api::V1::DocumentoController < Api::V1::ApiController
     #Busca email en modelo contribuyentes
     contrib = Contribuyente.find_by_rut(rut)
     unless contrib.nil?
-      NotificationMailer.notification_email(contrib.email, id).deliver
+      if Rails.env.production?
+        email = contrib.email
+      else
+        email = "jimenezmaury@gmail.com"
+    end
+      NotificationMailer.notification_email(email, id).deliver
     end
   end
 end
