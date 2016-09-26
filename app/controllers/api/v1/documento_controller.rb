@@ -37,11 +37,9 @@ class Api::V1::DocumentoController < Api::V1::ApiController
    
     if @invoice.save
       if !params[:conEnvio].present? || params[:conEnvio] == "S"
-        @invoice.estadoxml = postsii(@invoice.id)
-        trackid = @invoice.estadoxml.to_s[estadoxml.to_s.index('TRACKID')+8..estadoxml.to_s.index('/TRACKID')-2]
-        @invoice.trackidSII = trackid
-        @invoice.save       
-        estadoStr(@invoice)
+        #@invoice.estadoxml = postsii(@invoice.id)
+        #@invoice.save       
+        #estadoStr(@invoice)
       end
 
       render 'api/v1/invoices/create' 
@@ -54,6 +52,9 @@ class Api::V1::DocumentoController < Api::V1::ApiController
     invoices = Documento.where(estado: "CREADO").where(:created_at => 30.days.ago..Time.now)
     invoices.each do |invoice| 
       invoice.estadoxml = postsii(invoice.id)
+      estadoxml = @invoice.estadoxml
+      trackid = estadoxml.to_s[estadoxml.to_s.index('TRACKID')+8..estadoxml.to_s.index('/TRACKID')-2]
+      @invoice.trackidSII = trackid
       invoice.save   
       if invoice.save    
         estadoStr(invoice)
@@ -191,7 +192,9 @@ class Api::V1::DocumentoController < Api::V1::ApiController
 
       File.open("tosign_xml#{t}.xml", 'w') { |file| file.puts tosign_xml}
       sleep 1
-     
+      puts "-----------------------------------------------------------"
+      puts rut
+      puts "-----------------------------------------------------------"
       system("./comando#{rut} tosign_xml#{t}.xml doc-signed#{t}.xml")
 
       doc = File.read "doc-signed#{t}.xml"
@@ -312,6 +315,7 @@ class Api::V1::DocumentoController < Api::V1::ApiController
       if rechazados == "1"
         d.estado = "Rechazado SII"
         d.save 
+        enviaEmailCliente(d.RUTRecep,id)
       end  
       if aceptados == "1"
         d.estado = "Aceptado Ok SII" 
@@ -373,14 +377,14 @@ class Api::V1::DocumentoController < Api::V1::ApiController
   def enviaEmailCliente(rut,id)
     #Busca email en modelo contribuyentes
     contrib = Contribuyente.find_by_rut(rut)
-    unless contrib.nil?
+    #unless contrib.nil?
       if Rails.env.production?
         email = contrib.email
       else
         email = "jimenezmaury@gmail.com"
-    end
+      end
       NotificationMailer.notification_email(email, id).deliver
-    end
+    #end
   end
 end
 
