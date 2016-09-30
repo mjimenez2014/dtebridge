@@ -17,6 +17,7 @@
     <th>MntTotal</th>
 
     <th>Estado</th>
+    <th>trackidSII</th>   
   </tr>
   <% @documentos.each do |documento| %>
   <tr>
@@ -36,6 +37,7 @@
     <td><%= documento.IVA %></td>
     <td><%= documento.MntTotal %></td>
     <td><%= documento.estado %></td>
+    <td><%= documento.trackidSII %></td>    
   </tr>
   <% end %>
 </table>

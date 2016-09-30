@@ -2,13 +2,11 @@
 class Api::V1::DoccompraController < Api::V1::ApiController
   def procesarecibo
     demails = Docsemail.where(estado: "RECIBIDO").all
-
     demails.each do |demail| 
       begin
         @doc_xml = 'PROCESADO' 
-        unless demail.nil?
+        unless demail.nil? #A no ser que demail sea nulo
           json= Hash.from_xml(demail.xmlrecibido)
-          
           if json['EnvioDTE']['SetDTE']['DTE'].kind_of?(Array)
              json['EnvioDTE']['SetDTE']['DTE'].each do  |dte| 
               procesadoc(dte,demail)
@@ -25,6 +23,19 @@ class Api::V1::DoccompraController < Api::V1::ApiController
 
       end  
     end  
+    render 'api/v1/doccompra/procesarecibo'
+  end
+
+  def procesarecibo2
+    demails = Docsemail.where(estado: "RECIBIDO").all
+    demails.each do |demail|
+      doc  = Nokogiri::XML::Reader(demail.xmlrecibido)
+      doc.each do |docs|
+        #if docs.name == "Folio" 
+          puts docs.value
+        #end
+      end
+    end
     render 'api/v1/doccompra/procesarecibo'
   end
 

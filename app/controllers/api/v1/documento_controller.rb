@@ -49,12 +49,12 @@ class Api::V1::DocumentoController < Api::V1::ApiController
   end 
 
   def resend
-    invoices = Documento.where(estado: "CREADO").where(:created_at => 30.days.ago..Time.now)
+    invoices = Documento.where(estado: "CREADO").where(:created_at => 30.days.ago..Time.now).limit(10)
     invoices.each do |invoice| 
       invoice.estadoxml = postsii(invoice.id)
-      estadoxml = @invoice.estadoxml
+      estadoxml = invoice.estadoxml
       trackid = estadoxml.to_s[estadoxml.to_s.index('TRACKID')+8..estadoxml.to_s.index('/TRACKID')-2]
-      @invoice.trackidSII = trackid
+      invoice.trackidSII = trackid
       invoice.save   
       if invoice.save    
         estadoStr(invoice)
@@ -377,14 +377,14 @@ class Api::V1::DocumentoController < Api::V1::ApiController
   def enviaEmailCliente(rut,id)
     #Busca email en modelo contribuyentes
     contrib = Contribuyente.find_by_rut(rut)
-    #unless contrib.nil?
+    unless contrib.nil?
       if Rails.env.production?
         email = contrib.email
       else
         email = "jimenezmaury@gmail.com"
       end
       NotificationMailer.notification_email(email, id).deliver
-    #end
+    end
   end
 end
 

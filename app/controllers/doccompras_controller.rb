@@ -51,8 +51,7 @@ class DoccomprasController < ApplicationController
     d.save
     respond_to do |format|
         format.html { redirect_to :back}
-    end   
-      
+    end
   end
 
   

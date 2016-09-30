@@ -134,6 +134,7 @@ Dtebridge::Application.routes.draw do
       get "/procestado", to: "documento#procesoEstado"
       get "/notification", to: "notification#send_notif"
       get "/procesarecibo", to: "doccompra#procesarecibo"
+      get "/procesarecibo2", to: "doccompra#procesarecibo2"      
       get "/resend", to: "documento#resend"
       get "/sendclient", to: "documento#sendclient"
       get "/separchivo", to: "separchivo#separchivo"
