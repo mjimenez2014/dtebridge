@@ -140,10 +140,19 @@ class Compmanual < ActiveRecord::Base
           imptoH["compmanual_id"] = doc.id
           Otrosimpcompmanual.create! imptoH
         end  
+          if doc.codimp != 0
+          imptoH = Hash.new 
+          imptoH["TipoImp"] = doc.codimp  
+          imptoH["TasaImp"] = doc.tasaimp
+          imptoH["MontoImp"] = doc.mntimp
+          imptoH["compmanual_id"] = doc.id
+          Otrosimpcompmanual.create! imptoH  
+        end 
         doc.otrosimpto = impto10 + impto18 + impto25 + impto30
         doc.save
       end  
     end
+    actulizaidotroimp
     return msg
   end  
   
@@ -259,6 +268,43 @@ class Compmanual < ActiveRecord::Base
     end
     return msg
   end 
+
+  def self.busca_duplic(rut,tipo,folio)
+    doc = Compmanual.where(rutemisor:rut).where(tipodoc:tipo).where(folio:folio).all
+    iddoc = Array.new
+    doc.each do |docs|
+      iddoc << docs.id
+    end
+    return iddoc
+  end
+
+  def self.actulizaidotroimp
+    doc = Compmanual.where(estado:"PREVIO").where.not(codimp: 0)
+    doc.each do |docs|
+      encontrado = busca_duplic(docs.rutemisor,docs.tipodoc,docs.folio)
+      primerdoc = encontrado[0]
+      i = 0
+      encontrado.each do |cambio|
+        otroimp = Otrosimpcompmanual.where(compmanual_id:cambio).first
+        if otroimp.nil?
+        else
+        otroimp.compmanual_id = primerdoc
+        otroimp.save
+                  puts "========================="
+          puts i
+          puts "=========================="
+        end
+          if i>0
+          del = Compmanual.find(cambio)
+          puts "========================="
+          puts i
+          puts "=========================="
+          del.delete 
+        end
+        i=i+1
+      end
+    end
+  end
 
   def self.open_spreadsheet(file)
 

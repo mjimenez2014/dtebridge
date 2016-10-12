@@ -117,7 +117,10 @@
     - @docmanuals.each do |documento|
       %tr
         %td{:style => 'text-align: right;'}= documento.tipodoc
-        %td{:style => 'text-align: right;'}= documento.count
+        -if(documento.tipodoc == 35)
+          %td{:style => 'text-align: right;'}= @cantBoleta.cantidad
+        -else
+          %td{:style => 'text-align: right;'}= documento.count
         - if(documento.tipodoc==61) 
           %td{:style => 'text-align: right;'}= '('+number_to_currency(documento.mntneto , precision: 0, delimiter: "." )+')' 
           %td{:style => 'text-align: right;'}= '('+number_to_currency(documento.mntexe , precision: 0, delimiter: "." )+')'
