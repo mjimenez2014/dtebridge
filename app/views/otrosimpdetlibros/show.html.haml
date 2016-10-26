@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Tipoimp:
+  = @otrosimpdetlibro.TipoImp
+%p
+  %b Tasaimp:
+  = @otrosimpdetlibro.TasaImp
+%p
+  %b Montoimp:
+  = @otrosimpdetlibro.MontoImp
+%p
+  %b Detlibro:
+  = @otrosimpdetlibro.detlibro
+
+= link_to 'Edit', edit_otrosimpdetlibro_path(@otrosimpdetlibro)
+\|
+= link_to 'Back', otrosimpdetlibros_path

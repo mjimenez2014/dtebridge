@@ -41,7 +41,6 @@ class Api::V1::DocumentoController < Api::V1::ApiController
         #@invoice.save       
         #estadoStr(@invoice)
       end
-
       render 'api/v1/invoices/create' 
     else
       render 'api/v1/invoices/error'

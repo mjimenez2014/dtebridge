@@ -1,0 +1,27 @@
+%h1 Listing otrosimpdetlibros
+
+%table
+  %thead
+    %tr
+      %th Tipoimp
+      %th Tasaimp
+      %th Montoimp
+      %th Detlibro
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @otrosimpdetlibros.each do |otrosimpdetlibro|
+      %tr
+        %td= otrosimpdetlibro.TipoImp
+        %td= otrosimpdetlibro.TasaImp
+        %td= otrosimpdetlibro.MontoImp
+        %td= otrosimpdetlibro.detlibro
+        %td= link_to 'Show', otrosimpdetlibro
+        %td= link_to 'Edit', edit_otrosimpdetlibro_path(otrosimpdetlibro)
+        %td= link_to 'Destroy', otrosimpdetlibro, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Otrosimpdetlibro', new_otrosimpdetlibro_path

@@ -206,19 +206,21 @@ class DoccomprasController < ApplicationController
 
     #enviar doc por mail
     contrib = Contribuyente.find_by_rut(d.RUTEmisor)
-    if Rails.env.production?
-        email = contrib.email
-    else
-        email = "jimenezmaury@gmail.com"
+    if contrib.nil?
+    else    
+        if Rails.env.production?
+            email = contrib.email
+        else
+            email = "soporte@invoicedigital.cl"
+        end   
+    #   NotificationMailer.send_intercambio("osvaldo.omiranda@gmail.com", d.id, d.RUTRecep, "inter_doc-signed#{t}.xml" ).deliver
+        NotificationMailer.send_intercambio(email, d.id, d.RUTRecep, "inter_doc-signed#{t}.xml" ).deliver
+        system("rm inter_tosign_xml#{t}.xml") 
+        #system("rm doc-signed#{t}.xml")
+        system("mv inter_doc-signed#{t}.xml public/uploads/documento/fileIntercambio/")
+        d.estado = "APROBADO"
+        d.save
     end
-
-   #   NotificationMailer.send_intercambio("osvaldo.omiranda@gmail.com", d.id, d.RUTRecep, "inter_doc-signed#{t}.xml" ).deliver
-    NotificationMailer.send_intercambio(email, d.id, d.RUTRecep, "inter_doc-signed#{t}.xml" ).deliver
-    system("rm inter_tosign_xml#{t}.xml") 
-    #system("rm doc-signed#{t}.xml")
-    system("mv inter_doc-signed#{t}.xml public/uploads/documento/fileIntercambio/")
-    d.estado = "APROBADO"
-    d.save
 
     @doccompras = Doccompra.where(estado: nil).where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).paginate(:page => params[:page], :per_page => 15 )
     respond_to do |format|

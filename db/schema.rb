@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160725165256) do
+ActiveRecord::Schema.define(version: 20161022162408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -611,6 +611,17 @@ ActiveRecord::Schema.define(version: 20160725165256) do
   end
 
   add_index "otrosimpcompmanuals", ["compmanual_id"], name: "index_otrosimpcompmanuals_on_compmanual_id", using: :btree
+
+  create_table "otrosimpdetlibros", force: true do |t|
+    t.string   "TipoImp"
+    t.float    "TasaImp"
+    t.integer  "MontoImp"
+    t.integer  "detlibro_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "otrosimpdetlibros", ["detlibro_id"], name: "index_otrosimpdetlibros_on_detlibro_id", using: :btree
 
   create_table "otrosimpmanuals", force: true do |t|
     t.string   "TipoImp"

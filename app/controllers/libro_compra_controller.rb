@@ -151,7 +151,19 @@ class LibroCompraController < ApplicationController
       detlibro.codimp = e.codimp
       detlibro.tasaimp = e.tasaimp
       detlibro.mntimp = e.mntimp
+      detlibro.save
       
+      if  e.otrosimpcompmanuals.present?
+        e.otrosimpcompmanuals.each do |otroimp|
+          imptoH = Hash.new 
+          imptoH["TipoImp"] = otroimp.TipoImp  
+          imptoH["TasaImp"] = otroimp.TasaImp
+          imptoH["MontoImp"] = otroimp.MontoImp
+          imptoH["detlibro_id"] =  detlibro.id
+          Otrosimpdetlibro.create! imptoH  
+        end
+      end
+
       if e.ivanorec.present?
         detlibro.ivanorec = e.ivanorec
         detlibro.codivanorec = e.codivanorec

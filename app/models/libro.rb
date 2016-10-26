@@ -251,38 +251,38 @@ class Libro < ActiveRecord::Base
     tosign_xml="<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
     tosign_xml+="<LibroCompraVenta xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.sii.cl/SiiDte LibroCV_v10.xsd\" version=\"1.0\" xmlns=\"http://www.sii.cl/SiiDte\">"
     tosign_xml+="<EnvioLibro ID=\"IDC#{libro.idenvio}\">\r\n"
-    tosign_xml+="<Caratula>\r\n"
-    tosign_xml+="<RutEmisorLibro>#{libro.rut}</RutEmisorLibro>\r\n"
+    tosign_xml+=" <Caratula>\r\n"
+    tosign_xml+=" <RutEmisorLibro>#{libro.rut}</RutEmisorLibro>\r\n"
 
     if Rails.env.production?
-      tosign_xml+="<RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
-      tosign_xml+="<PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
-      tosign_xml+="<FchResol>#{fchResolucion}</FchResol>\r\n"
-      tosign_xml+="<NroResol>#{numResolucion}</NroResol>\r\n"
-      tosign_xml+="<TipoOperacion>COMPRA</TipoOperacion>\r\n"
-      tosign_xml+="<TipoLibro>MENSUAL</TipoLibro>\r\n"
-      tosign_xml+="<TipoEnvio>TOTAL</TipoEnvio>\r\n"
+      tosign_xml+="   <RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
+      tosign_xml+="   <PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
+      tosign_xml+="   <FchResol>#{fchResolucion}</FchResol>\r\n"
+      tosign_xml+="   <NroResol>#{numResolucion}</NroResol>\r\n"
+      tosign_xml+="   <TipoOperacion>COMPRA</TipoOperacion>\r\n"
+      tosign_xml+="   <TipoLibro>MENSUAL</TipoLibro>\r\n"
+      tosign_xml+="   <TipoEnvio>TOTAL</TipoEnvio>\r\n"
     else 
-      tosign_xml+="<RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
-      tosign_xml+="<PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
-      tosign_xml+="<FchResol>2014-05-12</FchResol>\r\n"
-      tosign_xml+="<NroResol>0</NroResol>\r\n"
-      tosign_xml+="<TipoOperacion>COMPRA</TipoOperacion>\r\n"
-      tosign_xml+="<TipoLibro>ESPECIAL</TipoLibro>\r\n"
-      tosign_xml+="<TipoEnvio>TOTAL</TipoEnvio>\r\n"
-      tosign_xml+="<FolioNotificacion>2</FolioNotificacion>\r\n"
+      tosign_xml+="   <RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
+      tosign_xml+="   <PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
+      tosign_xml+="   <FchResol>2014-05-12</FchResol>\r\n"
+      tosign_xml+="   <NroResol>0</NroResol>\r\n"
+      tosign_xml+="   <TipoOperacion>COMPRA</TipoOperacion>\r\n"
+      tosign_xml+="   <TipoLibro>ESPECIAL</TipoLibro>\r\n"
+      tosign_xml+="   <TipoEnvio>TOTAL</TipoEnvio>\r\n"
+      tosign_xml+="   <FolioNotificacion>2</FolioNotificacion>\r\n"
       if(libro.codautrec != "0")
-      tosign_xml+="<CodAutRec>#{libro.codautrec}</CodAutRec>\r\n"
+      tosign_xml+="   <CodAutRec>#{libro.codautrec}</CodAutRec>\r\n"
       end  
     end
 
-    tosign_xml+="</Caratula>"
+    tosign_xml+=" </Caratula>\r\n"
 
-    tosign_xml+="<ResumenPeriodo>\r\n"
+    tosign_xml+=" <ResumenPeriodo>\r\n"
 
-    tipos = Tipodte.all
-    tipos.each do | t |
-      cantidad = libro.detlibro.where(tipodte: t.tipo).count
+    tipos = Tipodte.all # busco todos los tipos de documentos que existen
+    tipos.each do | t | 
+      cantidad = libro.detlibro.where(tipodte: t.tipo).count # cuenta los tipos de documentos del resumen
       mntexe = libro.detlibro.where(tipodte: t.tipo).sum(:mntexe)
       mntneto = libro.detlibro.where(tipodte: t.tipo).sum(:mntneto)
       iva = libro.detlibro.where(tipodte: t.tipo).sum(:mntiva).to_i 
@@ -306,89 +306,89 @@ class Libro < ActiveRecord::Base
 
 
       if cantidad > 0
-        tosign_xml+="<TotalesPeriodo>\r\n"
-        tosign_xml+="<TpoDoc>#{t.tipo}</TpoDoc>\r\n"
-        tosign_xml+="<TotDoc>#{cantidad}</TotDoc>\r\n"
-        tosign_xml+="<TotMntExe>#{mntexe}</TotMntExe>\r\n"
-        tosign_xml+="<TotMntNeto>#{mntneto}</TotMntNeto>\r\n"
-        tosign_xml+="<TotMntIVA>#{iva}</TotMntIVA>\r\n"
+        tosign_xml+="   <TotalesPeriodo>\r\n"
+        tosign_xml+="     <TpoDoc>#{t.tipo}</TpoDoc>\r\n"
+        tosign_xml+="     <TotDoc>#{cantidad}</TotDoc>\r\n"
+        tosign_xml+="     <TotMntExe>#{mntexe}</TotMntExe>\r\n"
+        tosign_xml+="     <TotMntNeto>#{mntneto}</TotMntNeto>\r\n"
+        tosign_xml+="     <TotMntIVA>#{iva}</TotMntIVA>\r\n"
         
         if ivanorec > 0
           civanorec = libro.detlibro.where(tipodte:t.tipo).where("codivanorec > ?", 0).last
           codivanorec = civanorec.codivanorec
-          tosign_xml+=" <TotIVANoRec>\r\n"
-          tosign_xml+=" <CodIVANoRec>#{codivanorec}</CodIVANoRec>\r\n"
-          tosign_xml+=" <TotOpIVANoRec>#{countivanorec}</TotOpIVANoRec>\r\n"
-          tosign_xml+=" <TotMntIVANoRec>#{ivanorec}</TotMntIVANoRec>\r\n"
-          tosign_xml+=" </TotIVANoRec>\r\n"
+          tosign_xml+="   <TotIVANoRec>\r\n"
+          tosign_xml+="   <CodIVANoRec>#{codivanorec}</CodIVANoRec>\r\n"
+          tosign_xml+="   <TotOpIVANoRec>#{countivanorec}</TotOpIVANoRec>\r\n"
+          tosign_xml+="   <TotMntIVANoRec>#{ivanorec}</TotMntIVANoRec>\r\n"
+          tosign_xml+="   </TotIVANoRec>\r\n"
         end
         
         if impto5 > 0
-          tosign_xml+="<TotOtrosImp>\r\n"
-          tosign_xml+="<CodImp>18</CodImp>\r\n"
-          tosign_xml+="<TotMntImp>#{impto5}</TotMntImp>\r\n"
-          tosign_xml+="</TotOtrosImp>\r\n"
+          tosign_xml+="   <TotOtrosImp>\r\n"
+          tosign_xml+="   <CodImp>18</CodImp>\r\n"
+          tosign_xml+="   <TotMntImp>#{impto5}</TotMntImp>\r\n"
+          tosign_xml+="   </TotOtrosImp>\r\n"
         end
         if impto15 > 0
-          tosign_xml+="<TotOtrosImp>\r\n"
-          tosign_xml+="<CodImp>23</CodImp>\r\n"
-          tosign_xml+="<TotMntImp>#{impto15}</TotMntImp>\r\n"
-          tosign_xml+="</TotOtrosImp>\r\n"
+          tosign_xml+="   <TotOtrosImp>\r\n"
+          tosign_xml+="   <CodImp>23</CodImp>\r\n"
+          tosign_xml+="   <TotMntImp>#{impto15}</TotMntImp>\r\n"
+          tosign_xml+="   </TotOtrosImp>\r\n"
         end
         if impto10 > 0
-          tosign_xml+="<TotOtrosImp>\r\n"
-          tosign_xml+="<CodImp>27</CodImp>\r\n"
-          tosign_xml+="<TotMntImp>#{impto10}</TotMntImp>\r\n"
-          tosign_xml+="</TotOtrosImp>\r\n"
+          tosign_xml+="   <TotOtrosImp>\r\n"
+          tosign_xml+="   <CodImp>27</CodImp>\r\n"
+          tosign_xml+="   <TotMntImp>#{impto10}</TotMntImp>\r\n"
+          tosign_xml+="   </TotOtrosImp>\r\n"
         end
         if impto12 > 0
-          tosign_xml+="<TotOtrosImp>\r\n"
-          tosign_xml+="<CodImp>19</CodImp>\r\n"
-          tosign_xml+="<TotMntImp>#{impto12}</TotMntImp>\r\n"
-          tosign_xml+="</TotOtrosImp>\r\n"
+          tosign_xml+="   <TotOtrosImp>\r\n"
+          tosign_xml+="   <CodImp>19</CodImp>\r\n"
+          tosign_xml+="   <TotMntImp>#{impto12}</TotMntImp>\r\n"
+          tosign_xml+="   </TotOtrosImp>\r\n"
         end
           if impto20_5 > 0
-          tosign_xml+="<TotOtrosImp>\r\n"
-          tosign_xml+="<CodImp>25</CodImp>\r\n"
-          tosign_xml+="<TotMntImp>#{impto20_5}</TotMntImp>\r\n"
-          tosign_xml+="</TotOtrosImp>\r\n"
+          tosign_xml+="   <TotOtrosImp>\r\n"
+          tosign_xml+="   <CodImp>25</CodImp>\r\n"
+          tosign_xml+="   <TotMntImp>#{impto20_5}</TotMntImp>\r\n"
+          tosign_xml+="   </TotOtrosImp>\r\n"
         end
         if impto18 > 0
-          tosign_xml+="<TotOtrosImp>\r\n"
-          tosign_xml+="<CodImp>271</CodImp>\r\n"
-          tosign_xml+="<TotMntImp>#{impto18}</TotMntImp>\r\n"
-          tosign_xml+="</TotOtrosImp>\r\n"
+          tosign_xml+="   <TotOtrosImp>\r\n"
+          tosign_xml+="   <CodImp>271</CodImp>\r\n"
+          tosign_xml+="   <TotMntImp>#{impto18}</TotMntImp>\r\n"
+          tosign_xml+="   </TotOtrosImp>\r\n"
         end
         if impto25 > 0
-          tosign_xml+="<TotOtrosImp>\r\n"
-          tosign_xml+="<CodImp>25</CodImp>\r\n"
-          tosign_xml+="<TotMntImp>#{impto25}</TotMntImp>\r\n"
-          tosign_xml+="</TotOtrosImp>\r\n"
+          tosign_xml+="   <TotOtrosImp>\r\n"
+          tosign_xml+="   <CodImp>25</CodImp>\r\n"
+          tosign_xml+="   <TotMntImp>#{impto25}</TotMntImp>\r\n"
+          tosign_xml+="   </TotOtrosImp>\r\n"
         end
         if impto30 > 0
-          tosign_xml+="<TotOtrosImp>\r\n"
-          tosign_xml+="<CodImp>24</CodImp>\r\n"
-          tosign_xml+="<TotMntImp>#{impto30}</TotMntImp>\r\n"
-          tosign_xml+="</TotOtrosImp>\r\n"
+          tosign_xml+="   <TotOtrosImp>\r\n"
+          tosign_xml+="   <CodImp>24</CodImp>\r\n"
+          tosign_xml+="   <TotMntImp>#{impto30}</TotMntImp>\r\n"
+          tosign_xml+="   </TotOtrosImp>\r\n"
         end
         if impto20_5_2 > 0
-          tosign_xml+="<TotOtrosImp>\r\n"
-          tosign_xml+="<CodImp>26</CodImp>\r\n"
-          tosign_xml+="<TotMntImp>#{impto20_5_2}</TotMntImp>\r\n"
-          tosign_xml+="</TotOtrosImp>\r\n"
+          tosign_xml+="   <TotOtrosImp>\r\n"
+          tosign_xml+="   <CodImp>26</CodImp>\r\n"
+          tosign_xml+="   <TotMntImp>#{impto20_5_2}</TotMntImp>\r\n"
+          tosign_xml+="   </TotOtrosImp>\r\n"
         end
         if diesel > 0
-          tosign_xml+="<TotOtrosImp>\r\n"
-          tosign_xml+="<CodImp>28</CodImp>\r\n"
-          tosign_xml+="<TotMntImp>#{diesel}</TotMntImp>\r\n"
-          tosign_xml+="</TotOtrosImp>\r\n"
+          tosign_xml+="   <TotOtrosImp>\r\n"
+          tosign_xml+="   <CodImp>28</CodImp>\r\n"
+          tosign_xml+="   <TotMntImp>#{diesel}</TotMntImp>\r\n"
+          tosign_xml+="   </TotOtrosImp>\r\n"
         end
-        tosign_xml+="<TotMntTotal>#{mnttotal}</TotMntTotal>\r\n"
-        tosign_xml+="</TotalesPeriodo>\r\n"
+        tosign_xml+="   <TotMntTotal>#{mnttotal}</TotMntTotal>\r\n"
+        tosign_xml+="   </TotalesPeriodo>\r\n"
       end
     end
 
-    tosign_xml+="</ResumenPeriodo>"
+    tosign_xml+=" </ResumenPeriodo>\r\n"
 
     #TO DO: Corrigir para usar modelo Doccompra
     tiposmanuales = Tipodte.all
@@ -509,5 +509,76 @@ class Libro < ActiveRecord::Base
 
     system("rm libro_compratosing#{libro.rut}#{libro.idenvio}.xml") 
   end  
+
+  def librocompra2
+    libro=self
+
+    empresa = Empresa.find_by_rut(libro.rut)
+    numResolucion = empresa.numerores
+    fchResolucion = empresa.fechares
+    rutEnvia = empresa.rutenvia
+
+    tosign_xml="<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+    tosign_xml+="<LibroCompraVenta xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.sii.cl/SiiDte LibroCV_v10.xsd\" version=\"1.0\" xmlns=\"http://www.sii.cl/SiiDte\">"
+    tosign_xml+="<EnvioLibro ID=\"IDC#{libro.idenvio}\">\r\n"
+    tosign_xml+="<Caratula>\r\n"
+    tosign_xml+="<RutEmisorLibro>#{libro.rut}</RutEmisorLibro>\r\n"
+
+    if Rails.env.production?
+      tosign_xml+="<RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
+      tosign_xml+="<PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
+      tosign_xml+="<FchResol>#{fchResolucion}</FchResol>\r\n"
+      tosign_xml+="<NroResol>#{numResolucion}</NroResol>\r\n"
+      tosign_xml+="<TipoOperacion>COMPRA</TipoOperacion>\r\n"
+      tosign_xml+="<TipoLibro>MENSUAL</TipoLibro>\r\n"
+      tosign_xml+="<TipoEnvio>TOTAL</TipoEnvio>\r\n"
+    else 
+      tosign_xml+="<RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
+      tosign_xml+="<PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
+      tosign_xml+="<FchResol>2014-05-12</FchResol>\r\n"
+      tosign_xml+="<NroResol>0</NroResol>\r\n"
+      tosign_xml+="<TipoOperacion>COMPRA</TipoOperacion>\r\n"
+      tosign_xml+="<TipoLibro>ESPECIAL</TipoLibro>\r\n"
+      tosign_xml+="<TipoEnvio>TOTAL</TipoEnvio>\r\n"
+      tosign_xml+="<FolioNotificacion>2</FolioNotificacion>\r\n"
+      if(libro.codautrec != "0")
+      tosign_xml+="<CodAutRec>#{libro.codautrec}</CodAutRec>\r\n"
+      end  
+    end
+
+    tosign_xml+="</Caratula>"
+
+    tosign_xml+="<ResumenPeriodo>\r\n"
+
+    tipos = Tipodte.all # busco todos los tipos de documentos que existen
+    tipos.each do | t | 
+      cantidad = libro.detlibro.where(tipodte: t.tipo).count # cuenta los tipos de documentos del resumen
+      mntexe = libro.detlibro.where(tipodte: t.tipo).sum(:mntexe)
+      mntneto = libro.detlibro.where(tipodte: t.tipo).sum(:mntneto)
+      iva = libro.detlibro.where(tipodte: t.tipo).sum(:mntiva).to_i 
+      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal)
+    end  
+
+        File.open("libro_compratosing#{libro.rut}#{libro.idenvio}.xml", 'w') { |file| file.puts tosign_xml}
+
+    sleep 1
+     
+    if Empresa.last.rut == "80790400-0"
+      puts "============"
+      puts "ElSultan"
+      puts "============"
+      system("./comandoElSultan libro_compratosing#{libro.rut}#{libro.idenvio}.xml libro_compra#{libro.rut}#{libro.idenvio}.xml")
+    else  
+      system("./comando libro_compratosing#{libro.rut}#{libro.idenvio}.xml libro_compra#{libro.rut}#{libro.idenvio}.xml")
+      puts "============"
+      puts "Otros"
+      puts "============"
+    end  
+
+   # lib = File.read "doc-signed#{t}.xml"
+
+    system("rm libro_compratosing#{libro.rut}#{libro.idenvio}.xml")     
+    
+  end
 
 end

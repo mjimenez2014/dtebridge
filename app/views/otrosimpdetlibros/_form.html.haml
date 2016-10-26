@@ -1,0 +1,11 @@
+= simple_form_for(@otrosimpdetlibro) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :TipoImp
+    = f.input :TasaImp
+    = f.input :MontoImp
+    = f.association :detlibro
+
+  .form-actions
+    = f.button :submit
