@@ -6,13 +6,13 @@ class Api::V1::ReadmailController < Api::V1::ApiController
     Mail.defaults do
       retriever_method :pop3, :address => "mail.invoicedigital.cl",
       :port       => 110,
-      :user_name  => 'test@invoicedigital.cl',
-      :password   => 'paso2011',
+      :user_name  => 'intercambiokar@invoicedigital.cl',
+      :password   => 'sopabru2011',
       :enable_ssl => false
     end
 
-    mails = Mail.all
-    #mails = Mail.find(:what => :last, :count => 5, :order => :desc)
+    #mails = Mail.all
+    mails = Mail.find(:what => :last, :count => 40, :order => :desc)
 
     mails.each do |mail|
       doceamil = Docsemail.where(mailid: mail.message_id).first
@@ -20,6 +20,8 @@ class Api::V1::ReadmailController < Api::V1::ApiController
         if mail.multipart?  
           mail.attachments.each do | attachment |
             filename = attachment.filename
+            puts "=============== FROM: ===================="
+            puts mail.from
             extencion = filename[filename.index('.')..filename.index('.')+4]
             if extencion == ".xml"
               d = Docsemail.new

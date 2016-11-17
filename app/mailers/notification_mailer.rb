@@ -13,6 +13,7 @@ class NotificationMailer < ActionMailer::Base
   end
 
   def notification_email(email,id)
+    puts"==================== Enviando Correo ================================"
     doc = Documento.find(id)
     @user = doc.RznSocRecep
     @destinatario = doc.RznSocRecep

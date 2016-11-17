@@ -14,7 +14,7 @@ class Libro < ActiveRecord::Base
     if self.tipo == "VENTA"
       libroventa  
     elsif self.tipo == "COMPRA"
-      librocompra
+      librocompratest
     end      
 
   end
@@ -510,7 +510,7 @@ class Libro < ActiveRecord::Base
     system("rm libro_compratosing#{libro.rut}#{libro.idenvio}.xml") 
   end  
 
-  def librocompra2
+  def librocompratest
     libro=self
 
     empresa = Empresa.find_by_rut(libro.rut)
@@ -521,34 +521,34 @@ class Libro < ActiveRecord::Base
     tosign_xml="<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
     tosign_xml+="<LibroCompraVenta xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.sii.cl/SiiDte LibroCV_v10.xsd\" version=\"1.0\" xmlns=\"http://www.sii.cl/SiiDte\">"
     tosign_xml+="<EnvioLibro ID=\"IDC#{libro.idenvio}\">\r\n"
-    tosign_xml+="<Caratula>\r\n"
-    tosign_xml+="<RutEmisorLibro>#{libro.rut}</RutEmisorLibro>\r\n"
+    tosign_xml+=" <Caratula>\r\n"
+    tosign_xml+=" <RutEmisorLibro>#{libro.rut}</RutEmisorLibro>\r\n"
 
     if Rails.env.production?
-      tosign_xml+="<RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
-      tosign_xml+="<PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
-      tosign_xml+="<FchResol>#{fchResolucion}</FchResol>\r\n"
-      tosign_xml+="<NroResol>#{numResolucion}</NroResol>\r\n"
-      tosign_xml+="<TipoOperacion>COMPRA</TipoOperacion>\r\n"
-      tosign_xml+="<TipoLibro>MENSUAL</TipoLibro>\r\n"
-      tosign_xml+="<TipoEnvio>TOTAL</TipoEnvio>\r\n"
+      tosign_xml+="   <RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
+      tosign_xml+="   <PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
+      tosign_xml+="   <FchResol>#{fchResolucion}</FchResol>\r\n"
+      tosign_xml+="   <NroResol>#{numResolucion}</NroResol>\r\n"
+      tosign_xml+="   <TipoOperacion>COMPRA</TipoOperacion>\r\n"
+      tosign_xml+="   <TipoLibro>MENSUAL</TipoLibro>\r\n"
+      tosign_xml+="   <TipoEnvio>TOTAL</TipoEnvio>\r\n"
     else 
-      tosign_xml+="<RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
-      tosign_xml+="<PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
-      tosign_xml+="<FchResol>2014-05-12</FchResol>\r\n"
-      tosign_xml+="<NroResol>0</NroResol>\r\n"
-      tosign_xml+="<TipoOperacion>COMPRA</TipoOperacion>\r\n"
-      tosign_xml+="<TipoLibro>ESPECIAL</TipoLibro>\r\n"
-      tosign_xml+="<TipoEnvio>TOTAL</TipoEnvio>\r\n"
-      tosign_xml+="<FolioNotificacion>2</FolioNotificacion>\r\n"
+      tosign_xml+="   <RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
+      tosign_xml+="   <PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
+      tosign_xml+="   <FchResol>#{fchResolucion}</FchResol>\r\n"
+      tosign_xml+="   <NroResol>0</NroResol>\r\n"
+      tosign_xml+="   <TipoOperacion>COMPRA</TipoOperacion>\r\n"
+      tosign_xml+="   <TipoLibro>ESPECIAL</TipoLibro>\r\n"
+      tosign_xml+="   <TipoEnvio>TOTAL</TipoEnvio>\r\n"
+      tosign_xml+="   <FolioNotificacion>2</FolioNotificacion>\r\n"
       if(libro.codautrec != "0")
-      tosign_xml+="<CodAutRec>#{libro.codautrec}</CodAutRec>\r\n"
+      tosign_xml+="   <CodAutRec>#{libro.codautrec}</CodAutRec>\r\n"
       end  
     end
 
-    tosign_xml+="</Caratula>"
+    tosign_xml+=" </Caratula>\r\n"
 
-    tosign_xml+="<ResumenPeriodo>\r\n"
+    tosign_xml+=" <ResumenPeriodo>\r\n"
 
     tipos = Tipodte.all # busco todos los tipos de documentos que existen
     tipos.each do | t | 
@@ -556,10 +556,125 @@ class Libro < ActiveRecord::Base
       mntexe = libro.detlibro.where(tipodte: t.tipo).sum(:mntexe)
       mntneto = libro.detlibro.where(tipodte: t.tipo).sum(:mntneto)
       iva = libro.detlibro.where(tipodte: t.tipo).sum(:mntiva).to_i 
-      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal)
-    end  
+      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal) 
 
-        File.open("libro_compratosing#{libro.rut}#{libro.idenvio}.xml", 'w') { |file| file.puts tosign_xml}
+      ivanorec = libro.detlibro.where(tipodte:t.tipo).sum(:ivanorec).to_i
+      countivanorec = libro.detlibro.where(tipodte:t.tipo).where("codivanorec > ?", 0).count
+
+
+      if cantidad > 0
+        tosign_xml+="   <TotalesPeriodo>\r\n"
+        tosign_xml+="     <TpoDoc>#{t.tipo}</TpoDoc>\r\n"
+        tosign_xml+="     <TotDoc>#{cantidad}</TotDoc>\r\n"
+        tosign_xml+="     <TotMntExe>#{mntexe}</TotMntExe>\r\n"
+        tosign_xml+="     <TotMntNeto>#{mntneto}</TotMntNeto>\r\n"
+        tosign_xml+="     <TotMntIVA>#{iva}</TotMntIVA>\r\n"
+        
+        if ivanorec > 0
+          civanorec = libro.detlibro.where(tipodte:t.tipo).where("codivanorec > ?", 0).last
+          codivanorec = civanorec.codivanorec
+          tosign_xml+="   <TotIVANoRec>\r\n"
+          tosign_xml+="   <CodIVANoRec>#{codivanorec}</CodIVANoRec>\r\n"
+          tosign_xml+="   <TotOpIVANoRec>#{countivanorec}</TotOpIVANoRec>\r\n"
+          tosign_xml+="   <TotMntIVANoRec>#{ivanorec}</TotMntIVANoRec>\r\n"
+          tosign_xml+="   </TotIVANoRec>\r\n"
+        end
+        #Sumar impuestos por documento
+        imp = Impuesto.all  
+        imp.each do |impto|
+            totMontoImp = Otrosimpdetlibro.where(tipodte: t.tipo).where(libro_id: libro.id).where(TipoImp: impto.tipoimp.to_s).sum(:MontoImp)# todos los doc del mimso tipo
+            puts "=============== TOTAL MONTO IMPUESTO ==========================="
+            puts totMontoImp
+          if totMontoImp != 0
+            tosign_xml+="   <TotOtrosImp>\r\n"
+            tosign_xml+="    <CodImp>#{impto.tipoimp}</CodImp>\r\n"
+            tosign_xml+="    <TotMntImp>#{totMontoImp}</TotMntImp>\r\n"
+            tosign_xml+="   </TotOtrosImp>\r\n"
+          end
+        end
+        tosign_xml+="   <TotMntTotal>#{mnttotal}</TotMntTotal>\r\n"
+        tosign_xml+="   </TotalesPeriodo>\r\n"
+      end
+    end
+
+    tosign_xml+=" </ResumenPeriodo>\r\n"
+
+    #TO DO: Corrigir para usar modelo Doccompra
+    tiposmanuales = Tipodte.all
+
+    tiposmanuales.each do |t|
+      #Detalle
+      detlibro = libro.detlibro.where(tipodte: t.tipo)
+
+      detlibro.each do |det| 
+
+        doc = Compmanual.where(folio: det.folio).where(rutrecep: det.rutrecep).where(rutemisor: det.rutemis).last
+
+        tosign_xml+="<Detalle>\r\n"
+        tosign_xml+=" <TpoDoc>#{det.tipodte}</TpoDoc>\r\n"
+        tosign_xml+=" <NroDoc>#{det.folio}</NroDoc>\r\n"
+        tosign_xml+=" <TpoImp>1</TpoImp>\r\n"
+        tosign_xml+=" <TasaImp>19</TasaImp>\r\n"
+        tosign_xml+=" <FchDoc>#{doc.fchemis}</FchDoc>\r\n"
+        tosign_xml+=" <RUTDoc>#{doc.rutemisor}</RUTDoc>\r\n"
+        tosign_xml+=" <RznSoc>#{doc.rznsocemisor}</RznSoc>\r\n"
+        tosign_xml+=" <MntExe>#{det.mntexe}</MntExe>\r\n"
+        tosign_xml+=" <MntNeto>#{det.mntneto}</MntNeto>\r\n"
+        tosign_xml+=" <MntIVA>#{det.mntiva.to_i}</MntIVA>\r\n"
+
+        if doc.codimp > 0
+          detlibroimp = Detlibro.find(det.id)  
+          detlibroimp.otrosimpdetlibro.each do |otrosimp|
+           tosign_xml+=" <OtrosImp>\r\n"
+           tosign_xml+="   <CodImp>#{otrosimp.TipoImp}</CodImp>\r\n"
+           tosign_xml+="   <TasaImp>#{otrosimp.TasaImp}</TasaImp>\r\n"
+           tosign_xml+="   <MntImp>#{otrosimp.MontoImp.to_i}</MntImp>\r\n"
+           tosign_xml+=" </OtrosImp>\r\n"
+          end 
+        end
+
+        if det.ivanorec > 0
+          tosign_xml+="<IVANoRec>\r\n"
+          tosign_xml+="<CodIVANoRec>#{det.codivanorec}</CodIVANoRec>\r\n"
+          tosign_xml+="<MntIVANoRec>#{det.ivanorec}</MntIVANoRec>\r\n"
+          tosign_xml+="</IVANoRec>\r\n"
+        end
+
+        tosign_xml+="<MntTotal>#{det.mnttotal}</MntTotal>\r\n"
+        tosign_xml+="</Detalle>\r\n"
+      end  
+    end
+
+    fchfirma = Date.strptime("#{Date.today.year}/#{Date.today.month}/#{Date.today.day}", "%Y/%m/%d")
+    tosign_xml+="<TmstFirma>#{fchfirma}T15:26:15</TmstFirma>"
+
+    tosign_xml+="</EnvioLibro>\r\n"
+
+    #Firma
+    tosign_xml+="<Signature xmlns=\"http://www.w3.org/2000/09/xmldsig#\">"
+    tosign_xml+=  "<SignedInfo>"
+    tosign_xml+=   "<CanonicalizationMethod Algorithm=\"http://www.w3.org/TR/2001/REC-xml-c14n-20010315\"/>"
+    tosign_xml+=    "<SignatureMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#rsa-sha1\"/>"
+    tosign_xml+=     "<Reference URI=\"\">"
+    tosign_xml+=      "<Transforms>"
+    tosign_xml+=         "<Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\"/>"
+    tosign_xml+=      "</Transforms>"
+    tosign_xml+=      "<DigestMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#sha1\"/>"
+    tosign_xml+=      "<DigestValue/>"
+    tosign_xml+=     "</Reference>"
+    tosign_xml+=  "</SignedInfo>"
+    tosign_xml+=  "<SignatureValue/>"
+    tosign_xml+=  "<KeyInfo>"
+    tosign_xml+=   "<KeyValue/>"
+    tosign_xml+=   "<X509Data>"
+    tosign_xml+=   "</X509Data>"
+    tosign_xml+=  "</KeyInfo>"
+    tosign_xml+= "</Signature>"
+
+    #Fin Libro  
+    tosign_xml+= "</LibroCompraVenta>"
+
+    File.open("libro_compratosing#{libro.rut}#{libro.idenvio}.xml", 'w') { |file| file.puts tosign_xml}
 
     sleep 1
      
@@ -578,7 +693,6 @@ class Libro < ActiveRecord::Base
    # lib = File.read "doc-signed#{t}.xml"
 
     system("rm libro_compratosing#{libro.rut}#{libro.idenvio}.xml")     
-    
   end
 
 end

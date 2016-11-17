@@ -330,6 +330,7 @@ class Api::V1::DocumentoController < Api::V1::ApiController
   end
 
   def consultaEnvio( docId, rut, dv, estadoxml, token)
+    puts "======== 2.- CONSULTA ENVIO =========="
     begin
       trackId = estadoxml.to_s[estadoxml.to_s.index('TRACKID')+8..estadoxml.to_s.index('/TRACKID')-2]
       estadoWs = Savon.client(wsdl: "https://palena.sii.cl/DTEWS/QueryEstUp.jws?WSDL")
@@ -350,6 +351,7 @@ class Api::V1::DocumentoController < Api::V1::ApiController
   end
 
   def procesoEstado
+      puts "========= 1.- PROCESO ESTADO =========" 
       listDoc = Documento.where(estado: "0 Upload Ok").limit(10)
       listDoc.each do |doc|
         token = get_token(doc.RUTEmisor)
@@ -380,7 +382,7 @@ class Api::V1::DocumentoController < Api::V1::ApiController
       if Rails.env.production?
         email = contrib.email
       else
-        email = "jimenezmaury@gmail.com"
+        email = "soporte@invoicedigital.cl"
       end
       NotificationMailer.notification_email(email, id).deliver
     end

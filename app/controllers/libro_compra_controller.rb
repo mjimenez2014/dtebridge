@@ -42,7 +42,7 @@ class LibroCompraController < ApplicationController
     totCManual.map {|e| @totCredManual  = e}
 
     @otrosImpsMan = Compmanual.select('"tipodoc","otrosimpcompmanuals"."TipoImp" as tipoimp, "otrosimpcompmanuals"."TasaImp" as tasaimp, sum("otrosimpcompmanuals"."MontoImp") as montoimp').where('"estado" = ? and "tipodoc" <> 52 and "tipodoc"<>60 and "rutrecep"=?', "PREVIO",@rut).joins(:otrosimpcompmanuals).group('"tipodoc","otrosimpcompmanuals"."TipoImp","otrosimpcompmanuals"."TasaImp"')
-    @otrosImpsCredMan = Compmanual.select('"tipodoc","otrosimpcompmanuals"."TipoImp" as tipoimp, "otrosimpcompmanuals"."TasaImp" as tasaimp, sum("otrosimpcompmanuals"."MontoImp") as montoimp').where('"estado" = ? and "tipodoc" <> 52 and "tipodoc"<>30 and "rutrecep"=?',"PREVIO", @rut).joins(:otrosimpcompmanuals).group('"tipodoc","otrosimpcompmanuals"."TipoImp","otrosimpcompmanuals"."TasaImp"')
+    @otrosImpsCredMan = Compmanual.select('"tipodoc","otrosimpcompmanuals"."TipoImp" as tipoimp, "otrosimpcompmanuals"."TasaImp" as tasaimp, sum("otrosimpcompmanuals"."MontoImp") as montoimp').where('"estado" = ? and "tipodoc" = 60 and "tipodoc"=61 and "rutrecep"=?',"PREVIO", @rut).joins(:otrosimpcompmanuals).group('"tipodoc","otrosimpcompmanuals"."TipoImp","otrosimpcompmanuals"."TasaImp"')
    
 
     respond_to do |format|
@@ -98,38 +98,6 @@ class LibroCompraController < ApplicationController
     desde = Date.strptime("#{mes}/01", "%Y/%m/%d")
     hasta = Date.strptime("#{mes}/#{desde.end_of_month.day}", "%Y/%m/%d")
 
-    # llenar detalle libro con doc electronicos
-    # dtes = Doccompra.where('estado <> ? AND "TipoDTE" <> 52 and "RUTEmisor"=? and "FchEmis" >= ? AND "FchEmis" <= ?',"Rechazado SII",  rut, desde, hasta )
-    # dtes.map { |e|  
-    #   detlibro = Detlibro.new
-    #   detlibro.tipodte = e.TipoDTE
-    #   detlibro.rutemis = e.RUTEmisor
-    #   detlibro.folio = e.Folio
-    #   detlibro.mnttotal = e.MntTotal
-  
-    #   detlibro.mntneto = e.MntNeto
-    #   detlibro.mntexe = e.MntExe
-    #   detlibro.mntiva = e.IVA
-      
-    #   sum_imptos = 0
-    #   e.impuesto_retens.map { |imp|
-    #     sum_imptos += imp.MontoImp
-    #     case imp.TasaImp
-    #     when 18 
-    #       detlibro.impto18 = imp.MontoImp
-    #     when 10  
-    #       detlibro.impto10 = imp.MontoImp
-    #     when 25  
-    #       detlibro.impto25 = imp.MontoImp
-    #     when 30  
-    #       detlibro.impto30 = imp.MontoImp  
-    #     end
-    #   }
-    #   detlibro.otrosimpto = sum_imptos
-    #   detlibro.libro_id = libro.id 
-
-    #   detlibro.save
-    # }
 
     # llenar detalle libro con doc manuales
     docmanual = Compmanual.where('"rutrecep"=? and "estado" = ?',  rut, "PREVIO" )
@@ -160,6 +128,8 @@ class LibroCompraController < ApplicationController
           imptoH["TasaImp"] = otroimp.TasaImp
           imptoH["MontoImp"] = otroimp.MontoImp
           imptoH["detlibro_id"] =  detlibro.id
+          imptoH["libro_id"] =  libro.id 
+          imptoH["tipodte"] =  detlibro.tipodte                   
           Otrosimpdetlibro.create! imptoH  
         end
       end

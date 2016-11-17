@@ -1,6 +1,8 @@
 Dtebridge::Application.routes.draw do
 
   
+  resources :impuestos
+
   resources :otrosimpdetlibros
 
   resources :usuarioempresas

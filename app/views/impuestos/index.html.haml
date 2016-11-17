@@ -1,0 +1,31 @@
+%h1 Listing impuestos
+
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Tipoimp
+      %th Tasaimp
+      %th Montoimp
+      %th Descripcion
+      %th Validacion
+      %th
+      %th
+      / %th
+      
+  %tbody
+    - @impuestos.each do |impuesto|
+      %tr
+        %td= impuesto.name
+        %td= impuesto.tipoimp
+        %td= impuesto.tasaimp
+        %td= impuesto.montoimp
+        %td= impuesto.descripcion
+        %td= impuesto.validacion
+        %td= link_to 'Show', impuesto
+        %td= link_to 'Edit', edit_impuesto_path(impuesto)
+        / %td= link_to 'Destroy', impuesto, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Impuesto', new_impuesto_path

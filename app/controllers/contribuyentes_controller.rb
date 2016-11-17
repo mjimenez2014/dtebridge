@@ -43,11 +43,11 @@ class ContribuyentesController < ApplicationController
   end
 
   def import
-    Contribuyente.destroy_all
+    Contribuyente.delete_all
 
     Contribuyente.import(params[:file])
 
-    @contribuyentes = Contribuyente.all
+    @contribuyentes = Contribuyente.count
     respond_with(@contribuyentes)
   end
 

@@ -1,0 +1,13 @@
+= simple_form_for(@impuesto) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :tipoimp
+    = f.input :tasaimp
+    = f.input :montoimp
+    = f.input :descripcion
+    = f.input :validacion
+
+  .form-actions
+    = f.button :submit

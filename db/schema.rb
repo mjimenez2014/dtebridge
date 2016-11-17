@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161022162408) do
+ActiveRecord::Schema.define(version: 20161116214207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -535,6 +535,17 @@ ActiveRecord::Schema.define(version: 20161022162408) do
 
   add_index "impuesto_retens", ["documento_id"], name: "index_impuesto_retens_on_documento_id", using: :btree
 
+  create_table "impuestos", force: true do |t|
+    t.string   "name"
+    t.integer  "tipoimp"
+    t.float    "tasaimp"
+    t.integer  "montoimp"
+    t.text     "descripcion"
+    t.text     "validacion"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "installs", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -619,9 +630,12 @@ ActiveRecord::Schema.define(version: 20161022162408) do
     t.integer  "detlibro_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tipodte"
+    t.integer  "libro_id"
   end
 
   add_index "otrosimpdetlibros", ["detlibro_id"], name: "index_otrosimpdetlibros_on_detlibro_id", using: :btree
+  add_index "otrosimpdetlibros", ["libro_id"], name: "index_otrosimpdetlibros_on_libro_id", using: :btree
 
   create_table "otrosimpmanuals", force: true do |t|
     t.string   "TipoImp"

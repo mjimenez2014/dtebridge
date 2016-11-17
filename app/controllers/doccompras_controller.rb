@@ -14,12 +14,12 @@ class DoccomprasController < ApplicationController
           paginate :page => 1, :per_page => 500
         end
         @doccompras = search
-        @doccompras = Doccompra.where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).where(id: search.map(&:id)).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
+        @doccompras = Doccompra.where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).where(id: search.map(&:id)).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )        
       else
-        @doccompras = Doccompra.where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).where(estado: nil).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
+        @doccompras = Doccompra.where(estado: nil).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
       end  
     else  
-      @doccompras = Doccompra.where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).where(estado: nil).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
+      @doccompras = Doccompra.where(estado: nil).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
     end
   end
 
@@ -217,7 +217,9 @@ class DoccomprasController < ApplicationController
         NotificationMailer.send_intercambio(email, d.id, d.RUTRecep, "inter_doc-signed#{t}.xml" ).deliver
         system("rm inter_tosign_xml#{t}.xml") 
         #system("rm doc-signed#{t}.xml")
+        if Rails.env.production?
         system("mv inter_doc-signed#{t}.xml public/uploads/documento/fileIntercambio/")
+        end
         d.estado = "APROBADO"
         d.save
     end

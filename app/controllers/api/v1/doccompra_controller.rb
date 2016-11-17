@@ -7,7 +7,7 @@ class Api::V1::DoccompraController < Api::V1::ApiController
         @doc_xml = 'PROCESADO' 
         unless demail.nil? #A no ser que demail sea nulo
           json= Hash.from_xml(demail.xmlrecibido)
-          if json['EnvioDTE']['SetDTE']['DTE'].kind_of?(Array)
+          if json['EnvioDTE']['SetDTE']['DTE'].kind_of?(Array) # si es un arreglo
              json['EnvioDTE']['SetDTE']['DTE'].each do  |dte| 
               procesadoc(dte,demail)
             end
@@ -18,29 +18,16 @@ class Api::V1::DoccompraController < Api::V1::ApiController
 
         end
       rescue
-        puts "======ERROR EN PROCESAR RECIBO ======"
+        puts "====== ERROR EN PROCESAR RECIBO ======"
+        puts demail.id
         demail = 'ACUSEPROVEEDOR'
-
       end  
     end  
     render 'api/v1/doccompra/procesarecibo'
   end
 
-  def procesarecibo2
-    demails = Docsemail.where(estado: "RECIBIDO").all
-    demails.each do |demail|
-      doc  = Nokogiri::XML::Reader(demail.xmlrecibido)
-      doc.each do |docs|
-        #if docs.name == "Folio" 
-          puts docs.value
-        #end
-      end
-    end
-    render 'api/v1/doccompra/procesarecibo'
-  end
-
   def procesadoc(dte, docEmail)
-    begin
+    #begin
         doc = dte['Documento']
 
         idDoc = doc['Encabezado']['IdDoc']
@@ -69,7 +56,7 @@ class Api::V1::DoccompraController < Api::V1::ApiController
         #subD = Hash.new
 
 
-        if _detalles .kind_of?(Array)
+        if _detalles.kind_of?(Array)
           _detalles.each do |det|
 
             if det["CdgItem"].kind_of?(Array)
@@ -90,8 +77,9 @@ class Api::V1::DoccompraController < Api::V1::ApiController
             end  
             if cdgI.present?
               detalles << det.merge(cdgI)
-            end
-            
+            else
+              detalles << det  
+            end            
           end    
         else
           det = _detalles
@@ -108,8 +96,12 @@ class Api::V1::DoccompraController < Api::V1::ApiController
             else
               det.delete("subdsctos_attributes")
               detalles << subD
-            end    
-          detalles << det.merge(cdgI)
+            end   
+            if cdgI.present?
+              detalles << det.merge(cdgI)
+            else
+              detalles << det  
+            end
         end
 
 
@@ -154,10 +146,6 @@ class Api::V1::DoccompraController < Api::V1::ApiController
         p = Hash.new
         p[:documento] = documento
 
-        puts "============="
-        puts p[:documento]
-        puts "============="
-
         
         @docCompra = Doccompra.new(p[:documento])
         @docCompra.xmlrecibido = docEmail.xmlrecibido
@@ -165,10 +153,14 @@ class Api::V1::DoccompraController < Api::V1::ApiController
         if @docCompra.save
           docEmail.estado = 'PROCESADO'
           docEmail.save
+          puts "============= DOCUMENTO PROCESADO ==============="
+          puts p[:documento]
+          puts "=================================================="
         end  
-    rescue 
-      docEmail.estado = 'ERROR'
-      docEmail.save
-    end    
+    #rescue 
+     # docEmail.estado = 'ERROR'
+     # docsemail.id
+     # docEmail.save
+    #end    
   end
 end
