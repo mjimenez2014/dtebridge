@@ -530,8 +530,11 @@ class Libro < ActiveRecord::Base
       tosign_xml+="   <FchResol>#{fchResolucion}</FchResol>\r\n"
       tosign_xml+="   <NroResol>#{numResolucion}</NroResol>\r\n"
       tosign_xml+="   <TipoOperacion>COMPRA</TipoOperacion>\r\n"
-      tosign_xml+="   <TipoLibro>MENSUAL</TipoLibro>\r\n"
+      tosign_xml+="   <TipoLibro>#{libro.tipolibro}</TipoLibro>\r\n"
       tosign_xml+="   <TipoEnvio>TOTAL</TipoEnvio>\r\n"
+      if(libro.codautrec != "0")
+      tosign_xml+="   <CodAutRec>#{libro.codautrec}</CodAutRec>\r\n"
+      end        
     else 
       tosign_xml+="   <RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
       tosign_xml+="   <PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
