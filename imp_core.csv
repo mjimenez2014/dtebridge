@@ -1,0 +1,8 @@
+name;tipoimp;tasaimp;descripcion
+IVA ANTICIPADO CARNE;18;5;Tasa de 5%. Se registra el monto de IVA anticipado cobrado al cliente
+IVA ANTICIPADO HARINA;19;12;Tasa de 12%. Se registra el monto de IVA anticipado cobrado al cliente.
+DL 825/74, ART. 42, letra b);24;31.5;Tasa del 31,5% Licores, Piscos, whisky, aguardiente, y vinos licorosos o aromatizados.
+DL 825/74, ART. 42, letra c);25;20.5;Tasa del 20,5% Vinos
+DL 825/74, ART. 42, letra c);26;20.5;Tasa del 20,5% Cervezas y bebidas alcoholicas
+DL 825/74, ART. 42, letra a);27;10;Tasa del 10%
+DL 825/74, ART. 42, letra a) Inciso Segundo;271;18;Tasa del 18% Bebidas analcoholicas y Minerales con elevado contenido de azucares. (segun indica la ley)
