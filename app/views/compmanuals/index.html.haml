@@ -1,5 +1,5 @@
 %h3 Documentos de Compra
-
+= link_to 'Crear nuevo', "compmanuals/new",:class => 'btn btn-success btn-sm'
 %table.table.table-striped
   %thead
     %tr
@@ -12,11 +12,12 @@
       %th Mntneto
       %th Mntexe
       %th Mntiva
-      %th CodImp
-      %th TasaImp
-      %th MntImp
+      / %th CodImp
+      / %th TasaImp
+      / %th MntImp
       %th Mnttotal
       %th Estado
+      %th
       %th
       
   %tbody
@@ -31,12 +32,13 @@
         %td= compmanual.mntneto
         %td= compmanual.mntexe
         %td= compmanual.mntiva
-        %td= compmanual.codimp
-        %td= compmanual.tasaimp
-        %td= compmanual.mntimp               
+        /%td= compmanual.codimp
+        /%td= compmanual.tasaimp
+        /%td= compmanual.mntimp               
         %td= compmanual.mnttotal
         %td= compmanual.estado
-        %td= link_to 'Eliminar', compmanual, :method => :delete, :data => { :confirm => 'Seguro que desea Eliminar?' }
+        %td= link_to 'Eliminar', compmanual, :method => :delete, :data => { :confirm => 'Seguro que desea Eliminar?' },:class => 'btn btn-danger btn-sm'
+        %td= link_to 'ver', compmanual,:class => 'btn btn-default btn-sm'
 
 %br
 %h2 Importar Documentos

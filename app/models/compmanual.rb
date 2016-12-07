@@ -3,6 +3,7 @@ class Compmanual < ActiveRecord::Base
   require 'csv'
 
   has_many :otrosimpcompmanuals, dependent: :destroy
+  validates :rznsocemisor, :rutemisor,:fchemis,:folio, presence: true
 
   def nomtipo
     Tipodte.find_by_tipo(self.tipodoc).nombre

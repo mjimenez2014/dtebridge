@@ -13,6 +13,18 @@ class CompmanualsController < ApplicationController
     respond_with(@compmanual)
   end
 
+  def update
+    respond_to do |format|
+      if @compmanual.update(compmanual_params)
+        format.html { redirect_to @compmanual, notice: 'Compmanual was successfully updated.' }
+        format.json { render :show, status: :ok, location: @compmanual }
+      else
+        format.html { render :edit }
+        format.json { render json: @compmanual.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def import
     @compmanuals = Compmanual.where(estado: "PREVIO")
     @msg = Compmanual.import(params[:file]).force_encoding('utf-8')
@@ -27,6 +39,29 @@ class CompmanualsController < ApplicationController
     end   
   end
 
+  def new
+    @compmanual = Compmanual.new
+    @tipodtes = Tipodte.where(:tipo => [33,61,60,52])
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @compmanual }
+    end
+  end
+
+  def create
+    @compmanual = Compmanual.new(compmanual_params)
+    
+    respond_to do |format|
+      if @compmanual.save
+        format.html { redirect_to @compmanual, notice: 'Compmanual was successfully created.' }
+        format.xml  { render :xml => @compmanual, :status => :created, :location => @compmanual }
+      else
+        format.html { render :new }
+        format.json { render json: @compmanual.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     @compmanual.destroy
     respond_with(@compmanual)
@@ -38,6 +73,6 @@ class CompmanualsController < ApplicationController
     end
 
     def compmanual_params
-      params.require(:compmanual).permit(:tipodoc, :folio, :fchemis, :rutemisor, :rutrecep, :rznsoemisor, :mntneto, :mntexe, :mntiva, :otrosimpto, :mnttotal, :impto18, :impto10, :impto25, :impto30, :estado)
+      params.require(:compmanual).permit(:tipodoc, :folio, :fchemis, :rutemisor, :rutrecep, :rznsocemisor, :mntneto, :mntexe, :mntiva, :otrosimpto, :mnttotal, :impto18, :impto10, :impto25, :impto30, :estado)
     end
 end

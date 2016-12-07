@@ -2,21 +2,21 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :tipodoc
+    = f.collection_select :tipodoc, Tipodte.where(:tipo => [33,61,60,52]),:tipo,:nombre
     = f.input :folio
-    = f.input :fchemis
+    = f.date_field :fchemis
     = f.input :rutemisor
     = f.input :rutrecep
-    = f.input :rznsoemisor
+    = f.input :rznsocemisor
     = f.input :mntneto
     = f.input :mntexe
     = f.input :mntiva
-    = f.input :otrosimpto
+    /= f.input :otrosimpto
     = f.input :mnttotal
-    = f.input :impto18
-    = f.input :impto10
-    = f.input :impto25
-    = f.input :impto30
+    /= f.input :impto18
+    /= f.input :impto10
+    /= f.input :impto25
+    /= f.input :impto30
     = f.input :estado
 
   .form-actions

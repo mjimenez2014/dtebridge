@@ -1,5 +1,26 @@
 %h1 New compmanual
-
+.row
+/   = form_tag @compmanual do
+/     = field_set_tag do
+/       .col-md-6
+/         .form-group
+/           = label_tag :tipodoc, 'Tipo DTE: '
+/           = select_tag "tipodoc", options_from_collection_for_select(@tipodtes, "tipo", "nombre")
+/         .form-group  
+/           = label_tag :folio, 'Folio: ' 
+/           = text_field_tag 'folio' 
+/         .form-group  
+/           = label_tag :fchemis, 'Fecha de Emisión: '
+/           = date_field_tag "fchemis", value = DateTime.now
+/       .col-md-6
+/         .form-group  
+/           = label_tag :rutemisor, 'Rut Emisor: '
+/           = text_field_tag "rutemisor",nil, placeholder: '00000000-0'
+/         .form-group  
+/           = label_tag :rutrecep, 'Rut Receptor: '
+/           = text_field_tag "rutrecep",nil, placeholder: '00000000-0'      
+/         .form-group  
+/           = submit_tag 'Guardar'
 = render 'form'
 
 = link_to 'Back', compmanuals_path
