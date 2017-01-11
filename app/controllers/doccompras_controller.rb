@@ -10,16 +10,16 @@ class DoccomprasController < ApplicationController
       if searchparams[:search] != ""
           search = Doccompra.where(RUTEmisor: searchparams[:rutemis]).where(estado: nil).all do
           fulltext searchparams[:search]
-          order_by(:created_at, :desc)
+          order_by(:FchEmis, :desc)
           paginate :page => 1, :per_page => 500
         end
         @doccompras = search
-        @doccompras = Doccompra.where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).where(id: search.map(&:id)).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )        
+        @doccompras = Doccompra.where(:RUTRecep => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).where(id: search.map(&:id)).order(FchEmis: :desc).paginate(:page => params[:page], :per_page => 15 )        
       else
-        @doccompras = Doccompra.where(estado: nil).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
+        @doccompras = Doccompra.where(estado: nil).order(FchEmis: :desc).paginate(:page => params[:page], :per_page => 15 )
       end  
     else  
-      @doccompras = Doccompra.where(estado: nil).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
+      @doccompras = Doccompra.where(estado: nil).order(FchEmis: :desc).paginate(:page => params[:page], :per_page => 15 )
     end
   end
 

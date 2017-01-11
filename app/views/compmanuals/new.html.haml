@@ -1,6 +1,6 @@
-%h1 New compmanual
-.row
-/   = form_tag @compmanual do
+%h1 Nueva Compra Manual
+/ .row
+/   = form_tag '/compmanuals' do
 /     = field_set_tag do
 /       .col-md-6
 /         .form-group
@@ -22,5 +22,5 @@
 /         .form-group  
 /           = submit_tag 'Guardar'
 = render 'form'
-
+=javascript_include_tag "compmanual/new"
 = link_to 'Back', compmanuals_path

@@ -4,7 +4,7 @@
   .form-inputs
     = f.collection_select :tipodoc, Tipodte.where(:tipo => [33,61,60,52]),:tipo,:nombre
     = f.input :folio
-    = f.date_field :fchemis
+    = f.input :fchemis
     = f.input :rutemisor
     = f.input :rutrecep
     = f.input :rznsocemisor
@@ -20,4 +20,4 @@
     = f.input :estado
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, id:"agregar", data: { confirm: "Esta seguro?" }

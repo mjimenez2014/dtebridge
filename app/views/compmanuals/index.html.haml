@@ -1,5 +1,9 @@
 %h3 Documentos de Compra
 = link_to 'Crear nuevo', "compmanuals/new",:class => 'btn btn-success btn-sm'
+%h2 Importar Documentos
+= form_tag import_compmanuals_path, multipart: true do 
+  = file_field_tag :file 
+  = submit_tag "Importar" 
 %table.table.table-striped
   %thead
     %tr
@@ -41,7 +45,3 @@
         %td= link_to 'ver', compmanual,:class => 'btn btn-default btn-sm'
 
 %br
-%h2 Importar Documentos
-= form_tag import_compmanuals_path, multipart: true do 
-  = file_field_tag :file 
-  = submit_tag "Importar" 

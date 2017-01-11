@@ -8,9 +8,11 @@ class DocumentosController < ApplicationController
     searchparams = params["/documentos"]
 
     if searchparams.present?
-      @search = Documento.sucursal(searchparams["sucursal"]).tipodte(searchparams["tipodte"]).folio(searchparams["folio"])
-      puts "----------------------------------------------"
-      puts @search
+      if searchparams["sucursal"].present?
+        @search = Documento.sucursal(busca_idsucur(searchparams["sucursal"])).tipodte(searchparams["tipodte"]).folio(searchparams["folio"])
+      else
+        @search = Documento.sucursal(searchparams["sucursal"]).tipodte(searchparams["tipodte"]).folio(searchparams["folio"])        
+      end
       @documentos = Documento.where(id: @search.map(&:id)).where(:RUTEmisor => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
     else
       @documentos = Documento.where(:RUTEmisor => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
@@ -29,6 +31,10 @@ class DocumentosController < ApplicationController
       format.html { redirect_to documentos_url }
       format.json { head :no_content }
     end
+  end
+
+  def busca_idsucur(nomSuc)
+    Sucursal.where(nombre: nomSuc).last.cdgsiisucur
   end
 
   private

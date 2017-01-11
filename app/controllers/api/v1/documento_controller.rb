@@ -80,7 +80,7 @@ class Api::V1::DocumentoController < Api::V1::ApiController
 
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
       request = Net::HTTP::Post.new(uri.request_uri) 
 
@@ -234,7 +234,7 @@ class Api::V1::DocumentoController < Api::V1::ApiController
       # ambiente sii pruebas 
       #client = Savon.client(wsdl:"https://maullin2.sii.cl/DTEWS/CrSeed.jws?WSDL") 
       #produccion
-      client = Savon.client(wsdl:"https://palena.sii.cl/DTEWS/CrSeed.jws?WSDL") 
+      client = Savon.client(wsdl:"https://palena.sii.cl/DTEWS/CrSeed.jws?WSDL", ssl_verify_mode: :none) 
       seed_xml = client.call(:get_seed)
 
       seed= seed_xml.to_s[seed_xml.to_s.index('SEMILLA')+11..seed_xml.to_s.index('SEMILLA')+22]
@@ -265,7 +265,7 @@ class Api::V1::DocumentoController < Api::V1::ApiController
       puts "============="
 
       #tokenws = Savon.client(wsdl: "https://maullin2.sii.cl/DTEWS/GetTokenFromSeed.jws?WSDL")
-      tokenws = Savon.client(wsdl: "https://palena.sii.cl/DTEWS/GetTokenFromSeed.jws?WSDL")
+      tokenws = Savon.client(wsdl: "https://palena.sii.cl/DTEWS/GetTokenFromSeed.jws?WSDL", ssl_verify_mode: :none)
       token = tokenws.call( :get_token , message: {string: seed_xml}) 
 
       puts "=====TOKEN========"
@@ -333,7 +333,7 @@ class Api::V1::DocumentoController < Api::V1::ApiController
     puts "======== 2.- CONSULTA ENVIO =========="
     begin
       trackId = estadoxml.to_s[estadoxml.to_s.index('TRACKID')+8..estadoxml.to_s.index('/TRACKID')-2]
-      estadoWs = Savon.client(wsdl: "https://palena.sii.cl/DTEWS/QueryEstUp.jws?WSDL")
+      estadoWs = Savon.client(wsdl: "https://palena.sii.cl/DTEWS/QueryEstUp.jws?WSDL", ssl_verify_mode: :none)
       estado = estadoWs.call( :get_est_up , message: {RutCompania: rut, DvCompania: dv, TrackId: trackId, Token: token})
 
       # #estado = estadoWs.call( :get_est_up , message: {RutCompania: '77888630', DvCompania: '8', TrackId: '0878885016', Token: 'BCTTCTEYZnzrM'})
