@@ -48,6 +48,23 @@
 %p
   %b Estado:
   = @compmanual.estado
+%hr
+  %h4 Impuestos Adicionales
+- @otrosimp.each do |otrosimp|
+  =otrosimp.TipoImp
+  =otrosimp.TasaImp
+%hr
+  %h4 Add Otros Impuestos
+= simple_form_for([@compmanual,@compmanual.otrosimpcompmanuals.build]) do |f|
+
+  .form-inputs
+    = f.collection_select :TipoImp, Impuesto.all,:tipoimp,:tipoimp
+    = f.collection_select :TasaImp, Impuesto.all,:tipoimp,:tasaimp
+    = f.input :MontoImp
+    = f.association :compmanual
+
+  .form-actions
+    = f.button :submit
 
 = link_to 'Editar', edit_compmanual_path(@compmanual)
 |

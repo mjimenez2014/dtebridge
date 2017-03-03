@@ -12,6 +12,10 @@ class ContribuyentesController < ApplicationController
     respond_with(@contribuyente)
   end
 
+  def busca_por_rut
+    @contribuyente = Contribuyente.where(rut: params['rut']).first
+  end
+
   def new
     @contribuyente = Contribuyente.new
     respond_with(@contribuyente)

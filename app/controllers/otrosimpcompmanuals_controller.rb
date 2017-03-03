@@ -21,9 +21,11 @@ class OtrosimpcompmanualsController < ApplicationController
   end
 
   def create
+    @compmanual = Compmanual.find(params[:compmanual_id])
     @otrosimpcompmanual = Otrosimpcompmanual.new(otrosimpcompmanual_params)
     @otrosimpcompmanual.save
-    respond_with(@otrosimpcompmanual)
+    # respond_with(@otrosimpcompmanual)
+    redirect_to compmanual_path(@compmanual)
   end
 
   def update

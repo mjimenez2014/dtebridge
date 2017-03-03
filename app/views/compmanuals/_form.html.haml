@@ -1,23 +1,23 @@
 = simple_form_for(@compmanual) do |f|
   = f.error_notification
 
-  .form-inputs
+  .form-input
     = f.collection_select :tipodoc, Tipodte.where(:tipo => [33,61,60,52]),:tipo,:nombre
     = f.input :folio
-    = f.input :fchemis
-    = f.input :rutemisor
-    = f.input :rutrecep
-    = f.input :rznsocemisor
+    = f.input :fchemis, as: :date, html5: true
+    = f.input :rutemisor, :placeholder => "00000000-0"
+    = f.collection_select :rutrecep, Empresa.where(rut: Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}),:rut,:rznsocial
+    = f.input :rznsocemisor, :input_html => {:value => "COMERCIAL LUBBA LTDA."}
     = f.input :mntneto
     = f.input :mntexe
     = f.input :mntiva
-    /= f.input :otrosimpto
+    = f.input :otrosimpto,:as => :hidden, :input_html =>{ :value => "0"}
     = f.input :mnttotal
-    /= f.input :impto18
-    /= f.input :impto10
-    /= f.input :impto25
-    /= f.input :impto30
-    = f.input :estado
+    = f.input :impto18,:as => :hidden, :input_html =>{ :value => "0"}
+    = f.input :impto10,:as => :hidden, :input_html =>{ :value => "0"}
+    = f.input :impto25,:as => :hidden, :input_html =>{ :value => "0"}
+    = f.input :impto30,:as => :hidden, :input_html =>{ :value => "0"}
+    = f.input :estado, :as => :hidden, :input_html =>{ :value => "PREVIO"}
 
   .form-actions
     = f.button :submit, id:"agregar", data: { confirm: "Esta seguro?" }

@@ -1,26 +1,5 @@
 %h1 Nueva Compra Manual
-/ .row
-/   = form_tag '/compmanuals' do
-/     = field_set_tag do
-/       .col-md-6
-/         .form-group
-/           = label_tag :tipodoc, 'Tipo DTE: '
-/           = select_tag "tipodoc", options_from_collection_for_select(@tipodtes, "tipo", "nombre")
-/         .form-group  
-/           = label_tag :folio, 'Folio: ' 
-/           = text_field_tag 'folio' 
-/         .form-group  
-/           = label_tag :fchemis, 'Fecha de Emisión: '
-/           = date_field_tag "fchemis", value = DateTime.now
-/       .col-md-6
-/         .form-group  
-/           = label_tag :rutemisor, 'Rut Emisor: '
-/           = text_field_tag "rutemisor",nil, placeholder: '00000000-0'
-/         .form-group  
-/           = label_tag :rutrecep, 'Rut Receptor: '
-/           = text_field_tag "rutrecep",nil, placeholder: '00000000-0'      
-/         .form-group  
-/           = submit_tag 'Guardar'
+/ = link_to "Buscar Emisor", :controller => "compmanuals", :action => "index"
 = render 'form'
-=javascript_include_tag "compmanual/new"
+= javascript_include_tag "compmanual/new"
 = link_to 'Back', compmanuals_path

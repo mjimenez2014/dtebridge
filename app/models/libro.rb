@@ -72,7 +72,7 @@ class Libro < ActiveRecord::Base
       mntexe = libro.detlibro.where(tipodte: t.tipo).sum(:mntexe)
       mntneto = libro.detlibro.where(tipodte: t.tipo).sum(:mntneto)
       iva = libro.detlibro.where(tipodte: t.tipo).sum(:mntiva).to_i 
-      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal) 
+      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal).to_i
 
       impto18 = libro.detlibro.where(tipodte: t.tipo).sum(:impto18).to_i
       impto10 = libro.detlibro.where(tipodte: t.tipo).sum(:impto10).to_i
@@ -286,7 +286,7 @@ class Libro < ActiveRecord::Base
       mntexe = libro.detlibro.where(tipodte: t.tipo).sum(:mntexe)
       mntneto = libro.detlibro.where(tipodte: t.tipo).sum(:mntneto)
       iva = libro.detlibro.where(tipodte: t.tipo).sum(:mntiva).to_i 
-      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal) 
+      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal).to_i 
 
       impto18 = libro.detlibro.where(tipodte: t.tipo).where(:codimp =>271).sum(:mntimp).to_i
       impto10 = libro.detlibro.where(tipodte: t.tipo).sum(:impto10).to_i

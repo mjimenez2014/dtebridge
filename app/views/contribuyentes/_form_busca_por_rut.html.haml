@@ -1,0 +1,8 @@
+= form_tag "busca_por_rut",:method=> "get" do |f|
+
+  .form-inputs
+    = text_field_tag "rut"
+  %p  
+
+  .form-actions
+    = submit_tag "buscar"

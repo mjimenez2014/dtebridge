@@ -10,6 +10,7 @@ class CompmanualsController < ApplicationController
   end
 
   def show
+    @otrosimp = Otrosimpcompmanual.where(compmanual_id: @compmanual.id).all
     respond_with(@compmanual)
   end
 

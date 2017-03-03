@@ -1,14 +1,13 @@
 Dtebridge::Application.routes.draw do
 
-  
   resources :impuestos
-
   resources :otrosimpdetlibros
-
   resources :usuarioempresas
-
   resources :envioclientes
-
+  
+  resources :compmanuals do
+    resources :otrosimpcompmanuals
+  end
 
   resources :compmanuals do
     collection { post :import }
@@ -86,6 +85,7 @@ Dtebridge::Application.routes.draw do
   get "estadistica/index"
   get "estadistica", to: "estadistica#index"
   get "/contribuyentes/upload", to: "contribuyentes#upload"
+  get "/contribuyentes/busca_por_rut", to: "contribuyentes#busca_por_rut"
  
   get "listalibro/genxml/:id", to: "listalibro#genxml"
   get "listalibro/sendxml/:id", to: "listalibro#sendxml"
@@ -124,6 +124,7 @@ Dtebridge::Application.routes.draw do
   resources :contribuyentes do
     collection { post :import }
   end
+
 
   namespace :api do
     namespace :v1 do

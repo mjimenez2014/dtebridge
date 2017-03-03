@@ -1,0 +1,8 @@
+/= params
+%h1 Busca Contribuyente
+= render 'form_busca_por_rut'
+- if @contribuyente.nil?
+  /%h1 no se encuentra el contribuyente!
+- else
+  %hr
+  = @contribuyente.nombre

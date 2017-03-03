@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161116214207) do
+ActiveRecord::Schema.define(version: 20170116230745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(version: 20161116214207) do
     t.integer  "tipodte"
     t.integer  "folio"
     t.string   "rutemis"
-    t.integer  "mnttotal"
+    t.integer  "mnttotal",    limit: 8
     t.integer  "libro_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -303,7 +303,7 @@ ActiveRecord::Schema.define(version: 20161116214207) do
     t.integer  "mntexe"
     t.float    "mntiva"
     t.float    "otrosimpto"
-    t.integer  "mnttotal"
+    t.integer  "mnttotal",    limit: 8
     t.float    "impto18"
     t.float    "impto10"
     t.float    "impto25"
