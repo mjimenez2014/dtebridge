@@ -3,7 +3,7 @@ class Api::V1::DoccompraController < Api::V1::ApiController
   def procesarecibo
     demails = Docsemail.where(estado: "RECIBIDO").all
     demails.each do |demail| 
-      #begin
+      begin
         @doc_xml = 'PROCESADO' 
         unless demail.nil? #A no ser que demail sea nulo
           json= Hash.from_xml(demail.xmlrecibido)
@@ -17,17 +17,17 @@ class Api::V1::DoccompraController < Api::V1::ApiController
           @doc_xml = "OK"
 
         end
-      #rescue
+      rescue
         #puts "====== ERROR EN PROCESAR RECIBO ======"
         #puts demail.id
-        #demail = 'ACUSEPROVEEDOR'
-      #end  
+        demail.estado = 'ACUSEPROVEEDOR'
+      end  
     end  
     render 'api/v1/doccompra/procesarecibo'
   end
 
   def procesadoc(dte, docEmail)
-    #begin
+    begin
         doc = dte['Documento']
 
         idDoc = doc['Encabezado']['IdDoc']
@@ -144,9 +144,6 @@ class Api::V1::DoccompraController < Api::V1::ApiController
 
         p = Hash.new
         p[:documento] = documento
-        puts "============= RECEPTOR ==============="
-        puts p[:documento]['RUTRecep']
-        puts "======================================"
         
         @docCompra = Doccompra.new(p[:documento])
         @docCompra.xmlrecibido = docEmail.xmlrecibido
@@ -155,10 +152,10 @@ class Api::V1::DoccompraController < Api::V1::ApiController
           docEmail.estado = 'PROCESADO'
           docEmail.save
         end  
-    #rescue 
-     # docEmail.estado = 'ERROR'
-     # docsemail.id
-     # docEmail.save
-    #end    
+    rescue 
+      docEmail.estado = 'ERROR'
+      docEmail.id
+      docEmail.save
+    end    
   end
 end

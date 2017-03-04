@@ -367,9 +367,9 @@ class Api::V1::DocumentoController < Api::V1::ApiController
     folio = params[:folio]
     rut = params[:rut]
     tipo = params[:tipodte]
-    doc = Documento.where(Folio: folio).where(RUTEmisor: rut).where(TipoDTE: tipo).first
+    doc = Documento.where(Folio: folio).where(RUTRecep: rut).where(TipoDTE: tipo).first
     unless doc.fileCliente.nil?
-      enviaEmailCliente(doc.RUTRecep, doc.id)
+      enviaEmailCliente(doc.RUTEmisor, doc.id)
     end
     render "/api/v1/iat/ping"  
   end

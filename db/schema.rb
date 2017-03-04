@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170116230745) do
+ActiveRecord::Schema.define(version: 20170304021632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 20170116230745) do
     t.integer  "MntMargComer"
     t.integer  "PrcConsFinal"
     t.integer  "NmbItem"
-    t.text     "DscItem"
+    t.string   "DscItem"
     t.integer  "QtyRef"
     t.string   "UnmdRef"
     t.float    "PrcRef"
@@ -424,7 +424,6 @@ ActiveRecord::Schema.define(version: 20170116230745) do
     t.text     "estadoxml"
     t.string   "pdft"
     t.text     "estadoEnvioXml"
-    t.string   "trackidSII"
     t.string   "fileCliente"
     t.string   "fileFactura"
     t.string   "fileJson"
@@ -439,6 +438,7 @@ ActiveRecord::Schema.define(version: 20170116230745) do
     t.string   "NroOrdenCompra"
     t.string   "CondVenta"
     t.string   "MedioPago"
+    t.string   "trackidSII"
   end
 
   create_table "dsc_rcg_globals", force: true do |t|
@@ -735,6 +735,7 @@ ActiveRecord::Schema.define(version: 20170116230745) do
     t.string   "password"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "trackidSII"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
