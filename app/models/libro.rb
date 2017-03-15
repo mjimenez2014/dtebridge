@@ -72,7 +72,7 @@ class Libro < ActiveRecord::Base
       mntexe = libro.detlibro.where(tipodte: t.tipo).sum(:mntexe)
       mntneto = libro.detlibro.where(tipodte: t.tipo).sum(:mntneto)
       iva = libro.detlibro.where(tipodte: t.tipo).sum(:mntiva).to_i 
-      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal).to_i
+      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal) 
 
       impto18 = libro.detlibro.where(tipodte: t.tipo).sum(:impto18).to_i
       impto10 = libro.detlibro.where(tipodte: t.tipo).sum(:impto10).to_i
@@ -260,9 +260,12 @@ class Libro < ActiveRecord::Base
       tosign_xml+="   <FchResol>#{fchResolucion}</FchResol>\r\n"
       tosign_xml+="   <NroResol>#{numResolucion}</NroResol>\r\n"
       tosign_xml+="   <TipoOperacion>COMPRA</TipoOperacion>\r\n"
-      tosign_xml+="   <TipoLibro>MENSUAL</TipoLibro>\r\n"
-      tosign_xml+="   <TipoEnvio>TOTAL</TipoEnvio>\r\n"
-    else 
+      tosign_xml+="<TipoLibro>#{libro.tipolibro}</TipoLibro>"
+      tosign_xml+="<TipoEnvio>TOTAL</TipoEnvio>"
+      if(libro.tipolibro == "RECTIFICA")
+       tosign_xml+="<CodAutRec>#{libro.codautrec}</CodAutRec>\r\n"
+      end   
+   else 
       tosign_xml+="   <RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
       tosign_xml+="   <PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
       tosign_xml+="   <FchResol>2014-05-12</FchResol>\r\n"
@@ -286,7 +289,7 @@ class Libro < ActiveRecord::Base
       mntexe = libro.detlibro.where(tipodte: t.tipo).sum(:mntexe)
       mntneto = libro.detlibro.where(tipodte: t.tipo).sum(:mntneto)
       iva = libro.detlibro.where(tipodte: t.tipo).sum(:mntiva).to_i 
-      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal).to_i 
+      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal) 
 
       impto18 = libro.detlibro.where(tipodte: t.tipo).where(:codimp =>271).sum(:mntimp).to_i
       impto10 = libro.detlibro.where(tipodte: t.tipo).sum(:impto10).to_i
@@ -530,12 +533,12 @@ class Libro < ActiveRecord::Base
       tosign_xml+="   <FchResol>#{fchResolucion}</FchResol>\r\n"
       tosign_xml+="   <NroResol>#{numResolucion}</NroResol>\r\n"
       tosign_xml+="   <TipoOperacion>COMPRA</TipoOperacion>\r\n"
-      tosign_xml+="   <TipoLibro>#{libro.tipolibro}</TipoLibro>\r\n"
-      tosign_xml+="   <TipoEnvio>TOTAL</TipoEnvio>\r\n"
-      if(libro.codautrec != "0")
-      tosign_xml+="   <CodAutRec>#{libro.codautrec}</CodAutRec>\r\n"
-      end        
-    else 
+      tosign_xml+="<TipoLibro>#{libro.tipolibro}</TipoLibro>"
+      tosign_xml+="<TipoEnvio>TOTAL</TipoEnvio>"
+      if(libro.tipolibro == "RECTIFICA")
+       tosign_xml+="<CodAutRec>#{libro.codautrec}</CodAutRec>\r\n"
+      end  
+   else 
       tosign_xml+="   <RutEnvia>#{rutEnvia}</RutEnvia>\r\n"
       tosign_xml+="   <PeriodoTributario>#{libro.idenvio}</PeriodoTributario>\r\n"
       tosign_xml+="   <FchResol>#{fchResolucion}</FchResol>\r\n"
