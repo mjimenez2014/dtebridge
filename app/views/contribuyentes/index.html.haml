@@ -1,32 +1,31 @@
 %h1 Contribuyentes
+.container-fluid
+  .row
+    .col-md-12
+      
+
+/%p Contribuyentes Registrados :
+/%h3= @contribuyentes
 %br
+= will_paginate @contribuyentes
+%table.table.table-striped
+  %tr
+    %th Rut
+    %th Nombre
+    %th Email
+    %th
+    %th
+    %th
+
+  - @contribuyentes.each do |contribuyente|
+    %tr
+    %td= contribuyente.rut
+    %td= contribuyente.nombre
+    %td= contribuyente.email
+    %td= link_to 'Show', contribuyente
+    %td= link_to 'Edit', edit_contribuyente_path(contribuyente)
+    %td= link_to 'Destroy', contribuyente, :method => :delete, :data => { :confirm => 'Are you sure?' }
 %br
 = link_to 'uploads Contribuyente', '/contribuyentes/upload', class: "btn btn-primary btn-xs"
-%br
-%br
-
-%p Contribuyentes Registrados :
-%h3= @contribuyentes
-/ %br
-/ %table
-/   %thead
-/     %tr
-/       %th Rut
-/       %th Nombre
-/       %th Email
-/       %th
-/       %th
-/       %th
-      
-/   %tbody
-/     - @contribuyentes.each do |contribuyente|
-/       %tr
-/         %td= contribuyente.rut
-/         %td= contribuyente.nombre
-/         %td= contribuyente.email
-/         %td= link_to 'Show', contribuyente
-/         %td= link_to 'Edit', edit_contribuyente_path(contribuyente)
-/         %td= link_to 'Destroy', contribuyente, :method => :delete, :data => { :confirm => 'Are you sure?' }
-/ %br
 
 

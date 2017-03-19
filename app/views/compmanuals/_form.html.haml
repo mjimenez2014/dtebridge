@@ -1,23 +1,75 @@
 = simple_form_for(@compmanual) do |f|
   = f.error_notification
-
-  .form-input
-    = f.collection_select :tipodoc, Tipodte.where(:tipo => [33,61,60,52]),:tipo,:nombre
-    = f.input :folio
-    = f.input :fchemis, as: :date, html5: true
-    = f.input :rutemisor, :placeholder => "00000000-0"
-    = f.collection_select :rutrecep, Empresa.where(rut: Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}),:rut,:rznsocial
-    = f.input :rznsocemisor, :input_html => {:value => "COMERCIAL LUBBA LTDA."}
-    = f.input :mntneto
-    = f.input :mntexe
-    = f.input :mntiva
-    = f.input :otrosimpto,:as => :hidden, :input_html =>{ :value => "0"}
-    = f.input :mnttotal
-    = f.input :impto18,:as => :hidden, :input_html =>{ :value => "0"}
-    = f.input :impto10,:as => :hidden, :input_html =>{ :value => "0"}
-    = f.input :impto25,:as => :hidden, :input_html =>{ :value => "0"}
-    = f.input :impto30,:as => :hidden, :input_html =>{ :value => "0"}
-    = f.input :estado, :as => :hidden, :input_html =>{ :value => "PREVIO"}
-
-  .form-actions
-    = f.button :submit, id:"agregar", data: { confirm: "Esta seguro?" }
+  .row 
+    .col-md-4
+      .form-group
+        .input-group
+          .input-group-addon
+          = f.collection_select :tipodoc, Tipodte.where(:tipo => [33,61,60,52]),:tipo,:nombre, label: false
+          .input-group-addon
+    .col-md-4
+      .form-group
+        .input-group
+          .input-group-addon
+          = f.input :folio, label: false,:placeholder => "Folio"
+          .input-group-addon
+    .col-md-4
+      .form-group
+        .input-group
+          .input-group-addon
+          = f.input :fchemis, as: :date, html5: true,label: false
+          .input-group-addon
+    .col-md-4#idRutEmisor{:style =>   "display: none;"} 
+      .form-group
+        .input-group
+          .input-group-addon      
+          = f.input :rutemisor,label: false
+          .input-group-addon 
+      .form-group
+        .input-group
+          .input-group-addon
+          = f.collection_select :rutrecep, Empresa.where(rut: Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}),:rut,:rznsocial,label: false
+          .input-group-addon
+    .col-md-4#idRznSocEmisor{:style =>   "display: none;"}     
+      .form-group
+        .input-group
+          .input-group-addon
+          = f.input :rznsocemisor,label: false
+          .input-group-addon
+    .col-md-4  
+      .form-group
+        .input-group
+          .input-group-addon   
+          = f.input :mntneto,:placeholder => "Monto Neto",label: false
+          .input-group-addon 
+      .form-group   
+        .input-group
+          .input-group-addon
+          = f.input :mntexe,:placeholder => "Monto Exento",label: false
+          .input-group-addon       
+      .form-group
+        .input-group
+          .input-group-addon
+          = f.input :mntiva,:placeholder => "IVA",label: false
+          .input-group-addon
+    .col-md-4    
+      .form-group   
+        = f.input :otrosimpto,:as => :hidden, :input_html =>{ :value => "0"}
+      .form-group 
+        .input-group
+          .input-group-addon
+          = f.input :mnttotal,:placeholder => "Monto Total",label: false
+          .input-group-addon
+      .form-group
+        = f.input :impto18,:as => :hidden, :input_html =>{ :value => "0"}
+      .form-group
+        = f.input :impto10,:as => :hidden, :input_html =>{ :value => "0"}
+    .col-md-4
+      .form-group
+        = f.input :impto25,:as => :hidden, :input_html =>{ :value => "0"}
+      .form-group
+        = f.input :impto30,:as => :hidden, :input_html =>{ :value => "0"}
+      .form-group
+        = f.input :estado, :as => :hidden, :input_html =>{ :value => "PREVIO"}
+    .col-md-12
+      = f.button :submit, id:"agregar", data: { confirm: "Esta seguro?" } 

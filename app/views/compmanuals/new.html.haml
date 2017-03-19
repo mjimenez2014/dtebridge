@@ -1,5 +1,5 @@
 %h1 Nueva Compra Manual
-/ = link_to "Buscar Emisor", :controller => "compmanuals", :action => "index"
+= render 'buscaCliente'
 = render 'form'
 = javascript_include_tag "compmanual/new"
 = link_to 'Back', compmanuals_path

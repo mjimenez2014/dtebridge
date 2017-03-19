@@ -4,7 +4,7 @@ class ContribuyentesController < ApplicationController
   respond_to :html
 
   def index
-    @contribuyentes = Contribuyente.count
+    @contribuyentes = Contribuyente.all.paginate(:page => params[:page], :per_page => 15 )
     respond_with(@contribuyentes)
   end
 
