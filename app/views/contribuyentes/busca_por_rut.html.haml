@@ -4,5 +4,19 @@
 - if @contribuyente.nil?
   /%h1 no se encuentra el contribuyente!
 - else
-  %hr
-  = @contribuyente.nombre
+  %table.table
+    %tr
+      %th R.U.T
+      %th Razón Social
+      %th -
+    %tr
+      %td   
+        = @contribuyente.rut
+      %td 
+        = @contribuyente.nombre
+      %td
+        = link_to "Aceptar"
+
+      
+
+

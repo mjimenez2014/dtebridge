@@ -1,13 +1,18 @@
 %h1 Contribuyentes
 .container-fluid
   .row
+    .col-xs-12.col-sm-6.col-md-12
+      = form_tag contribuyentes_path,:method=> "get" do |f|
+        = text_field_tag "rut", nil,placeholder: 'Rut Contribuyente'
+        = submit_tag "buscar",:class=>"btn btn-default"
+        = link_to "Limpiar Busqueda","/contribuyentes",  class: 'btn btn-info btn-xs' 
+        %hr
+  .row
     .col-md-12
-      
-
 /%p Contribuyentes Registrados :
 /%h3= @contribuyentes
 %br
-= will_paginate @contribuyentes
+= will_paginate @contribuyente
 %table.table.table-striped
   %tr
     %th Rut
@@ -17,7 +22,7 @@
     %th
     %th
 
-  - @contribuyentes.each do |contribuyente|
+  - @contribuyente.each do |contribuyente|
     %tr
     %td= contribuyente.rut
     %td= contribuyente.nombre

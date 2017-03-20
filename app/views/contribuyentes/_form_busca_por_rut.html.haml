@@ -1,8 +1,6 @@
-= form_tag "busca_por_rut",:method=> "get" do |f|
-
-  .form-inputs
-    = text_field_tag "rut"
-  %p  
-
-  .form-actions
-    = submit_tag "buscar"
+.row
+	.col-xs-12.col-sm-6.col-md-8
+		= form_tag "busca_por_rut",:method=> "get" do |f|
+			= text_field_tag "rut"
+			= submit_tag "buscar",:class=>"btn btn-default"
+			%hr

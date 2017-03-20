@@ -1,11 +1,17 @@
 class ContribuyentesController < ApplicationController
- # before_action :set_contribuyente, only: [:show, :edit, :update, :destroy]
+  before_action :set_contribuyente, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
 
   def index
-    @contribuyentes = Contribuyente.all.paginate(:page => params[:page], :per_page => 15 )
-    respond_with(@contribuyentes)
+
+    if params["rut"].present?
+     @contribuyente = Contribuyente.where(rut: params["rut"]).paginate(:page => params[:page], :per_page => 15 )
+    else
+     @contribuyente = Contribuyente.all.paginate(:page => params[:page], :per_page => 15 )
+    end
+
+    respond_with(@contribuyente)
   end
 
   def show
