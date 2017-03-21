@@ -1,5 +1,5 @@
 / Button trigger modal
-%button.btn.btn-primary{"data-target" => "#BuscaCliente", "data-toggle" => "modal", :type => "button"} Busca Cliente
+%button.btn.btn-primary{"data-target" => "#BuscaCliente", "data-toggle" => "modal", :type => "button",:id =>"busca_cliente"} Busca Cliente
 %hr
 #BuscaCliente.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
   .modal-dialog{:role => "document"}
@@ -13,7 +13,6 @@
         .form-group
         %label.control-label{:for => "recipient-name"} RUT Cliente:
         %input#recipient-name.form-control{:type => "text"}/
-        =link_to "Buscar"
       .modal-footer
-        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Cerrar
-        = link_to "Aceptar",nil,:id=>"boton"
+        = link_to "Aceptar",nil,:id=>"boton", :type => "button"
+

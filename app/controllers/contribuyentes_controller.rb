@@ -20,7 +20,7 @@ class ContribuyentesController < ApplicationController
 
   def busca_por_rut
     @contribuyente = Contribuyente.where(rut: params['rut']).first
-    respond_with(@contribuyente)
+    render '/contribuyentes/busca_por_rut.json'
   end
 
   def new
@@ -64,7 +64,11 @@ class ContribuyentesController < ApplicationController
 
   private
     def set_contribuyente
-      @contribuyente = Contribuyente.find(params[:id])
+      if params[:id].present?
+       @contribuyente = Contribuyente.find(params[:id])
+      else
+       @contribuyente = Contribuyente.find(params[:rut])
+      end
     end
 
     def contribuyente_params
