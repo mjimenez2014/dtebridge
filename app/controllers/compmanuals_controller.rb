@@ -46,7 +46,6 @@ class CompmanualsController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @compmanual }
-      format.js {}
     end
   end
 

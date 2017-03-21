@@ -1,7 +1,7 @@
 class ContribuyentesController < ApplicationController
   before_action :set_contribuyente, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :html,:json
 
   def index
 
@@ -20,6 +20,7 @@ class ContribuyentesController < ApplicationController
 
   def busca_por_rut
     @contribuyente = Contribuyente.where(rut: params['rut']).first
+    respond_with(@contribuyente)
   end
 
   def new
