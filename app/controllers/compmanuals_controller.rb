@@ -10,6 +10,7 @@ class CompmanualsController < ApplicationController
   end
 
   def show
+    @impuestos = Impuesto.all
     @otrosimp = Otrosimpcompmanual.where(compmanual_id: @compmanual.id).all
     respond_with(@compmanual)
   end
@@ -42,7 +43,7 @@ class CompmanualsController < ApplicationController
 
   def new
     @compmanual = Compmanual.new
-    @tipodtes = Tipodte.where(:tipo => [33,61,60,52])
+    @tipodtes = Tipodte.where(:tipo => [33,61,60,52,34])
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @compmanual }

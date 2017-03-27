@@ -1,5 +1,8 @@
-%h1 Nueva Compra Manual
 = render 'buscaCliente'
-= render 'form'
+.panel.panel-default
+  .panel-heading.h4 Documento
+  .panel.body
+    = render 'form'
 = javascript_include_tag "compmanual/new"
-= link_to 'Back', compmanuals_path
+%p
+= link_to '<---- Volver', compmanuals_path

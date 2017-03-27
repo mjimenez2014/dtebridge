@@ -37,9 +37,11 @@ class LibroVentaController < ApplicationController
 
     @docmanuals = Docmanual.select('"tipodoc", sum("mntneto") as mntneto,sum("mntexe") as mntexe, sum("mntiva") as iva, sum("mnttotal") as mnttotal,  sum(impto10+impto18+impto25+impto30) as otrosimp, count(*) as count').where('"tipodoc" <> 52  and "rutemisor"=? and "fchemis" >= ? AND "fchemis" <= ?',  @rut , desde, hasta ).group('"tipodoc"')
     cantBoleta = Docmanual.select('"cantidad"').where('"tipodoc" =35  and "tipodoc" <> 52  and "rutemisor"=? and "fchemis" >= ? AND "fchemis" <= ?',  @rut , desde, hasta )
+    cantVoucher = Docmanual.select('"cantidad"').where('"tipodoc" =48  and "tipodoc" <> 52  and "rutemisor"=? and "fchemis" >= ? AND "fchemis" <= ?',  @rut , desde, hasta )
     totFman = Docmanual.select('sum("mntneto") as mntneto,sum("mntexe") as mntexe, sum("mntiva") as iva, sum("mnttotal") as mnttotal,sum(impto10+impto18+impto25+impto30) as otrosimp, count(*) as count').where('"tipodoc" <> 52 and "tipodoc"<>60  and "rutemisor"=? and "fchemis" >= ? AND "fchemis" <= ?',  @rut, desde, hasta )
     totCManual = Docmanual.select('sum("mntneto") as mntneto,sum("mntexe") as mntexe, sum("mntiva") as iva, sum("mnttotal") as mnttotal,sum(impto10+impto18+impto25+impto30) as otrosimp,  count(*) as count').where(' "tipodoc"=60  and "rutemisor"=? and "fchemis" >= ? AND "fchemis" <= ? ',  @rut, desde, hasta )
     cantBoleta.map {|e| @cantBoleta = e}
+    cantVoucher.map {|e| @cantVoucher = e}
     totFman.map {|e| @totFmanual = e}
     totCManual.map {|e| @totCredManual  = e}
 

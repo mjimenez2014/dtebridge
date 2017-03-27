@@ -72,7 +72,7 @@ class Libro < ActiveRecord::Base
       mntexe = libro.detlibro.where(tipodte: t.tipo).sum(:mntexe)
       mntneto = libro.detlibro.where(tipodte: t.tipo).sum(:mntneto)
       iva = libro.detlibro.where(tipodte: t.tipo).sum(:mntiva).to_i 
-      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal) 
+      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal)
 
       impto18 = libro.detlibro.where(tipodte: t.tipo).sum(:impto18).to_i
       impto10 = libro.detlibro.where(tipodte: t.tipo).sum(:impto10).to_i
@@ -131,7 +131,7 @@ class Libro < ActiveRecord::Base
 
         doc = Docmanual.where(folio: det.folio).where(rutemisor: det.rutemis).last
 
-        if doc.tipodoc != 35 &&  doc.tipodoc != 38
+        if doc.tipodoc != 35 &&  doc.tipodoc != 38 &&  doc.tipodoc != 48
           tosign_xml+="<Detalle>\r\n"
           tosign_xml+="<TpoDoc>#{doc.tipodoc}</TpoDoc>\r\n"
           tosign_xml+="<NroDoc>#{doc.folio}</NroDoc>\r\n"
@@ -562,7 +562,7 @@ class Libro < ActiveRecord::Base
       mntexe = libro.detlibro.where(tipodte: t.tipo).sum(:mntexe)
       mntneto = libro.detlibro.where(tipodte: t.tipo).sum(:mntneto)
       iva = libro.detlibro.where(tipodte: t.tipo).sum(:mntiva).to_i 
-      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal) 
+      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal).to_i
 
       ivanorec = libro.detlibro.where(tipodte:t.tipo).sum(:ivanorec).to_i
       countivanorec = libro.detlibro.where(tipodte:t.tipo).where("codivanorec > ?", 0).count

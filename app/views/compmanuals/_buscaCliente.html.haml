@@ -1,18 +1,13 @@
-/ Button trigger modal
-%button.btn.btn-primary{"data-target" => "#BuscaCliente", "data-toggle" => "modal", :type => "button",:id =>"busca_cliente"} Busca Cliente
-%hr
-#BuscaCliente.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
-  .modal-dialog{:role => "document"}
-    .modal-content
-      .modal-header
-        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
-          %span{"aria-hidden" => "true"} ×
-        %h4#myModalLabel.modal-title Busca Cliente
-      .modal-body
-        %form
-        .form-group
-        %label.control-label{:for => "recipient-name"} RUT Cliente:
-        %input#recipient-name.form-control{:type => "text"}/
-      .modal-footer
-        = link_to "Aceptar",nil,:id=>"boton", :type => "button"
-
+.panel.panel-info
+  .panel.heading.h3 Nueva Compra Manual
+  .panel.body
+    .row
+      .col-sm-4
+        #BuscaCliente{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+        %input#recipient-name{:placeholder => "Rut Cliente"}
+        = link_to "Buscar",nil,:id=>"boton", :type => "button",:class=>"btn btn-default btn-sm"
+      .col-sm-4
+        %label{:id=>"RutCliente"}
+      .col-sm-4
+        %label{:id=>"RzsCliente"}        
+        %p

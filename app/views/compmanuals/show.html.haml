@@ -1,71 +1,120 @@
 %p#notice= notice
-
-%p
-  %b Tipodoc:
-  = @compmanual.tipodoc
-%p
-  %b Folio:
-  = @compmanual.folio
-%p
-  %b Fchemis:
-  = @compmanual.fchemis
-%p
-  %b Rutemisor:
-  = @compmanual.rutemisor
-%p
-  %b Rutrecep:
-  = @compmanual.rutrecep
-%p
-  %b Rznsoemisor:
-  = @compmanual.rznsocemisor
-%p
-  %b Mntneto:
-  = @compmanual.mntneto
-%p
-  %b Mntexe:
-  = @compmanual.mntexe
-%p
-  %b Mntiva:
-  = @compmanual.mntiva
-/ %p
-/   %b Otrosimpto:
-/   = @compmanual.otrosimpto
-%p
-  %b Mnttotal:
-  = @compmanual.mnttotal
-/ %p
-/   %b Impto18:
-/   = @compmanual.impto18
-/ %p
-/   %b Impto10:
-/   = @compmanual.impto10
-/ %p
-/   %b Impto25:
-/   = @compmanual.impto25
-/ %p
-/   %b Impto30:
-/   = @compmanual.impto30
-%p
-  %b Estado:
-  = @compmanual.estado
-%hr
-  %h4 Impuestos Adicionales
-- @otrosimp.each do |otrosimp|
-  =otrosimp.TipoImp
-  =otrosimp.TasaImp
-%hr
-  %h4 Add Otros Impuestos
+.panel.panel-success
+  .panel.heading.h4 Documento
+  .row
+    .col-sm-3
+      %p
+        %b Tipodoc:
+        = @compmanual.tipodoc
+    .col-sm-3
+      %p  
+        %b Folio:
+        = @compmanual.folio
+    .col-sm-3
+      %p
+        %b Fchemis:
+        = @compmanual.fchemis
+    .col-sm-3
+      %p
+        %b Rutemisor:
+        = @compmanual.rutemisor
+  .row
+    .col-sm-3
+      %p
+        %b Rutrecep:
+        = @compmanual.rutrecep
+    .col-sm-3
+      %p
+        %b Rznsoemisor:
+        = @compmanual.rznsocemisor
+    .col-sm-3
+      %p
+        %b Mntneto:
+        = @compmanual.mntneto
+    .col-sm-3
+      %p
+        %b Mntexe:
+        = @compmanual.mntexe
+  .row
+    .col-sm-3
+      %p
+        %b Mntiva:
+        = @compmanual.mntiva
+    .col-sm-3
+      %p
+        %b Mnttotal:
+        = @compmanual.mnttotal
+    .col-sm-3
+      %p
+        %b Estado:
+        = @compmanual.estado
+.panel.panel-success
+  .panel.heading.h4 Impuestos Adicionales
+/ Button trigger modal
+%button.btn.btn-primary.btn-sm{"data-target" => "#ImpAdicModal", "data-toggle" => "modal", :type => "button",:id =>"BuscaImp"}
+  Busca Impuesto Adicional
+/ Modal
+#ImpAdicModal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        %h4#myModalLabel.modal-title Impuestos Adicionales
+      .modal-body
+        %table.table
+          %tr
+            %th Id
+            %th Nombre
+            %th Tasa %
+            %th - 
+          - @impuestos.each do |imp|
+            %tr
+              %td=imp.id
+              %td=imp.name
+              %td=imp.tasaimp.to_s + " %"
+              %td
+                %input{:name => "selectImp", :type => "radio", :value => imp.id, :id => "radioID#{imp.id}"}
+              //%td=link_to "aceptar",nil,:id=>"botonImp", :type => "button"
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button", :id => "bus"} Aceptar
+        %p
 = simple_form_for([@compmanual,@compmanual.otrosimpcompmanuals.build]) do |f|
-
-  .form-inputs
-    = f.collection_select :TipoImp, Impuesto.all,:tipoimp,:tipoimp
-    = f.collection_select :TasaImp, Impuesto.all,:tipoimp,:tasaimp
-    = f.input :MontoImp
-    = f.association :compmanual
-
-  .form-actions
-    = f.button :submit
-
+  .row
+    .col-sm-5
+      %label#labelNomImp  
+    .col-sm-3
+      %label#labelTipoImp
+    .col-sm-3
+      %label#labelTasaImp  
+  .row
+    .col-sm-3#TipoImp{:style =>   "display: none;"}
+      = f.input :TipoImp
+    .col-sm-3#TasaImp{:style =>   "display: none;"}        
+      = f.input :TasaImp         
+    .col-sm-3#MontoImp{:style =>   "display: none;"}    
+      = f.input :MontoImp,:placeholder => "Monto Impuesto Adicional",label: false        
+    .col-sm-3#compmanual{:style =>   "display: none;"}      
+      = f.association :compmanual
+  .row      
+    .col-sm-3#btAgregarOtrosImp{:style =>   "display: none;"}
+      = f.button :submit,"Agregar", :data => { :confirm => 'Are you sure?' }      
+.panel.panel-success
+  .panel.heading
+    %table.table
+      %tr
+        %th Codigo Impuesto
+        %th Tasa de impuesto
+        %th Monto impuesto
+        %th -
+      - @otrosimp.each do |otrosimp|
+        %tr
+          %td=otrosimp.TipoImp
+          %td=otrosimp.TasaImp.to_s + " %"
+          %td= "$ " + otrosimp.MontoImp.to_s
+          %td=link_to 'Destroy', otrosimp, :method => :delete, :data => { :confirm => 'Are you sure?' }
+       
 = link_to 'Editar', edit_compmanual_path(@compmanual)
 |
 = link_to 'Volver', compmanuals_path
+= javascript_include_tag "/assets/compmanual/show"
