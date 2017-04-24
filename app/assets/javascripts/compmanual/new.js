@@ -5,7 +5,7 @@ $(document).ready(function(){
 $('#boton').click(function(ev){
 	ev.stopImmediatePropagation()
 	ev.preventDefault()
-	var url1 = 'http://localhost:3000/contribuyentes/busca_por_rut?utf8=%E2%9C%93&rut=';
+	var url1 = 'http://localhost/contribuyentes/busca_por_rut?utf8=%E2%9C%93&rut=';
 	var url2 = $("#recipient-name").val();
 	var url3 = '&commit=buscar'
 
