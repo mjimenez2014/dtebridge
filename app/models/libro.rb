@@ -563,10 +563,9 @@ class Libro < ActiveRecord::Base
       mntneto = libro.detlibro.where(tipodte: t.tipo).sum(:mntneto)
       iva = libro.detlibro.where(tipodte: t.tipo).sum(:mntiva).to_i 
       mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal).to_i
-
       ivanorec = libro.detlibro.where(tipodte:t.tipo).sum(:ivanorec).to_i
       countivanorec = libro.detlibro.where(tipodte:t.tipo).where("codivanorec > ?", 0).count
-
+      sum_mntsincred = libro.detlibro.where(tipodte:t.tipo).sum(:mntsincred).to_i
 
       if cantidad > 0
         tosign_xml+="   <TotalesPeriodo>\r\n"
@@ -589,14 +588,17 @@ class Libro < ActiveRecord::Base
         imp = Impuesto.all  
         imp.each do |impto|
             totMontoImp = Otrosimpdetlibro.where(tipodte: t.tipo).where(libro_id: libro.id).where(TipoImp: impto.tipoimp.to_s).sum(:MontoImp)# todos los doc del mimso tipo
-            puts "=============== TOTAL MONTO IMPUESTO ==========================="
-            puts totMontoImp
+            #puts "=============== TOTAL MONTO IMPUESTO ==========================="
+            #puts totMontoImp
           if totMontoImp != 0
             tosign_xml+="   <TotOtrosImp>\r\n"
             tosign_xml+="    <CodImp>#{impto.tipoimp}</CodImp>\r\n"
             tosign_xml+="    <TotMntImp>#{totMontoImp}</TotMntImp>\r\n"
             tosign_xml+="   </TotOtrosImp>\r\n"
           end
+        end
+        if sum_mntsincred > 0
+        tosign_xml+="   <TotImpSinCredito>#{sum_mntsincred}</TotImpSinCredito>\r\n"          
         end
         tosign_xml+="   <TotMntTotal>#{mnttotal}</TotMntTotal>\r\n"
         tosign_xml+="   </TotalesPeriodo>\r\n"
@@ -640,14 +642,18 @@ class Libro < ActiveRecord::Base
         end
 
         if det.ivanorec > 0
-          tosign_xml+="<IVANoRec>\r\n"
-          tosign_xml+="<CodIVANoRec>#{det.codivanorec}</CodIVANoRec>\r\n"
-          tosign_xml+="<MntIVANoRec>#{det.ivanorec}</MntIVANoRec>\r\n"
-          tosign_xml+="</IVANoRec>\r\n"
+          tosign_xml+=" <IVANoRec>\r\n"
+          tosign_xml+=" <CodIVANoRec>#{det.codivanorec}</CodIVANoRec>\r\n"
+          tosign_xml+=" <MntIVANoRec>#{det.ivanorec}</MntIVANoRec>\r\n"
+          tosign_xml+=" </IVANoRec>\r\n"
+        end
+        
+        if det.mntsincred > 0
+        tosign_xml+=" <MntSinCred>#{det.mntsincred}</MntSinCred>\r\n"        
         end
 
-        tosign_xml+="<MntTotal>#{det.mnttotal}</MntTotal>\r\n"
-        tosign_xml+="</Detalle>\r\n"
+        tosign_xml+=" <MntTotal>#{det.mnttotal}</MntTotal>\r\n"
+        tosign_xml+="</Detalle>\r\n"  
       end  
     end
 

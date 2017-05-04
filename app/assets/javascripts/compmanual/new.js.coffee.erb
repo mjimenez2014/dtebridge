@@ -1,0 +1,27 @@
+$(document).ready ->
+  $('#recipient-name').focus()
+  return
+$('#boton').click (ev) ->
+  ev.stopImmediatePropagation()
+  ev.preventDefault() 
+  <% if Rails.env.production? %>
+  url1 = 'http://localhost/contribuyentes/busca_por_rut?utf8=%E2%9C%93&rut='
+  <% else %>
+  url1 = 'http://localhost:3000/contribuyentes/busca_por_rut?utf8=%E2%9C%93&rut='
+  <% end %>
+  url2 = $('#recipient-name').val()
+  url3 = '&commit=buscar'
+  $.getJSON url1 + url2 + url3, (response) ->
+    $('#RutCliente').text 'Rut:  ' + response.rut
+    $('#RzsCliente').text 'Razón Social: ' + response.nombre
+    #$("#idRutEmisor").css("display", "block");
+    $('#compmanual_rutemisor').val response.rut
+    #$("#idRznSocEmisor").css("display", "block");
+    $('#compmanual_rznsocemisor').val response.nombre
+    console.log response
+    return
+  $('#recipient-name').val ''
+  $('#compmanual_tipodoc').focus()
+  return
+
+

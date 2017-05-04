@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170304021632) do
+ActiveRecord::Schema.define(version: 20170428014444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20170304021632) do
     t.integer  "mntimp"
     t.string   "tipolibro"
     t.string   "codautrec"
+    t.integer  "mntsincred"
   end
 
   create_table "contribuyentes", force: true do |t|
@@ -107,7 +108,7 @@ ActiveRecord::Schema.define(version: 20170304021632) do
     t.integer  "MntMargComer"
     t.integer  "PrcConsFinal"
     t.integer  "NmbItem"
-    t.string   "DscItem"
+    t.text     "DscItem"
     t.integer  "QtyRef"
     t.string   "UnmdRef"
     t.float    "PrcRef"
@@ -187,6 +188,7 @@ ActiveRecord::Schema.define(version: 20170304021632) do
     t.integer  "codimp"
     t.float    "tasaimp"
     t.integer  "mntimp"
+    t.integer  "mntsincred"
   end
 
   add_index "detlibros", ["libro_id"], name: "index_detlibros_on_libro_id", using: :btree
@@ -424,6 +426,7 @@ ActiveRecord::Schema.define(version: 20170304021632) do
     t.text     "estadoxml"
     t.string   "pdft"
     t.text     "estadoEnvioXml"
+    t.string   "trackidSII"
     t.string   "fileCliente"
     t.string   "fileFactura"
     t.string   "fileJson"
@@ -438,7 +441,6 @@ ActiveRecord::Schema.define(version: 20170304021632) do
     t.string   "NroOrdenCompra"
     t.string   "CondVenta"
     t.string   "MedioPago"
-    t.string   "trackidSII"
   end
 
   create_table "dsc_rcg_globals", force: true do |t|

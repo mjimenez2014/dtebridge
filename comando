@@ -1,10 +1,10 @@
 #!/usr/bin/expect -f
 set inf [lindex $argv 0];
 set outf [lindex $argv 1];
-spawn xmlsec1 --sign --output $outf --privkey-pem privateKeyDonAngel.pem,publicCertDonAngel.pem $inf
+spawn xmlsec1 --sign --output $outf --privkey-pem privateKeyDila.pem,publicCertDila.pem $inf
 expect {
 -re ".*sword.*" {
-exp_send "carnesdonangel2016\r"
+exp_send "elpreciosodt3\r"
 exp_continue
 }
 }

@@ -1,0 +1,41 @@
+$('#botonImp').click (ev) ->
+  ev.stopImmediatePropagation()
+  ev.preventDefault()
+  <% if Rails.env.production? %>
+  url1 = 'http://localhost/impuestos/'
+  <% else %>
+  url1 = 'http://localhost:3000/impuestos/'
+  <% end %>
+  url2 = $('#recipient-name').val()
+  $.getJSON url1 + url2, (response) ->
+    $('#idRutEmisor').css 'display', 'block'
+    $('#compmanual_rutemisor').val response.rut
+    return
+  return
+$('#bus').click ->
+  idImpuesto = ''
+  i = 1
+  while i < 8
+    if $('#radioID' + i).is(':checked')
+      idImpuesto = $('#radioID' + i).val()
+    i++
+  <% if Rails.env.production? %>
+  url1 = 'http://localhost/impuestos/'
+  <% else %>
+  url1 = 'http://localhost:3000/impuestos/'
+  <% end %>  
+  url2 = idImpuesto
+  $.getJSON url1 + url2, (response) ->
+    $('#labelNomImp').text 'Nombre: ' + response.name
+    $('#otrosimpcompmanual_TipoImp').val response.tipoimp
+    $('#labelTipoImp').text 'Codigo Impuesto: ' + response.tipoimp
+    $('#otrosimpcompmanual_TasaImp').val response.tasaimp
+    $('#labelTasaImp').text 'Tasa Impuesto: ' + response.tasaimp + ' %'
+    $('#MontoImp').css 'display', 'block'
+    $('#btAgregarOtrosImp').css 'display', 'block'
+    $('#otrosimpcompmanual_MontoImp').focus()
+    console.log response
+    return
+  return
+
+ 

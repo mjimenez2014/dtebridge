@@ -119,6 +119,7 @@ class LibroCompraController < ApplicationController
       detlibro.codimp = e.codimp
       detlibro.tasaimp = e.tasaimp
       detlibro.mntimp = e.mntimp
+      detlibro.mntsincred = e.mntsincred
       detlibro.save
       
       if  e.otrosimpcompmanuals.present?
