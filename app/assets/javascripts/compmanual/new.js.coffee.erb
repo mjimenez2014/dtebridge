@@ -5,8 +5,8 @@ $('#boton').click (ev) ->
   ev.stopImmediatePropagation()
   ev.preventDefault() 
   <% if Rails.env.production? %>
-  url1 = 'http://localhost/contribuyentes/busca_por_rut?utf8=%E2%9C%93&rut='
-  <% else %>
+  url1 = 'http://' + '<%=Socket.ip_address_list.detect{|intf| intf.ipv4_private?}.try(:ip_address)%>' + '/contribuyentes/busca_por_rut?utf8=%E2%9C%93&rut='
+  <% else %>  
   url1 = 'http://localhost:3000/contribuyentes/busca_por_rut?utf8=%E2%9C%93&rut='
   <% end %>
   url2 = $('#recipient-name').val()
@@ -23,5 +23,5 @@ $('#boton').click (ev) ->
   $('#recipient-name').val ''
   $('#compmanual_tipodoc').focus()
   return
-
+ 
 
