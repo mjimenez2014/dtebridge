@@ -2,7 +2,7 @@ $('#botonImp').click (ev) ->
   ev.stopImmediatePropagation()
   ev.preventDefault()
   <% if Rails.env.production? %>
-  url1 = 'http://localhost/impuestos/'
+  url1 = 'http://' + '<%=Socket.ip_address_list.detect{|intf| intf.ipv4_private?}.try(:ip_address)%>' + '/impuestos/'
   <% else %>
   url1 = 'http://localhost:3000/impuestos/'
   <% end %>
@@ -20,7 +20,7 @@ $('#bus').click ->
       idImpuesto = $('#radioID' + i).val()
     i++
   <% if Rails.env.production? %>
-  url1 = 'http://localhost/impuestos/'
+  url1 = 'http://' + '<%=Socket.ip_address_list.detect{|intf| intf.ipv4_private?}.try(:ip_address)%>' + '/impuestos/'
   <% else %>
   url1 = 'http://localhost:3000/impuestos/'
   <% end %>  
