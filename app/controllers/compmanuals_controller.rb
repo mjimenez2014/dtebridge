@@ -52,9 +52,9 @@ class CompmanualsController < ApplicationController
 
   def create
     @compmanual = Compmanual.new(compmanual_params)
-    puts "======== PARAMS ==========="
-    puts compmanual_params
-    puts "============================"
+    #puts "======== PARAMS ==========="
+    #puts compmanual_params
+    #puts "============================"
     respond_to do |format|
       if @compmanual.save
         format.html { redirect_to @compmanual, notice: 'Compmanual was successfully created.' }

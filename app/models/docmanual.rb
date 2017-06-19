@@ -38,10 +38,10 @@ class Docmanual < ActiveRecord::Base
       end
     rescue
       msg = msg + "Formato de archivo incorrecto, revise si contiene algún caracter especial \r\n"
-      puts "****************"
-      puts msg
-      puts puts "Error #{$!}"
-      puts "****************"  
+      #puts "****************"
+      #puts msg
+      #puts "Error #{$!}"
+      #puts "****************"  
       return msg    
     end  
 

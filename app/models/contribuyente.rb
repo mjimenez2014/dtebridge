@@ -5,8 +5,8 @@ class Contribuyente < ActiveRecord::Base
     CSV.foreach(file.path, col_sep: ';', headers: true, encoding: "ISO-8859-1" ) do |row|
       rowHash = row.to_hash
       
-      puts "================="
-      puts rowHash
+      #puts "================="
+      #puts rowHash
       res = Contribuyente.new(rowHash)
       res.save
     end

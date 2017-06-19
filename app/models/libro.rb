@@ -72,7 +72,7 @@ class Libro < ActiveRecord::Base
       mntexe = libro.detlibro.where(tipodte: t.tipo).sum(:mntexe)
       mntneto = libro.detlibro.where(tipodte: t.tipo).sum(:mntneto)
       iva = libro.detlibro.where(tipodte: t.tipo).sum(:mntiva).to_i 
-      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal)
+      mnttotal = libro.detlibro.where(tipodte: t.tipo).sum(:mnttotal).to_i
 
       impto18 = libro.detlibro.where(tipodte: t.tipo).sum(:impto18).to_i
       impto10 = libro.detlibro.where(tipodte: t.tipo).sum(:impto10).to_i
@@ -222,15 +222,15 @@ class Libro < ActiveRecord::Base
     sleep 1
      
     if Empresa.last.rut == "80790400-0"
-      puts "============"
-      puts "ElSultan"
-      puts "============"
+      #puts "============"
+      #puts "ElSultan"
+      #puts "============"
       system("./comandoElSultan libro_ventatosing#{libro.rut}#{libro.idenvio}.xml libro_venta#{libro.rut}#{libro.idenvio}.xml")
     else  
       system("./comando libro_ventatosing#{libro.rut}#{libro.idenvio}.xml libro_venta#{libro.rut}#{libro.idenvio}.xml")
-      puts "============"
-      puts "Otros"
-      puts "============"
+      #puts "============"
+      #puts "Otros"
+      #puts "============"
     end  
 
 
@@ -497,15 +497,15 @@ class Libro < ActiveRecord::Base
     sleep 1
      
     if Empresa.last.rut == "80790400-0"
-      puts "============"
-      puts "ElSultan"
-      puts "============"
+      #puts "============"
+      #puts "ElSultan"
+      #puts "============"
       system("./comandoElSultan libro_compratosing#{libro.rut}#{libro.idenvio}.xml libro_compra#{libro.rut}#{libro.idenvio}.xml")
     else  
       system("./comando libro_compratosing#{libro.rut}#{libro.idenvio}.xml libro_compra#{libro.rut}#{libro.idenvio}.xml")
-      puts "============"
-      puts "Otros"
-      puts "============"
+      #puts "============"
+      #puts "Otros"
+      #puts "============"
     end  
 
    # lib = File.read "doc-signed#{t}.xml"
@@ -691,15 +691,15 @@ class Libro < ActiveRecord::Base
     sleep 1
      
     if Empresa.last.rut == "80790400-0"
-      puts "============"
-      puts "ElSultan"
-      puts "============"
+      #puts "============"
+      #puts "ElSultan"
+      #puts "============"
       system("./comandoElSultan libro_compratosing#{libro.rut}#{libro.idenvio}.xml libro_compra#{libro.rut}#{libro.idenvio}.xml")
     else  
       system("./comando libro_compratosing#{libro.rut}#{libro.idenvio}.xml libro_compra#{libro.rut}#{libro.idenvio}.xml")
-      puts "============"
-      puts "Otros"
-      puts "============"
+      #puts "============"
+      #puts "Otros"
+      #puts "============"
     end  
 
    # lib = File.read "doc-signed#{t}.xml"

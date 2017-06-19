@@ -42,8 +42,8 @@ class DoccomprasController < ApplicationController
     #recupero el archivo del formulario
     file_data = params[:file]
     file_content = file_data.read
-    puts "-----    XML    ------------"
-    puts file_content
+    #puts "-----    XML    ------------"
+    #puts file_content
     d = Docsemail.new
     d.xmlrecibido = file_content
     d.mailid = "Carga Manual"

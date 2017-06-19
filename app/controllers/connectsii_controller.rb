@@ -81,9 +81,9 @@ before_filter :authenticate_user!
       
       responce = http.request(request)
 
-      puts "===================================="
-      puts responce.body
-      puts "===================================="
+      #puts "===================================="
+      #puts responce.body
+      #puts "===================================="
     
       render 'connectsii/index' 
     else
@@ -166,9 +166,9 @@ before_filter :authenticate_user!
       return @seed
 
     rescue
-      puts "=====SEED========"
-      puts "Error #{$!}"
-      puts "============="
+      #puts "=====SEED========"
+      #puts "Error #{$!}"
+      #puts "============="
       @seed=nil
     ensure 
     end
@@ -180,9 +180,9 @@ before_filter :authenticate_user!
       #tokenws = Savon.client(wsdl: "https://palena.sii.cl/DTEWS/GetTokenFromSeed.jws?WSDL")
       @token = tokenws.call( :get_token , message: {string: seed_xml}) 
     rescue
-      puts "=====TOKEN========"
-      puts "Error #{$!}"
-      puts "============="
+      #puts "=====TOKEN========"
+      #puts "Error #{$!}"
+      #puts "============="
       @token=nil
     ensure 
     end

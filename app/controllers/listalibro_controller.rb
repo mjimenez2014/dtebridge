@@ -18,7 +18,7 @@ class ListalibroController < ApplicationController
 
   def genxml
     lib = Libro.find(params[:id])
-    puts lib.id
+    #puts lib.id
     lib.xml
     lib.estado = "XML Generado"
     lib.enviado = "NO"
@@ -136,11 +136,11 @@ class ListalibroController < ApplicationController
       request["Cookie"]          = "TOKEN=#{@tokenOk}"
     
       responce = http.request(request)
-      puts "===================================="
-      puts request.body
-      puts "===================================="
-      puts responce.body
-      puts "===================================="
+      #puts "===================================="
+      #puts request.body
+      #puts "===================================="
+      #puts responce.body
+      #puts "===================================="
 
       return responce.body
     else
@@ -198,15 +198,15 @@ class ListalibroController < ApplicationController
 
       # Se agregará un comando para cada cliente mientras se resuelve como solucionar
       # if Empresa.last.rut == "80790400-0"
-      #   puts "============"
-      #   puts "ElSultan"
-      #   puts "============"
+      #   #puts "============"
+      #   #puts "ElSultan"
+      #   #puts "============"
       #   system("./comandoElSultan tosign_xml#{t}.xml doc-signed#{t}.xml")
       # else  
       #   system("./comando tosign_xml#{t}.xml doc-signed#{t}.xml")
-      #   puts "============"
-      #   puts "Otros"
-      #   puts "============"
+      #   #puts "============"
+      #   #puts "Otros"
+      #   #puts "============"
       # end
 
       system("rm tosign_xml#{t}.xml") 
@@ -219,9 +219,9 @@ class ListalibroController < ApplicationController
         i+=1
       end
       
-      puts "=====TOKEN OK========"
-      puts @token
-      puts "============="
+      #puts "=====TOKEN OK========"
+      #puts @token
+      #puts "============="
    
       unless @token.nil?
         @token= @token.to_s[@token.to_s.index('TOKEN')+9..@token.to_s.index('TOKEN')+21]
@@ -253,17 +253,17 @@ class ListalibroController < ApplicationController
       seed= seed_xml.to_s[seed_xml.to_s.index('SEMILLA')+11..seed_xml.to_s.index('SEMILLA')+22]
 
 
-      puts "=====SEED OK========"
-      puts seed_xml
-      puts seed
-      puts "============="
+      #puts "=====SEED OK========"
+      #puts seed_xml
+      #puts seed
+      #puts "============="
 
       return seed
 
     rescue
-      puts "=====SEED========"
-      puts "Error #{$!}"
-      puts "============="
+      #puts "=====SEED========"
+      #puts "Error #{$!}"
+      #puts "============="
       seed=nil
 
     ensure 
@@ -273,9 +273,9 @@ class ListalibroController < ApplicationController
   def gettoken(seed_xml)
     begin
 
-      puts "=====SEED XML========"
-      puts seed_xml
-      puts "============="
+      #puts "=====SEED XML========"
+      #puts seed_xml
+      #puts "============="
 
       # if Rails.env.production?
         tokenws = Savon.client(wsdl: "https://palena.sii.cl/DTEWS/GetTokenFromSeed.jws?WSDL")
@@ -284,17 +284,17 @@ class ListalibroController < ApplicationController
       # end
       token = tokenws.call( :get_token , message: {string: seed_xml}) 
 
-      puts "=====TOKEN========"
-      puts "OBTENIDO"
-      puts token
-      puts "============="
+      #puts "=====TOKEN========"
+      #puts "OBTENIDO"
+      #puts token
+      #puts "============="
 
       return token
 
     rescue
-      puts "=====TOKEN========"
-      puts "Error #{$!}"
-      puts "============="
+      #puts "=====TOKEN========"
+      #puts "Error #{$!}"
+      #puts "============="
       token=nil
     ensure 
     end

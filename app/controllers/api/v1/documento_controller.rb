@@ -137,11 +137,11 @@ class Api::V1::DocumentoController < Api::V1::ApiController
       request["Cookie"]          = "TOKEN=#{@tokenOk}"
     
       responce = http.request(request)
-      puts "===================================="
-      puts request.body
-      puts "===================================="
-      puts responce.body
-      puts "===================================="
+      #puts "===================================="
+      #puts request.body
+      #puts "===================================="
+      #puts responce.body
+      #puts "===================================="
 
       return responce.body
     else
@@ -191,9 +191,9 @@ class Api::V1::DocumentoController < Api::V1::ApiController
 
       File.open("tosign_xml#{t}.xml", 'w') { |file| file.puts tosign_xml}
       sleep 1
-      puts "-----------------------------------------------------------"
-      puts rut
-      puts "-----------------------------------------------------------"
+      #puts "-----------------------------------------------------------"
+      #puts rut
+      #puts "-----------------------------------------------------------"
       system("./comando#{rut} tosign_xml#{t}.xml doc-signed#{t}.xml")
 
       doc = File.read "doc-signed#{t}.xml"
@@ -208,9 +208,9 @@ class Api::V1::DocumentoController < Api::V1::ApiController
         i+=1
       end
       
-      puts "=====TOKEN OK========"
-      puts @token
-      puts "============="
+      #puts "=====TOKEN OK========"
+      #puts @token
+      #puts "============="
    
       unless @token.nil?
         if @token.to_s.index('TOKEN') != nil
@@ -240,17 +240,17 @@ class Api::V1::DocumentoController < Api::V1::ApiController
       seed= seed_xml.to_s[seed_xml.to_s.index('SEMILLA')+11..seed_xml.to_s.index('SEMILLA')+22]
 
 
-      puts "=====SEED OK========"
-      puts seed_xml
-      puts seed
-      puts "============="
+      #puts "=====SEED OK========"
+      #puts seed_xml
+      #puts seed
+      #puts "============="
 
       return seed
 
     rescue
-      puts "=====SEED========"
-      puts "Error #{$!}"
-      puts "============="
+      #puts "=====SEED========"
+      #puts "Error #{$!}"
+      #puts "============="
       seed=nil
 
     ensure 
@@ -260,25 +260,25 @@ class Api::V1::DocumentoController < Api::V1::ApiController
   def gettoken(seed_xml)
     begin
 
-      puts "=====SEED XML========"
-      puts seed_xml
-      puts "============="
+      #puts "=====SEED XML========"
+      #puts seed_xml
+      #puts "============="
 
       #tokenws = Savon.client(wsdl: "https://maullin2.sii.cl/DTEWS/GetTokenFromSeed.jws?WSDL")
       tokenws = Savon.client(wsdl: "https://palena.sii.cl/DTEWS/GetTokenFromSeed.jws?WSDL", ssl_verify_mode: :none)
       token = tokenws.call( :get_token , message: {string: seed_xml}) 
 
-      puts "=====TOKEN========"
-      puts "OBTENIDO"
-      puts token
-      puts "============="
+      #puts "=====TOKEN========"
+      #puts "OBTENIDO"
+      #puts token
+      #puts "============="
 
       return token
 
     rescue
-      puts "=====TOKEN========"
-      puts "Error #{$!}"
-      puts "============="
+      #puts "=====TOKEN========"
+      #puts "Error #{$!}"
+      #puts "============="
       token=nil
     ensure 
     end
@@ -330,7 +330,7 @@ class Api::V1::DocumentoController < Api::V1::ApiController
   end
 
   def consultaEnvio( docId, rut, dv, estadoxml, token)
-    puts "======== 2.- CONSULTA ENVIO =========="
+    #puts "======== 2.- CONSULTA ENVIO =========="
     begin
       trackId = estadoxml.to_s[estadoxml.to_s.index('TRACKID')+8..estadoxml.to_s.index('/TRACKID')-2]
       estadoWs = Savon.client(wsdl: "https://palena.sii.cl/DTEWS/QueryEstUp.jws?WSDL", ssl_verify_mode: :none)
@@ -338,9 +338,9 @@ class Api::V1::DocumentoController < Api::V1::ApiController
 
       # #estado = estadoWs.call( :get_est_up , message: {RutCompania: '77888630', DvCompania: '8', TrackId: '0878885016', Token: 'BCTTCTEYZnzrM'})
 
-      puts "======================="
-      puts estado
-      puts "======================="
+      #puts "======================="
+      #puts estado
+      #puts "======================="
       docum = Documento.find(docId)
       docum.estadoEnvioXml = estado.to_s
       docum.save
@@ -351,7 +351,7 @@ class Api::V1::DocumentoController < Api::V1::ApiController
   end
 
   def procesoEstado
-      puts "========= 1.- PROCESO ESTADO =========" 
+      #puts "========= 1.- PROCESO ESTADO =========" 
       listDoc = Documento.where(estado: "0 Upload Ok").limit(10)
       listDoc.each do |doc|
         token = get_token(doc.RUTEmisor)

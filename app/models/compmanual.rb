@@ -39,10 +39,10 @@ class Compmanual < ActiveRecord::Base
       end
     rescue
       msg = msg + "Formato de archivo incorrecto, revise si contiene algún caracter especial."
-      puts "****************"
-      puts msg
-      puts puts "Error #{$!}"
-      puts "****************"  
+      #puts "****************"
+      #puts msg
+      #puts "Error #{$!}"
+      #puts "****************"  
       return msg    
     end  
 
@@ -187,10 +187,10 @@ class Compmanual < ActiveRecord::Base
       end
     rescue
       msg = msg + "Formato de archivo incorrecto, revise si contiene algún caracter especial."
-      puts "****************"
-      puts msg
-      puts puts "Error #{$!}"
-      puts "****************"  
+      #puts "****************"
+      #puts msg
+      #puts "Error #{$!}"
+      #puts "****************"  
       return msg    
     end  
 
@@ -291,15 +291,15 @@ class Compmanual < ActiveRecord::Base
         else
         otroimp.compmanual_id = primerdoc
         otroimp.save
-                  puts "========================="
-          puts i
-          puts "=========================="
+          #puts "========================="
+          #puts i
+          #puts "=========================="
         end
           if i>0
           del = Compmanual.find(cambio)
-          puts "========================="
-          puts i
-          puts "=========================="
+          #puts "========================="
+          #puts i
+          #puts "=========================="
           del.delete 
         end
         i=i+1
@@ -309,9 +309,9 @@ class Compmanual < ActiveRecord::Base
 
   def self.open_spreadsheet(file)
 
-    # puts "*******************"
-    # puts file.original_filename
-    # puts "*******************"
+    # #puts "*******************"
+    # #puts file.original_filename
+    # #puts "*******************"
 
     # case File.extname(file.original_filename)
     # when '.csv' then Csv.new(file.path, nil, :ignore)
