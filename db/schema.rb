@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619134500) do
+ActiveRecord::Schema.define(version: 20170619141131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -441,7 +441,7 @@ ActiveRecord::Schema.define(version: 20170619134500) do
     t.string   "NroOrdenCompra"
     t.string   "CondVenta"
     t.string   "MedioPago"
-    t.string   "Nrocita"
+    t.string   "NroCita"
     t.string   "Sello"
   end
 
