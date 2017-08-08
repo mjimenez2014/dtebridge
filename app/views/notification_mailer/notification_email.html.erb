@@ -11,7 +11,7 @@
 
 <p>
 Emisor     : <%= @rut %>
-             <%= @empresa %> 
+             <%= @empresa.force_encoding('utf-8') %> 
 </p>
 <p>
 Documento  : <%= @documento %>

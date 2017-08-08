@@ -5,13 +5,13 @@
   </head>
   <body>
 
-<h3>Sres: <%= @destinatario %>:</h3>
+<h3>Sres: <%= @destinatario.force_encoding('utf-8') %>:</h3>
 
 <p> En el presente correo se les adjunta xml de intercambio de documento tributario electrónico: </p>
 
 <p>
 Emisor     : <%= @rut %>
-             <%= @empresa %> 
+             <%= @empresa.force_encoding('utf-8') %> 
 </p>
 <p>
 Documento  : <%= @documento %>

@@ -1,0 +1,94 @@
+ <div class="container-fluid" id="fondo-menu">
+   <div class="row">
+    <nav class="navbar navbar-default" role="navigation">
+  <!-- El logotipo y el icono que despliega el menú se agrupan
+  para mostrarlos mejor en los dispositivos móviles -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse"
+    data-target=".navbar-ex1-collapse">
+    <span class="sr-only">Desplegar navegación</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="navbar-brand" href="#"><%= image_tag("logo_int.png")%></a>
+</div>
+
+  <!-- Agrupar los enlaces de navegación, los formularios y cualquier
+  otro elemento que se pueda ocultar al minimizar la barra -->
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Documentos Dte <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to "Documentos Venta","/documentos"%></li>
+          <li><%= link_to "Exportar a Excel","/report/venta"%></li>
+          <li><%= link_to "Estadistica","/estadistica"%></li>
+        </ul>
+      </li>
+      <% if current_user.isadmin? %> 
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">DTE Proveedores<b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to "Documentos Recibidos","/doccompras"%></li>
+          <li><%= link_to "Documentos Aprobados","/doccompras_aprob"%></li>
+          <li><%= link_to "Documentos Rechazados","/doccompras_rech"%></li>
+          <li><%= link_to "Exportar a Excel","/report/compra"%></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dctos Manuales<b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to "Ventas Upload CSV","/docmanuals"%></li>
+          <li><%= link_to "Compras Upload CSV","/compmanuals"%></li>
+          <li><%= link_to "Formato","/uploadformat/index"%></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Libros Contables <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to "Genera Libro Ventas","/libro_venta/index" %></li>
+          <li><%= link_to "Genera Libro Compra","/libro_compra/index" %></li>
+          <li><%= link_to "Envía Libros","/listalibro/index" %></li>
+        </ul>
+      </li>
+            <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Maestros<b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to "Contribuyentes","/contribuyentes"%></li>
+        </ul>
+      </li>
+      <% end %>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">iAt<b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to "Ver Ping", log_iats_path %></li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Usuario 
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to "Mi Perfil","/users/edit" %></li>
+<!--           <% if current_user.isadmin? %>
+          <li><%= link_to "Dar Permisos Admin","/daradmin/permisos"  %></li>
+          <li><%= link_to "Crear Usuario","/newuser/index" %></li>
+          <% end %> -->
+          <li class="divider"></li>
+          <li><%= link_to "Salir", destroy_user_session_path, method: :delete %></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+</div>
+</div>

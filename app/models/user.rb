@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   end
 
   def lessadmin
-    unless self.email == "osvaldo.omiranda@gmail.com"
+    unless self.email == "jimenezmaury@gmail.com"
       admin = Admin.find_by_email(self.email)
       unless admin.nil?
         admin.destroy

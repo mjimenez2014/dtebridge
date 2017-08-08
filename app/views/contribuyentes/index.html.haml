@@ -1,36 +1,36 @@
-%h1 Contribuyentes
-.container-fluid
-  .row
-    .col-xs-12.col-sm-6.col-md-12
-      = form_tag contribuyentes_path,:method=> "get" do |f|
-        = text_field_tag "rut", nil,placeholder: 'Rut Contribuyente'
-        = submit_tag "buscar",:class=>"btn btn-default"
-        = link_to "Limpiar Busqueda","/contribuyentes",  class: 'btn btn-info btn-xs' 
-        %hr
-  .row
-    .col-md-12
-/%p Contribuyentes Registrados :
-/%h3= @contribuyentes
-%br
-= will_paginate @contribuyente
-%table.table.table-striped
-  %tr
-    %th Rut
-    %th Nombre
-    %th Email
-    %th
-    %th
-    %th
-
-  - @contribuyente.each do |contribuyente|
+.panel.panel-success
+  .panel.heading.h4 Contribuyentes
+  .panel.body
+    = form_tag contribuyentes_path,:method=> "get" do |f|
+      .row
+        .col-xs-12.col-md-2
+          .form-group
+            = text_field_tag "rut", nil,placeholder: 'RUT: 00000000-0',:autofocus => true,:input_html => {:style=> 'width: 130px'}
+        .col-xs-12.col-md-2
+          .form-group    
+            = submit_tag "buscar",:class=>"btn btn-default btn-xs"
+        .col-xs-12.col-md-2
+          .form-group
+            = link_to "Limpiar Busqueda","/contribuyentes",  class: 'btn btn-info btn-xs'  
+.panel.panel-default
+  = link_to "Crear Contibuyente","/contribuyentes/new",  class: 'btn btn-success btn-sm'
+  %p
+  = will_paginate @contribuyente
+  %table.table.table-hover
     %tr
-    %td= contribuyente.rut
-    %td= contribuyente.nombre
-    %td= contribuyente.email
-    %td= link_to 'Show', contribuyente
-    %td= link_to 'Edit', edit_contribuyente_path(contribuyente)
-    %td= link_to 'Destroy', contribuyente, :method => :delete, :data => { :confirm => 'Are you sure?' }
-%br
-= link_to 'uploads Contribuyente', '/contribuyentes/upload', class: "btn btn-primary btn-xs"
+      %th Rut Contibuyente
+      %th Nombre
+      %th Email
+      %th
+
+    - @contribuyente.each do |contribuyente|
+      %tr
+      %td= contribuyente.rut
+      %td= contribuyente.nombre.force_encoding('utf-8')
+      %td= contribuyente.email
+      %td= link_to 'Editar', edit_contribuyente_path(contribuyente)
+      / %td= link_to 'Eliminar', contribuyente, :method => :delete, :data => { :confirm => 'Está seguro?' }
+  %br
+= link_to 'uploads Contribuyente', '/contribuyentes/upload', class: "btn btn-default btn-xs"
 
 

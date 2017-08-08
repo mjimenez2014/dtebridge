@@ -24,6 +24,7 @@ class NotificationMailer < ActionMailer::Base
     @url  = 'http://www.invoicedigital.cl'
 
     attachments["#{doc.Folio}_cliente.xml"] =  File.read("#{Rails.root}/public#{doc.fileCliente}").force_encoding('iso-8859-1').encode('utf-8')
+    attachments["#{doc.Folio}_cliente.pdf"] =  File.read("#{Rails.root}/public#{doc.pdfs_url}")
 
     mail(to: email, subject: "DTE #{@folio} #{@empresa}", from:  Empresa.find_by_rut(doc.RUTEmisor).from)
 

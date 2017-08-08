@@ -1,58 +1,67 @@
-%h3 Documentos de Venta
-.container-fluid
-  .row
-    .col-md-12
-      = simple_form_for(documentos_path,:method => :get ) do |f|
-        .form-group  
-          .col-sm-2
-            = f.input :sucursal, label: false,  collection: Documento.sucursal_options_for_select(current_user.email), :input_html => {:style=> 'width: 180px'}
-          .col-sm-2   
+.panel.panel-success
+  .panel.heading.h4 Documentos Electrónicos
+  .panel.body
+    = simple_form_for(documentos_path,:method => :get ) do |f|
+      .row
+        .col-xs-12.col-md-1
+          Sucursal: 
+        .col-xs-12.col-md-2  
+          .form-group
+            = f.input :sucursal, label: false, collection: Documento.sucursal_options_for_select(current_user.email), :input_html => {:style=> 'width: 180px'}
+        .col-xs-12.col-md-1
+          Documento:  
+        .col-xs-12.col-md-2
+          .form-group
             = f.input :tipodte, label: false, collection:  Documento.tipodte_option_for_select,:input_html => {:style=> 'width: 150px'} 
-          .col-sm-2  
-            = f.input :folio, label: false, placeholder: "Folio", :input_html => {:style=> 'width: 150px'} 
-          / .col-sm-2 
-          /   = f.input :fecha, label: false, placeholder: "Fchemis(yyyy-mm)", :input_html => {:style=> 'width: 150px'} 
-          .col-sm-2  
-            = f.button :submit, "Buscar",  class: "btn btn-primary btn-xs"
-
-      = link_to "Limpiar Busqueda","/documentos",  class: 'btn btn-info btn-xs'
-%br
-= will_paginate @documentos
-%br
-
-%table.table.table-striped
-  %tr
-    %th Tipodte
-    %th Folio
-    %th Fchemis
-    %th.hidden_sm Cdgsiisucur
-    %th.hidden_sm Mntneto
-    %th Mnttotal
-    %th EstadoEnvio
-    %th Cedible
-    %th Tributable
-    %th XML
-  - @documentos.each do |documento|
+        .col-xs-12.col-md-2 
+          .form-group
+            = f.input :folio, label: false, placeholder: "Folio", :input_html => {:style=> 'width: 100px'} 
+        .col-xs-12.col-md-2
+          .form-group 
+            = f.button :submit, "Buscar",  class: "btn btn-primary btn-xs"  
+        .col-xs-12.col-md-2
+          .form-group
+            = link_to "Limpiar Busqueda","/documentos",  class: 'btn btn-info btn-xs'
+.panel.panel-default              
+  = will_paginate @documentos
+  %table.table.table-hover
     %tr
-      %td= documento.nombre_doc
-      %td= documento.Folio
-      %td= documento.FchEmis
-      %td= documento.sucursal
-      %td= number_to_currency(documento.MntNeto, precision: 0, delimiter: "." )
-      %td= number_to_currency(documento.MntTotal, precision: 0, delimiter: "." )
-      %td= documento.estado
-      -if(documento.pdfs?)
-        %td= link_to 'PDF', documento.pdfs_url
-      -else
+      %th Documento
+      %th Folio
+      %th Fecha Emisión
+      %th.hidden_sm Sucursal
+      %th.hidden_sm Neto
+      %th Monto Total
+      %th Estado Envío
+      %th Cedible
+      %th Tributable
+      %th XML
+      %th Correo
+    - @documentos.each do |documento|
+      %tr
+        %td= documento.nombre_doc
+        %td= documento.Folio
+        %td= documento.FchEmis
+        %td= documento.sucursal
+        %td= number_to_currency(documento.MntNeto, precision: 0, delimiter: "." )
+        %td= number_to_currency(documento.MntTotal, precision: 0, delimiter: "." )
+        %td= documento.estado
+        -if(documento.pdfs?)
+          %td= link_to 'PDF', documento.pdfs_url
+        -else
+          %td
+        -if(documento.pdft?)
+          %td= link_to 'PDF', documento.pdft_url
+        -else
+          %td
+        -if(documento.fileCliente?)
+          %td= link_to 'XML', documento.fileCliente_url
+        -else
+          %td 
         %td
-      -if(documento.pdft?)
-        %td= link_to 'PDF', documento.pdft_url
-      -else
-        %td
-      -if(documento.fileCliente?)
-        %td= link_to 'XML', documento.fileCliente_url
-      -else
-        %td   
+          %span.glyphicon.glyphicon-envelope
+          = link_to 'Enviar',api_v1_sendclient_path(:folio => documento.Folio,:rut => documento.RUTRecep,:tipodte => documento.TipoDTE), :class => "btn btn-primary btn-xs"
 
-%br
+
+  %br
 

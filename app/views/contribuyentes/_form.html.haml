@@ -1,10 +1,16 @@
-= simple_form_for(@contribuyente) do |f|
-  = f.error_notification
+.panel.panel-success
+  .panel.heading.h4 Nuevo Contribuyente
+  .panel-body
+  = simple_form_for(@contribuyente) do |f|
+    .row
+      .col-xs-12.col-md-2
+        .form-group
+          = f.input :rut, label: false, placeholder: "Rut: 00000000-0", :autofocus => true,:input_html => {:style=> 'width: 130px'}
+      .col-xs-12.col-md-5
+        .form-group
+          = f.input :nombre, label: false, placeholder: "Nombre",:input_html => {:style=> 'width: 430px'}
+      .col-xs-12.col-md-2  
+        = f.input :email, label: false, placeholder: "Email"
+      .col-xs-12-col-md-2  
+        = f.button :submit, "Guardar", class: "btn btn-primary btn-xs" 
 
-  .form-inputs
-    = f.input :rut
-    = f.input :nombre
-    = f.input :email
-
-  .form-actions
-    = f.button :submit

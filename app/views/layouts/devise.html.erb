@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<title>Dtebridge</title>
+	<title>Dtebridge Login</title>
 	<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 	<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 	<%= csrf_meta_tags %>
@@ -9,10 +9,6 @@
 	<meta charset="utf-8">
 </head>
 <body>
-	<div class="login-margin"> 
-		<div class="container">
-   <%= yield %>
-   </div>
- </div>
+   	<%= yield %>
 </body>
 </html>
