@@ -1,15 +1,16 @@
 %h1 Listing envioclientes
-
-%table
+= will_paginate @envioclientes
+%table.table.table-hover
   %thead
     %tr
       %th Folio
       %th Tipo
       %th Rut
       %th Rznsoc
-      %th
-      %th
-      %th
+      %th Fecha
+      //%th
+      //%th
+      //%th
       
   %tbody
     - @envioclientes.each do |enviocliente|
@@ -17,11 +18,12 @@
         %td= enviocliente.folio
         %td= enviocliente.tipo
         %td= enviocliente.rut
-        %td= enviocliente.rznsoc
-        %td= link_to 'Show', enviocliente
-        %td= link_to 'Edit', edit_enviocliente_path(enviocliente)
-        %td= link_to 'Destroy', enviocliente, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= enviocliente.rznsoc.force_encoding('utf-8')
+        %td= enviocliente.created_at
+        //%td= link_to 'Show', enviocliente
+        //%td= link_to 'Edit', edit_enviocliente_path(enviocliente)
+        //%td= link_to 'Destroy', enviocliente, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
-= link_to 'New Enviocliente', new_enviocliente_path
+//= link_to 'New Enviocliente', new_enviocliente_path

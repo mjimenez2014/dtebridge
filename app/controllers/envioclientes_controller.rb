@@ -4,8 +4,13 @@ class EnvioclientesController < ApplicationController
   respond_to :html
 
   def index
-    @envioclientes = Enviocliente.all
-    respond_with(@envioclientes)
+    if params["rut_recep"].present?
+       @envioclientes = Enviocliente.where(rut: params["rut_recep"]).order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
+       respond_with(@envioclientes)
+    else  
+      @envioclientes = Enviocliente.all.order(created_at: :desc).paginate(:page => params[:page], :per_page => 15 )
+      respond_with(@envioclientes)
+    end
   end
 
   def show
