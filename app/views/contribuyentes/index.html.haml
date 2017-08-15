@@ -21,6 +21,7 @@
   = will_paginate @contribuyente
   %table.table.table-hover
     %tr
+      %th ID 
       %th Rut Contibuyente
       %th Nombre
       %th Email
@@ -28,6 +29,7 @@
 
     - @contribuyente.each do |contribuyente|
       %tr
+      %td= contribuyente.id
       %td= contribuyente.rut
       %td= contribuyente.nombre.force_encoding('utf-8')
       %td= contribuyente.email
