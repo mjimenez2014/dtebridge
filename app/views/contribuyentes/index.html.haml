@@ -1,5 +1,7 @@
 .panel.panel-success
-  .panel.heading.h4 Contribuyentes
+  .panel.heading.h4 
+    Contribuyentes Total: 
+    = @contribuyenteAll
   .panel.body
     = form_tag contribuyentes_path,:method=> "get" do |f|
       .row

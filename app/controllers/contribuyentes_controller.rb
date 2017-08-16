@@ -4,7 +4,7 @@ class ContribuyentesController < ApplicationController
   respond_to :html,:json
 
   def index
-
+     @contribuyenteAll = Contribuyente.count
     if params["rut"].present?
      @contribuyente = Contribuyente.where(rut: params["rut"]).paginate(:page => params[:page], :per_page => 15 )
     else
@@ -54,8 +54,9 @@ class ContribuyentesController < ApplicationController
   end
 
   def import
-    Contribuyente.delete_all
-
+   
+   # Contribuyente.delete_all
+   
     Contribuyente.import(params[:file])
 
     @contribuyentes = Contribuyente.count
