@@ -26,7 +26,7 @@ class ListalibroController < ApplicationController
     
     @libros = Libro.where(:rut => Usuarioempresa.where(useremail:current_user.email).map {|u| u.rutempresa}).order(:rut,:idenvio)
     respond_to do |format|
-      format.html { render action: 'index' }
+      format.html { render action: 'index', notice:"Libro Generado con exito!!" }
     end 
   end
 
@@ -66,11 +66,11 @@ class ListalibroController < ApplicationController
 
       @BOUNDARY = "9022632e1130lc4"
    
-      # if Rails.env.production?
-        uri = URI.parse("https://palena.sii.cl/cgi_dte/UPL/DTEUpload") 
-      # else
-      #   uri = URI.parse("https://maullin2.sii.cl/cgi_dte/UPL/DTEUpload") 
-      # end
+       if Rails.env.production?
+        #uri = URI.parse("https://palena.sii.cl/cgi_dte/UPL/DTEUpload") 
+       else
+         uri = URI.parse("https://maullin2.sii.cl/cgi_dte/UPL/DTEUpload") 
+       end
 
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
@@ -243,11 +243,11 @@ class ListalibroController < ApplicationController
       # ambiente sii pruebas 
       #client = Savon.client(wsdl:"https://maullin2.sii.cl/DTEWS/CrSeed.jws?WSDL") 
       #produccion
-      # if Rails.env.production?
-        client = Savon.client(wsdl:"https://palena.sii.cl/DTEWS/CrSeed.jws?WSDL") 
-      # else
-      #   client = Savon.client(wsdl:"https://maullin2.sii.cl/DTEWS/CrSeed.jws?WSDL")
-      # end  
+       if Rails.env.production?
+        #client = Savon.client(wsdl:"https://palena.sii.cl/DTEWS/CrSeed.jws?WSDL") 
+       else
+         client = Savon.client(wsdl:"https://maullin2.sii.cl/DTEWS/CrSeed.jws?WSDL")
+       end  
       seed_xml = client.call(:get_seed)
 
       seed= seed_xml.to_s[seed_xml.to_s.index('SEMILLA')+11..seed_xml.to_s.index('SEMILLA')+22]
@@ -277,11 +277,11 @@ class ListalibroController < ApplicationController
       #puts seed_xml
       #puts "============="
 
-      # if Rails.env.production?
-        tokenws = Savon.client(wsdl: "https://palena.sii.cl/DTEWS/GetTokenFromSeed.jws?WSDL")
-      # else
-      #   tokenws = Savon.client(wsdl: "https://maullin2.sii.cl/DTEWS/GetTokenFromSeed.jws?WSDL")
-      # end
+       if Rails.env.production?
+        #tokenws = Savon.client(wsdl: "https://palena.sii.cl/DTEWS/GetTokenFromSeed.jws?WSDL")
+       else
+         tokenws = Savon.client(wsdl: "https://maullin2.sii.cl/DTEWS/GetTokenFromSeed.jws?WSDL")
+       end
       token = tokenws.call( :get_token , message: {string: seed_xml}) 
 
       #puts "=====TOKEN========"

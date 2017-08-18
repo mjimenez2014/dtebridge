@@ -31,11 +31,11 @@
         %td= libro.enviado
         %td= link_to 'Ver Detalle', "/detlibro/index/#{libro.id}", class: "btn btn-primary btn-xs"
         - if libro.estado == "XML NO Generado"
-          %td= link_to "Generar", "/listalibro/genxml/#{libro.id}", class: "btn btn-primary btn-xs"
+          %td= link_to "Generar", "/listalibro/genxml/#{libro.id}", class: "btn btn-primary btn-xs", :data => { :confirm => 'Está seguro?' }
         - else
-          %td= link_to "Generar", "/listalibro/genxml/#{libro.id}", class: "btn btn-primary btn-xs", disabled: true
+          %td= link_to "Generar", "#", class: "btn btn-primary btn-xs", disabled: true
         %td= link_to "XML", "/listalibro/sendxml/#{libro.id}", class: "btn btn-primary btn-xs"
         - if libro.enviado == "NO"
-          %td= link_to "Enviar", "/listalibro/sendsii/#{libro.id}", class: "btn btn-primary btn-xs"
+          %td= link_to "Enviar", "/listalibro/sendsii/#{libro.id}", class: "btn btn-primary btn-xs", :data => { :confirm => 'Está seguro? el envio es irrevesible' }
         - else
-          %td= link_to "Enviar", "/listalibro/sendsii/#{libro.id}", class: "btn btn-primary btn-xs", disabled: true    
+          %td= link_to "Enviar", "#", class: "btn btn-primary btn-xs", disabled: true    

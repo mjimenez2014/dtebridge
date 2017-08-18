@@ -60,7 +60,8 @@ class ContribuyentesController < ApplicationController
     Contribuyente.import(params[:file])
 
     @contribuyentes = Contribuyente.count
-    respond_with(@contribuyentes)
+    redirect_to contribuyentes_path, notice:"Contribuyentes agregados"
+    #respond_with(@contribuyentes)
   end
 
   private
