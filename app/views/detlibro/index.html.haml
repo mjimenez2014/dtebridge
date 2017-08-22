@@ -1,56 +1,86 @@
-%h3 Detalle Libro
-
-%table.table.table-striped
-  %thead
-    %tr
-      %th Tipodoc
-      %th Folio
-      %th RutEmisor
-      / %th Rznsocrecep
-      %th{:style => 'text-align: right;'} Mntneto
-      %th{:style => 'text-align: right;'} Mntexe
-      %th{:style => 'text-align: right;'} Mntiva
-      %th{:style => 'text-align: right;'} CodImp
-      %th{:style => 'text-align: right;'} TasaImp
-      %th{:style => 'text-align: right;'} MntImp                  
-      /%th{:style => 'text-align: right;'} Otrosimpto
-      %th{:style => 'text-align: right;'} Mnttotal
-      
-  %tbody
-    - @detalles.each do |detalle|
+.panel.panel-default
+  .panel.heading.h3{:style => 'text-align: center;'} 
+    Muestra Impresa de Libro Electrónico
+    = @libro.fecha
+  .panel.body
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Tipodoc
+          %th Folio
+          %th RutEmisor
+          / %th Rznsocrecep
+          %th{:style => 'text-align: right;'} Mntneto
+          %th{:style => 'text-align: right;'} Mntexe
+          %th{:style => 'text-align: right;'} Mntiva
+          %th{:style => 'text-align: right;'} CodImp
+          %th{:style => 'text-align: right;'} TasaImp
+          %th{:style => 'text-align: right;'} MntImp                  
+          /%th{:style => 'text-align: right;'} Otrosimpto
+          %th{:style => 'text-align: right;'} Mnttotal
+          
+      %tbody
+        - @detalles.each do |detalle|
+          %tr
+            %td= detalle.nombre_doc
+            %td= detalle.folio
+            %td= detalle.rutemis
+            / %td= detalle.rznsocrecep
+            %td{:style => 'text-align: right;'}= number_to_currency(detalle.mntneto, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+            %td{:style => 'text-align: right;'}= number_to_currency(detalle.mntexe, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+            %td{:style => 'text-align: right;'}= number_to_currency(detalle.mntiva, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+            -if detalle.codimp.present?
+              %td{:style => 'text-align: right;'}= number_to_human(detalle.codimp, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+              %td{:style => 'text-align: right;'}= number_to_percentage(detalle.tasaimp, precision: 1, delimiter: "." )+"&nbsp;".html_safe
+              %td{:style => 'text-align: right;'}= number_to_currency(detalle.mntimp, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+              /%td{:style => 'text-align: right;'}= number_to_currency(detalle.otrosimpto, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+            -else
+              %td{:style => 'text-align: right;'}= " 0 &nbsp;".html_safe
+              %td{:style => 'text-align: right;'}= " 0 &nbsp;".html_safe
+              %td{:style => 'text-align: right;'}= " 0 &nbsp;".html_safe
+              /%td{:style => 'text-align: right;'}= number_to_currency(detalle.otrosimpto, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+            %td{:style => 'text-align: right;'}= number_to_currency(detalle.mnttotal, precision: 0, delimiter: "." )+"&nbsp;".html_safe
       %tr
-        %td= detalle.nombre_doc
-        %td= detalle.folio
-        %td= detalle.rutemis
-        / %td= detalle.rznsocrecep
-        %td{:style => 'text-align: right;'}= number_to_currency(detalle.mntneto, precision: 0, delimiter: "." )+"&nbsp;".html_safe
-        %td{:style => 'text-align: right;'}= number_to_currency(detalle.mntexe, precision: 0, delimiter: "." )+"&nbsp;".html_safe
-        %td{:style => 'text-align: right;'}= number_to_currency(detalle.mntiva, precision: 0, delimiter: "." )+"&nbsp;".html_safe
-        -if detalle.codimp.present?
-          %td{:style => 'text-align: right;'}= number_to_human(detalle.codimp, precision: 0, delimiter: "." )+"&nbsp;".html_safe
-          %td{:style => 'text-align: right;'}= number_to_percentage(detalle.tasaimp, precision: 1, delimiter: "." )+"&nbsp;".html_safe
-          %td{:style => 'text-align: right;'}= number_to_currency(detalle.mntimp, precision: 0, delimiter: "." )+"&nbsp;".html_safe
-          /%td{:style => 'text-align: right;'}= number_to_currency(detalle.otrosimpto, precision: 0, delimiter: "." )+"&nbsp;".html_safe
-        -else
-          %td{:style => 'text-align: right;'}= " 0 &nbsp;".html_safe
-          %td{:style => 'text-align: right;'}= " 0 &nbsp;".html_safe
-          %td{:style => 'text-align: right;'}= " 0 &nbsp;".html_safe
-          /%td{:style => 'text-align: right;'}= number_to_currency(detalle.otrosimpto, precision: 0, delimiter: "." )+"&nbsp;".html_safe
-        %td{:style => 'text-align: right;'}= number_to_currency(detalle.mnttotal, precision: 0, delimiter: "." )+"&nbsp;".html_safe
-  %tr
-/     %th
-/     %th
-/     %th
-/     %th
-/     %th
-/     %th{:style => 'text-align: right;'}= 'TOTALES'
-/     / %td{:style => 'text-align: right;'}= @totFmanual.count
-/     %td{:style => 'text-align: right;'}= number_to_currency(@mntneto, precision: 0, delimiter: "." )+"&nbsp;".html_safe 
-/     %td{:style => 'text-align: right;'}= number_to_currency(@mntexe, precision: 0, delimiter: "." )+"&nbsp;".html_safe
-/     %td{:style => 'text-align: right;'}= number_to_currency(@iva precision: 0, delimiter: "." )+"&nbsp;".html_safe
-/     %td{:style => 'text-align: right;'}= number_to_currency(@otrosimp, precision: 0, delimiter: "." )+"&nbsp;".html_safe
-/     %td{:style => 'text-align: right;'}= number_to_currency(@mnttotal, precision: 0, delimiter: "." )+"&nbsp;".html_safe 
-/ %br
+.panel.panel-default
+  .panel.heading.h3{:style => 'text-align: center;'} Cuadro Resumen
+  .panel.body
+    %table.table.table-hover
+      %thead
+        %tr
+          %th{:style => 'text-align: center;'} Cantidad
+          %th{:style => 'text-align: center;'} Tipodoc
+          %th{:style => 'text-align: center;'} Neto
+          %th{:style => 'text-align: center;'} Exento
+          %th{:style => 'text-align: center;'} IVA 
+          %th{:style => 'text-align: center;'} Diesel
+          %th{:style => 'text-align: center;'} Monto Total    
+      %tbody
+        - @detlibro.each do |detalle|
+          %tr
+            %td{:style => 'text-align: center;'}= detalle.count
+            %td{:style => 'text-align: center;'}= detalle.nombre_doc
+            %td{:style => 'text-align: right;'}= number_to_currency(detalle.mntneto, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+            %td{:style => 'text-align: right;'}= number_to_currency(detalle.mntexe, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+            %td{:style => 'text-align: right;'}= number_to_currency(detalle.mntiva, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+            - if detalle.mntsincred != nil
+              %td{:style => 'text-align: right;'}= number_to_currency(detalle.mntsincred, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+            - else
+              %td{:style => 'text-align: right;'}= "0"         
+            %td{:style => 'text-align: right;'}= number_to_currency(detalle.mnttotal, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+
+    /     %th
+    /     %th
+    /     %th
+    /     %th
+    /     %th
+    /     %th{:style => 'text-align: right;'}= 'TOTALES'
+    /     / %td{:style => 'text-align: right;'}= @totFmanual.count
+    /     %td{:style => 'text-align: right;'}= number_to_currency(@mntneto, precision: 0, delimiter: "." )+"&nbsp;".html_safe 
+    /     %td{:style => 'text-align: right;'}= number_to_currency(@mntexe, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+    /     %td{:style => 'text-align: right;'}= number_to_currency(@iva precision: 0, delimiter: "." )+"&nbsp;".html_safe
+    /     %td{:style => 'text-align: right;'}= number_to_currency(@otrosimp, precision: 0, delimiter: "." )+"&nbsp;".html_safe
+    /     %td{:style => 'text-align: right;'}= number_to_currency(@mnttotal, precision: 0, delimiter: "." )+"&nbsp;".html_safe 
+    / %br
 
 
 
