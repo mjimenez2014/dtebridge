@@ -2,10 +2,10 @@
  <table style="width:100%" border="0"><!--      Cabecera -->
    <tr>
      <td  valign="top" style="width:800px">
-<!-- Datos de Emisor -->     
-     <table>
+      <!-- Datos de Emisor -->  
+      <table>
        <tr>
-         <td style="font-size: 12pt; width:800px"><%=@doccompra.RznSoc.force_encoding('utf-8')%></td>
+         <td style="font-size: 12pt; width:800px"><strong><%=@doccompra.RznSoc.force_encoding('utf-8')%></strong></td>
        </tr>
        <tr>
          <td style="font-size: 9pt; width:800px"><%=@doccompra.GiroEmis.force_encoding('utf-8')%></td>
@@ -14,74 +14,101 @@
          <td style="font-size: 9pt; width:800px"><%=@doccompra.DirOrigen.force_encoding('utf-8')%> - <%=@doccompra.CmnaOrigen.force_encoding('utf-8')%></td>
        </tr>
      </table>
-     </td>
-     <td>
-<!-- Cuadro de folios -->     
-     <table border="1" style="border: 1px solid red">
-       <tr>
-         <td>
-<!-- Datos del Folio -->          
-         <table  style="width:240px; height:90px" border="0">
+   </td>
+   <td>
+    <!-- Cuadro de folios -->     
+    <table border="1" style="border: 1px solid red">
+     <tr>
+       <td>
+        <!-- Datos del Folio -->          
+        <table  style="width:240px; height:90px" border="0">
          <tr><td align="center" valign="top" style="font-size: 10pt; color:red">RUT: <%=@doccompra.RUTEmisor%></td></tr>
          <tr><td align="center" valign="top" style="font-size: 10pt; color:red"><%= nomdte =  Tipodte.where(tipo: @doccompra.TipoDTE).last.nomdtepdf%></td></tr>
          <tr><td align="center" valign="top" style="font-size: 10pt; color:red">Nº <%=@doccompra.Folio%></td></tr>
-         </table>
-         </td>
-       </tr>  
-     </table>
-     </td>      
-   </tr>
+       </table>
+     </td>
+   </tr>  
  </table>
+</td>      
+</tr>
+</table>
 </div>
 <div class="row">
-<table style="width:100%" border="0"><tr><td align="right" valign="top" style="font-size: 10pt; color:red"><%=@doccompra.FchEmis%></td></tr></table> <!-- Fecha Emis. TODO -->
-<p></p>
-<hr>
-<!-- Detalle -->
-<table style="width:100%" border="0"> 
-  <tr>
-    <td align="center" valign="top" style="font-size: 10pt">Item</td>
-    <td align="left" valign="top" style="font-size: 10pt">Nombre</td> 
-    <td align="center" valign="top" style="font-size: 10pt">Cantidad</td>
-    <td align="right" valign="top" style="font-size: 10pt">Precio</td>    
-  </tr>
- <% @doccompra.detcompras.each do |detalle|%>
-  <tr>
-    <td align="center" valign="top" style="font-size: 8pt"><%=detalle.NroLinDet%></td>
-    <td align="left" valign="top" style="font-size: 10pt"><%=detalle.NmbItem.force_encoding('utf-8')%></td> 
-    <td align="center" valign="top" style="font-size: 10pt"><%=detalle.QtyItem%></td>
-    <td align="right" valign="top" style="font-size: 10pt"><%=number_to_currency( detalle.PrcItem ,precision: 0, delimiter: "." )%></td> 
-  </tr>
- <%end%>
-</table> 
-<hr>
-<!-- Referncia -->
-<hr>
-<!-- Footer-->
-<table style="width:100%" border="0">
-  <tr>
-    <td valign="top" style="width:500px"> </td>
-<!-- Totales-->    
-    <td  align="right" valign="top" style="font-size: 10pt">
-      <table style="width:100%" border="0">
+  <table style="width:100%" border="0"><tr><td align="right" valign="top" style="font-size: 10pt; color:red"><%=@doccompra.FchEmis%></td></tr></table> <!-- Fecha Emis. TODO -->
+  <p></p>
+<!-- Datos del receptor -->  
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <table>
         <tr>
-          <td border="1" align="right" valign="top">Monto Neto: </td>
-          <td align="right" valign="top"><%=number_to_currency( @doccompra.MntNeto ,precision: 0, delimiter: "." )%></td>          
+          <td style="width:60px" align="left" valign="top" style="font-size: 9pt; color:black"><strong>Señor: </strong></td>
+          <td style="width:600px" align="left" valign="top" style="font-size: 9pt; color:black"><%= @doccompra.RznSocRecep.force_encoding('utf-8') %></td>
         </tr>
         <tr>
-          <td align="right" valign="top">IVA: </td>
-          <td align="right" valign="top"><%=number_to_currency( @doccompra.IVA ,precision: 0, delimiter: "." )%></td>          
+          <td style="width:60px" align="left" valign="top" style="font-size: 9pt; color:black"><strong> Giro: </strong></td>
+          <td style="width:600px" align="left" valign="top" style="font-size: 9pt; color:black"><%= @doccompra.GiroRecep.force_encoding('utf-8') %></td>
         </tr>
         <tr>
-          <td align="right" valign="top">Monto Exento: </td>
-          <td align="right" valign="top"><%=number_to_currency( @doccompra.MntExe ,precision: 0, delimiter: "." )%></td>          
+          <td  style="width:60px" align="left" valign="top" style="font-size: 9pt; color:black"><strong>R.U.T.:</strong></td>
+          <td style="width:600px" ><%= @doccompra.RUTRecep.force_encoding('utf-8') %></td>
+<!--           <td style="width:12%" align="left" valign="top" style="font-size: 9pt; color:black"><strong> Ciudad: </strong></td>
+          <td style="width:38%"><%= @doccompra.CiudadRecep.force_encoding('utf-8') %></td> -->
         </tr>
-        <tr>
-          <td align="right" valign="top">Monto Total: </td>
-          <td align="right" valign="top"><%=number_to_currency( @doccompra.MntTotal ,precision: 0, delimiter: "." )%></td>          
-        </tr>        
       </table>
-    </td>
-  </tr>
-</table>
+    </div>
+  </div>
+  <!-- Detalle -->
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <table style="width:100%" border="0"> 
+        <tr>
+          <td align="left" valign="top" style="font-size: 9pt">Item</td>
+          <td align="left" valign="top" style="font-size: 9pt">Nombre</td> 
+          <td align="center" valign="top" style="font-size: 9pt">Cantidad</td>
+          <td align="right" valign="top" style="font-size: 9pt">Precio</td>    
+        </tr>
+        <% @doccompra.detcompras.each do |detalle|%>
+        <tr>
+          <td align="left" valign="top" style="font-size: 8pt"><%=detalle.NroLinDet%></td>
+          <td align="left" valign="top" style="font-size: 9pt"><%=detalle.NmbItem.force_encoding('utf-8')%></td> 
+          <td align="center" valign="top" style="font-size: 9pt"><%=detalle.QtyItem%></td>
+          <td align="right" valign="top" style="font-size: 9pt"><%=number_to_currency( detalle.PrcItem ,precision: 0, delimiter: "." )%></td> 
+        </tr>
+        <%end%>
+      </table> 
+    </div>
+  </div>
+  <!-- Referncia -->
+  <div class="panel panel-default">
+    <div class="panel-body">
+
+    </div>
+  </div>
+  <!-- Footer-->
+  <table style="width:100%" border="0">
+    <tr>
+      <td valign="top" style="width:500px"> </td>
+      <!-- Totales-->    
+      <td  align="right" valign="top" style="font-size: 10pt">
+        <table style="width:100%" border="0">
+          <tr>
+            <td border="1" align="right" valign="top">Monto Neto: </td>
+            <td align="right" valign="top"><%=number_to_currency( @doccompra.MntNeto ,precision: 0, delimiter: "." )%></td>          
+          </tr>
+          <tr>
+            <td align="right" valign="top">IVA: </td>
+            <td align="right" valign="top"><%=number_to_currency( @doccompra.IVA ,precision: 0, delimiter: "." )%></td>          
+          </tr>
+          <tr>
+            <td align="right" valign="top">Monto Exento: </td>
+            <td align="right" valign="top"><%=number_to_currency( @doccompra.MntExe ,precision: 0, delimiter: "." )%></td>          
+          </tr>
+          <tr>
+            <td align="right" valign="top">Monto Total: </td>
+            <td align="right" valign="top"><%=number_to_currency( @doccompra.MntTotal ,precision: 0, delimiter: "." )%></td>          
+          </tr>        
+        </table>
+      </td>
+    </tr>
+  </table>
 </div>
