@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Codtpobultos:
+  = @tipobultocompra.CodTpoBultos
+%p
+  %b Cantbultos:
+  = @tipobultocompra.CantBultos
+%p
+  %b Marcas:
+  = @tipobultocompra.Marcas
+%p
+  %b Idcontainer:
+  = @tipobultocompra.IdContainer
+%p
+  %b Sello:
+  = @tipobultocompra.Sello
+%p
+  %b Emisorsello:
+  = @tipobultocompra.EmisorSello
+%p
+  %b Doccompra:
+  = @tipobultocompra.doccompra
+
+= link_to 'Edit', edit_tipobultocompra_path(@tipobultocompra)
+\|
+= link_to 'Back', tipobultocompras_path

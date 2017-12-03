@@ -1,0 +1,27 @@
+%h1 Listing impretotrmndacompras
+
+%table
+  %thead
+    %tr
+      %th Tipoimpotrmnda
+      %th Tasaimpotrmnda
+      %th Vlrimpotrmnda
+      %th Doccompra
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @impretotrmndacompras.each do |impretotrmndacompra|
+      %tr
+        %td= impretotrmndacompra.TipoImpOtrMnda
+        %td= impretotrmndacompra.TasaImpOtrMnda
+        %td= impretotrmndacompra.VlrImpOtrMnda
+        %td= impretotrmndacompra.doccompra
+        %td= link_to 'Show', impretotrmndacompra
+        %td= link_to 'Edit', edit_impretotrmndacompra_path(impretotrmndacompra)
+        %td= link_to 'Destroy', impretotrmndacompra, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Impretotrmndacompra', new_impretotrmndacompra_path

@@ -1,0 +1,11 @@
+= simple_form_for(@impretotrmndacompra) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :TipoImpOtrMnda
+    = f.input :TasaImpOtrMnda
+    = f.input :VlrImpOtrMnda
+    = f.association :doccompra
+
+  .form-actions
+    = f.button :submit

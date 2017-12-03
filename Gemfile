@@ -83,6 +83,9 @@ gem 'roo'
 # create PDF
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+# Genera pdf417
+gem 'pdf417', '~> 0.2.0'
+gem 'chunky_png', '~> 1.3', '>= 1.3.6'
 # administrar tablas
 #gem 'activeadmin', github: 'activeadmin'
 

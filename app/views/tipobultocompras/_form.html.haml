@@ -1,0 +1,14 @@
+= simple_form_for(@tipobultocompra) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :CodTpoBultos
+    = f.input :CantBultos
+    = f.input :Marcas
+    = f.input :IdContainer
+    = f.input :Sello
+    = f.input :EmisorSello
+    = f.association :doccompra
+
+  .form-actions
+    = f.button :submit

@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Subqty:
+  = @subcantidaddetcompra.SubQty
+%p
+  %b Subcod:
+  = @subcantidaddetcompra.SubCod
+%p
+  %b Tipcodsubqty:
+  = @subcantidaddetcompra.TipCodSubQty
+%p
+  %b Detcompra:
+  = @subcantidaddetcompra.detcompra
+
+= link_to 'Edit', edit_subcantidaddetcompra_path(@subcantidaddetcompra)
+\|
+= link_to 'Back', subcantidaddetcompras_path

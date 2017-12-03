@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Tipoimpotrmnda:
+  = @impretotrmndacompra.TipoImpOtrMnda
+%p
+  %b Tasaimpotrmnda:
+  = @impretotrmndacompra.TasaImpOtrMnda
+%p
+  %b Vlrimpotrmnda:
+  = @impretotrmndacompra.VlrImpOtrMnda
+%p
+  %b Doccompra:
+  = @impretotrmndacompra.doccompra
+
+= link_to 'Edit', edit_impretotrmndacompra_path(@impretotrmndacompra)
+\|
+= link_to 'Back', impretotrmndacompras_path

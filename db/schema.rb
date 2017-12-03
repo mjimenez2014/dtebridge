@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170818180925) do
+ActiveRecord::Schema.define(version: 20171005003501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,6 +163,7 @@ ActiveRecord::Schema.define(version: 20170818180925) do
     t.datetime "updated_at"
     t.string   "TipoDscto"
     t.float    "ValorDscto"
+    t.integer  "RecargoMonto"
   end
 
   add_index "detcompras", ["doccompra_id"], name: "index_detcompras_on_doccompra_id", using: :btree
@@ -292,6 +293,37 @@ ActiveRecord::Schema.define(version: 20170818180925) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "VlrPagar"
+    t.text     "TED"
+    t.string   "TpoTranCompra"
+    t.string   "integer"
+    t.integer  "TpoTranVenta"
+    t.string   "FmaPagExp"
+    t.string   "FchCancel"
+    t.integer  "MntCancel"
+    t.integer  "SaldoInsol"
+    t.string   "PeriodoDesde"
+    t.string   "PeriodoHasta"
+    t.string   "MedioPago"
+    t.string   "TipoCtaPago"
+    t.string   "NumCtaPago"
+    t.string   "BcoPago"
+    t.string   "TermPagoGlosa"
+    t.string   "TermPagoDias"
+    t.float    "MntFlete"
+    t.float    "MntSeguro"
+    t.integer  "CodPaisRecep"
+    t.integer  "CodPaisDestin"
+    t.integer  "MontoPeriodo"
+    t.integer  "SaldoAnterior"
+    t.integer  "TpoCambio"
+    t.float    "MntNetoOtrMnd"
+    t.float    "MntExeOtrMnda"
+    t.float    "MntFaeCarneOtrMnda"
+    t.integer  "MntMargComOtrMnda"
+    t.float    "IVAOtrMnda"
+    t.float    "VANoRetOtrMnda"
+    t.float    "MntTotOtrMnda"
+    t.string   "TermPagoCdg"
   end
 
   add_index "doccompras", ["RUTEmisor", "Folio", "TipoDTE"], name: "index_doccompras_on_RUTEmisor_and_Folio_and_TipoDTE", unique: true, using: :btree
@@ -519,6 +551,17 @@ ActiveRecord::Schema.define(version: 20170818180925) do
 
   add_index "iats", ["user_id"], name: "index_iats_on_user_id", using: :btree
 
+  create_table "impretotrmndacompras", force: true do |t|
+    t.integer  "TipoImpOtrMnda"
+    t.float    "TasaImpOtrMnda"
+    t.float    "VlrImpOtrMnda"
+    t.integer  "doccompra_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "impretotrmndacompras", ["doccompra_id"], name: "index_impretotrmndacompras_on_doccompra_id", using: :btree
+
   create_table "imptoretencompras", force: true do |t|
     t.string   "TipoImp"
     t.float    "TasaImp"
@@ -614,6 +657,7 @@ ActiveRecord::Schema.define(version: 20170818180925) do
     t.integer  "doccompra_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "GlosaPagos"
   end
 
   add_index "mpagocompras", ["doccompra_id"], name: "index_mpagocompras_on_doccompra_id", using: :btree
@@ -695,6 +739,17 @@ ActiveRecord::Schema.define(version: 20170818180925) do
 
   add_index "refdetcompras", ["doccompra_id"], name: "index_refdetcompras_on_doccompra_id", using: :btree
 
+  create_table "subcantidaddetcompras", force: true do |t|
+    t.float    "SubQty"
+    t.string   "SubCod"
+    t.integer  "TipCodSubQty"
+    t.integer  "detcompra_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subcantidaddetcompras", ["detcompra_id"], name: "index_subcantidaddetcompras_on_detcompra_id", using: :btree
+
   create_table "subdsctos", force: true do |t|
     t.string   "TipoDscto"
     t.float    "ValorDscto"
@@ -714,6 +769,20 @@ ActiveRecord::Schema.define(version: 20170818180925) do
   end
 
   add_index "sucursals", ["empresa_id"], name: "index_sucursals_on_empresa_id", using: :btree
+
+  create_table "tipobultocompras", force: true do |t|
+    t.integer  "CodTpoBultos"
+    t.integer  "CantBultos"
+    t.string   "Marcas"
+    t.string   "IdContainer"
+    t.string   "Sello"
+    t.string   "EmisorSello"
+    t.integer  "doccompra_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tipobultocompras", ["doccompra_id"], name: "index_tipobultocompras_on_doccompra_id", using: :btree
 
   create_table "tipodtes", force: true do |t|
     t.integer  "tipo"

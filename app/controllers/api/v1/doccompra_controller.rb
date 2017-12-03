@@ -2,49 +2,57 @@
 class Api::V1::DoccompraController < Api::V1::ApiController
   def procesarecibo
     demails = Docsemail.where(estado: "RECIBIDO").all
+    #Recorro los correos descargados del modelo Docsemail
     demails.each do |demail| 
-      begin
+      #begin
         @doc_xml = 'PROCESADO' 
-        unless demail.nil? #A no ser que demail sea nulo
-          json= Hash.from_xml(demail.xmlrecibido)
-          if json['EnvioDTE']['SetDTE']['DTE'].kind_of?(Array) # si es un arreglo
-             json['EnvioDTE']['SetDTE']['DTE'].each do  |dte| 
-              procesadoc(dte,demail)
+        #Mientras el correo no es nulo 
+        unless demail.nil?
+          #Convierto el xml en un hash
+          json= Hash.from_xml(demail.xmlrecibido.force_encoding("ISO-8859-1").encode("utf-8", replace: nil))
+          puts "=================== XML RECIBIDO ================================"
+          puts demail.xmlrecibido
+
+            if json['EnvioDTE']['SetDTE']['DTE'].kind_of?(Array) # si es un arreglo
+               json['EnvioDTE']['SetDTE']['DTE'].each do  |dte| 
+                procesadoc(dte,demail)
+               end
+            else
+              procesadoc(json['EnvioDTE']['SetDTE']['DTE'],demail)
             end
-          else
-            procesadoc(json['EnvioDTE']['SetDTE']['DTE'],demail)
-          end
           @doc_xml = "OK"
 
         end
-      rescue
+      #rescue
         #puts "====== ERROR EN PROCESAR RECIBO ======"
         #puts demail.id
         demail.estado = 'ACUSEPROVEEDOR'
-      end  
+        demail.save
+      #end  
     end  
     render 'api/v1/doccompra/procesarecibo'
   end
-
+  # Esta funcion toma el hash para crear el modelo Doccompra
+  # tambien carga el correo para guardar el xml en Doccompra
   def procesadoc(dte, docEmail)
-    begin
+    #begin
         doc = dte['Documento']
-
+        doc['TED'].delete('version')
         idDoc = doc['Encabezado']['IdDoc']
-        idDoc.delete("FchCancel")
-        idDoc.delete("MedioPago")
-        idDoc.delete("TermPagoDias")
+
 
 
         emisor = doc['Encabezado']['Emisor']
         receptor = doc['Encabezado']['Receptor']
         totales = doc['Encabezado']['Totales']
-        _detalles = doc['Detalle']
+        _detalles = doc['Detalle']     
         referencia = doc['Referencia']
         comisiones = doc['Comisiones']
         dsc_rcg_global = doc['DscRcgGlobal']
+        puts "============ dsc_rcg_global =================="
+        puts dsc_rcg_global
         impuesto_reten = totales['ImptoReten']
-        montos_pago = doc['MntPagos']
+        montos_pago = doc['Encabezado']['IdDoc']['MntPagos']
         idDoc.delete("MntPagos")
         totales.delete("ImptoReten")
         documento = idDoc.merge(emisor).merge(receptor).merge(totales)
@@ -55,15 +63,18 @@ class Api::V1::DoccompraController < Api::V1::ApiController
         #subD = Hash.new
 
 
+
         if _detalles.kind_of?(Array)
           _detalles.each do |det|
+
 
             if det["CdgItem"].kind_of?(Array)
               cdgI = det["CdgItem"].first
             else
               cdgI = det["CdgItem"]
-            end   
-
+            end
+            # TO DO Falta configurar los nested para estos modelos   
+            det.delete("Subcantidad")
             det.delete("CdgItem")
             det.delete("IndExe")
           
@@ -131,9 +142,9 @@ class Api::V1::DoccompraController < Api::V1::ApiController
             ir = [impuesto_reten]
           end     
         end
-        #if montos_pago.nil? 
+        if montos_pago.nil? 
           montos_pago = [{}] 
-        #end
+        end
 
         documento[:detcompras_attributes] = detalles
         documento[:refdetcompras_attributes] = r
@@ -148,14 +159,17 @@ class Api::V1::DoccompraController < Api::V1::ApiController
         @docCompra = Doccompra.new(p[:documento])
         @docCompra.xmlrecibido = docEmail.xmlrecibido
 
+        @docCompra.TED = doc['TED'].to_xml
+
+
         if @docCompra.save
           docEmail.estado = 'PROCESADO'
           docEmail.save
         end  
-    rescue 
+    #rescue 
       docEmail.estado = 'ERROR'
       docEmail.id
       docEmail.save
-    end    
+    #end    
   end
 end

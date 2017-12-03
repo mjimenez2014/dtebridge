@@ -11,7 +11,11 @@
          <td style="font-size: 9pt; width:800px"><%=@doccompra.GiroEmis.force_encoding('utf-8')%></td>
        </tr>
        <tr>
-         <td style="font-size: 9pt; width:800px"><%=@doccompra.DirOrigen.force_encoding('utf-8')%> - <%=@doccompra.CmnaOrigen.force_encoding('utf-8')%></td>
+         <% if @doccompra.CmnaOrigen.nil?%>
+          <td style="font-size: 9pt; width:800px"> SIN COMUNA </td>
+         <%else%>
+          <td style="font-size: 9pt; width:800px"><%=@doccompra.DirOrigen.force_encoding('utf-8')%> - <%=@doccompra.CmnaOrigen.force_encoding('utf-8')%></td>
+         <%end%> 
        </tr>
      </table>
    </td>
@@ -29,14 +33,14 @@
      </td>
    </tr>  
  </table>
-</td>      
+</td>    
 </tr>
 </table>
 </div>
 <div class="row">
   <table style="width:100%" border="0"><tr><td align="right" valign="top" style="font-size: 10pt; color:red"><%=@doccompra.FchEmis%></td></tr></table> <!-- Fecha Emis. TODO -->
   <p></p>
-<!-- Datos del receptor -->  
+  <!-- Datos del receptor -->  
   <div class="panel panel-default">
     <div class="panel-body">
       <table>
@@ -51,64 +55,78 @@
         <tr>
           <td  style="width:60px" align="left" valign="top" style="font-size: 9pt; color:black"><strong>R.U.T.:</strong></td>
           <td style="width:600px" ><%= @doccompra.RUTRecep.force_encoding('utf-8') %></td>
-<!--           <td style="width:12%" align="left" valign="top" style="font-size: 9pt; color:black"><strong> Ciudad: </strong></td>
-          <td style="width:38%"><%= @doccompra.CiudadRecep.force_encoding('utf-8') %></td> -->
-        </tr>
-      </table>
-    </div>
-  </div>
-  <!-- Detalle -->
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <table style="width:100%" border="0"> 
-        <tr>
-          <td align="left" valign="top" style="font-size: 9pt">Item</td>
-          <td align="left" valign="top" style="font-size: 9pt">Nombre</td> 
-          <td align="center" valign="top" style="font-size: 9pt">Cantidad</td>
-          <td align="right" valign="top" style="font-size: 9pt">Precio</td>    
-        </tr>
-        <% @doccompra.detcompras.each do |detalle|%>
-        <tr>
-          <td align="left" valign="top" style="font-size: 8pt"><%=detalle.NroLinDet%></td>
+</tr>
+</table>
+</div>
+</div>
+<!-- Detalle -->
+<div class="panel panel-default">
+  <div class="panel-body">
+    <table style="width:100%" border="0"> 
+      <tr>
+        <td align="left" valign="top" style="font-size: 9pt"><strong>Item</strong></td>
+        <td align="left" valign="top" style="font-size: 9pt"><strong>Nombre</strong> </td> 
+        <td align="center" valign="top" style="font-size: 9pt"><strong>Cantidad</strong> </td>
+        <td align="right" valign="top" style="font-size: 9pt"><strong>Precio</strong> </td>    
+      </tr>
+      <% @doccompra.detcompras.each do |detalle|%>
+      <tr>
+        <td align="left" valign="top" style="font-size: 8pt"><%=detalle.NroLinDet%></td>
+        <% if detalle.NmbItem.nil? %>
+          <td align="left" valign="top" style="font-size: 9pt"></td>
+        <% else %> 
           <td align="left" valign="top" style="font-size: 9pt"><%=detalle.NmbItem.force_encoding('utf-8')%></td> 
-          <td align="center" valign="top" style="font-size: 9pt"><%=detalle.QtyItem%></td>
-          <td align="right" valign="top" style="font-size: 9pt"><%=number_to_currency( detalle.PrcItem ,precision: 0, delimiter: "." )%></td> 
-        </tr>
-        <%end%>
-      </table> 
-    </div>
+        <% end %>
+        <td align="center" valign="top" style="font-size: 9pt"><%=detalle.QtyItem%></td>
+        <td align="right" valign="top" style="font-size: 9pt"><%=number_to_currency( detalle.PrcItem ,precision: 0, delimiter: "." )%></td> 
+      </tr>
+      <%end%>
+    </table> 
   </div>
-  <!-- Referncia -->
-  <div class="panel panel-default">
-    <div class="panel-body">
+</div>
+<!-- Referncia -->
+<div class="panel panel-default">
+  <div class="panel-body">
 
-    </div>
   </div>
-  <!-- Footer-->
-  <table style="width:100%" border="0">
-    <tr>
-      <td valign="top" style="width:500px"> </td>
-      <!-- Totales-->    
-      <td  align="right" valign="top" style="font-size: 10pt">
-        <table style="width:100%" border="0">
-          <tr>
-            <td border="1" align="right" valign="top">Monto Neto: </td>
-            <td align="right" valign="top"><%=number_to_currency( @doccompra.MntNeto ,precision: 0, delimiter: "." )%></td>          
-          </tr>
-          <tr>
-            <td align="right" valign="top">IVA: </td>
-            <td align="right" valign="top"><%=number_to_currency( @doccompra.IVA ,precision: 0, delimiter: "." )%></td>          
-          </tr>
-          <tr>
-            <td align="right" valign="top">Monto Exento: </td>
-            <td align="right" valign="top"><%=number_to_currency( @doccompra.MntExe ,precision: 0, delimiter: "." )%></td>          
-          </tr>
-          <tr>
-            <td align="right" valign="top">Monto Total: </td>
-            <td align="right" valign="top"><%=number_to_currency( @doccompra.MntTotal ,precision: 0, delimiter: "." )%></td>          
-          </tr>        
-        </table>
-      </td>
-    </tr>
-  </table>
+</div>
+<!-- Footer-->
+<div class="row">    
+  <div class="col-md-12">
+    <table style="width:100%" border="0">
+      <tr>
+        <td valign="top" style="width:300px"> 
+             <% pdf417  = PDF417.new(text:"<TED version=\"1.0\">" + @doccompra.TED + "</TED>",cols: 15).to_png(margin: 0, x_scale: 1, y_scale: 3).to_blob  %>
+    <% pdf417_png = Base64.encode64(pdf417.to_s).gsub(/\s+/, "") %>
+    <%=image_tag "data:image/png;base64,#{Rack::Utils.escape(pdf417_png)}" %>
+                <p align="center" style="font-size: 6pt">
+                  Timbre Electronico S.I.I </br>
+                  Verifique Documento: http://www.sii.cl
+                </p>
+
+        </td>
+        <!-- Totales-->    
+        <td  align="right" valign="top" style="font-size: 10pt">
+          <table style="width:100%" border="0">
+            <tr>
+              <td border="1" align="right" valign="top">Monto Neto: </td>
+              <td align="right" valign="top"><%=number_to_currency( @doccompra.MntNeto ,precision: 0, delimiter: "." )%></td>          
+            </tr>
+            <tr>
+              <td align="right" valign="top">IVA: </td>
+              <td align="right" valign="top"><%=number_to_currency( @doccompra.IVA ,precision: 0, delimiter: "." )%></td>          
+            </tr>
+            <tr>
+              <td align="right" valign="top">Monto Exento: </td>
+              <td align="right" valign="top"><%=number_to_currency( @doccompra.MntExe ,precision: 0, delimiter: "." )%></td>          
+            </tr>
+            <tr>
+              <td align="right" valign="top"><strong> Monto Total:</strong> </td>
+              <td align="right" valign="top"><strong> <%=number_to_currency( @doccompra.MntTotal ,precision: 0, delimiter: "." )%></strong></td>          
+            </tr>        
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>

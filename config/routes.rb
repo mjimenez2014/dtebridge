@@ -1,5 +1,11 @@
 Dtebridge::Application.routes.draw do
 
+  resources :subcantidaddetcompras
+
+  resources :impretotrmndacompras
+
+  resources :tipobultocompras
+
   resources :impuestos
   resources :otrosimpdetlibros
   resources :usuarioempresas

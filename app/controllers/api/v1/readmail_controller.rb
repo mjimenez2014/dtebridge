@@ -6,8 +6,8 @@ class Api::V1::ReadmailController < Api::V1::ApiController
     Mail.defaults do
       retriever_method :imap, :address => "mail.elsultan.cl",
       :port       => 143,
-      :user_name  => 'intercambio@elsultan.cl',
-      :password   => 'Yamahl2015',
+      :user_name  => 'intercambiochiquita@invoicedigital.cl',
+      :password   => 'chiquita2016',
       :enable_ssl => false
     end
 

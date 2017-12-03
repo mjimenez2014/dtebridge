@@ -1,0 +1,33 @@
+%h1 Listing tipobultocompras
+
+%table
+  %thead
+    %tr
+      %th Codtpobultos
+      %th Cantbultos
+      %th Marcas
+      %th Idcontainer
+      %th Sello
+      %th Emisorsello
+      %th Doccompra
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @tipobultocompras.each do |tipobultocompra|
+      %tr
+        %td= tipobultocompra.CodTpoBultos
+        %td= tipobultocompra.CantBultos
+        %td= tipobultocompra.Marcas
+        %td= tipobultocompra.IdContainer
+        %td= tipobultocompra.Sello
+        %td= tipobultocompra.EmisorSello
+        %td= tipobultocompra.doccompra
+        %td= link_to 'Show', tipobultocompra
+        %td= link_to 'Edit', edit_tipobultocompra_path(tipobultocompra)
+        %td= link_to 'Destroy', tipobultocompra, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Tipobultocompra', new_tipobultocompra_path

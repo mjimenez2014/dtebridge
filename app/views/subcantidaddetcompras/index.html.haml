@@ -1,0 +1,27 @@
+%h1 Listing subcantidaddetcompras
+
+%table
+  %thead
+    %tr
+      %th Subqty
+      %th Subcod
+      %th Tipcodsubqty
+      %th Detcompra
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @subcantidaddetcompras.each do |subcantidaddetcompra|
+      %tr
+        %td= subcantidaddetcompra.SubQty
+        %td= subcantidaddetcompra.SubCod
+        %td= subcantidaddetcompra.TipCodSubQty
+        %td= subcantidaddetcompra.detcompra
+        %td= link_to 'Show', subcantidaddetcompra
+        %td= link_to 'Edit', edit_subcantidaddetcompra_path(subcantidaddetcompra)
+        %td= link_to 'Destroy', subcantidaddetcompra, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Subcantidaddetcompra', new_subcantidaddetcompra_path

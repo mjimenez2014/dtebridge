@@ -1,0 +1,11 @@
+= simple_form_for(@subcantidaddetcompra) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :SubQty
+    = f.input :SubCod
+    = f.input :TipCodSubQty
+    = f.association :detcompra
+
+  .form-actions
+    = f.button :submit
